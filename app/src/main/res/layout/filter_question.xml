@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:ignore="HardcodedText">
+
+    <include layout="@layout/toolbar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="35dp"
+        android:layout_marginStart="35dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:text="כל מועמד שירצה ליצור קשר איתכם\nיהיה חייב לענות על שאלת הסינון"
+            android:textColor="@android:color/black"
+            android:typeface="monospace" />
+
+        <EditText
+            android:id="@+id/question"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:background="@drawable/edittext_selector"
+            android:gravity="top"
+            android:hint="השאלה שלכם..."
+            android:inputType="text"
+            android:paddingEnd="10dp"
+            android:paddingStart="10dp"
+            android:paddingTop="10dp"
+            android:textColor="@color/orange"
+            android:typeface="monospace" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="בחרו את התשובה הרצויה"
+            android:textColor="@android:color/black"
+            android:typeface="monospace" />
+
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/yes"
+                android:layout_width="130dp"
+                android:layout_height="65dp"
+                android:background="@drawable/button_selector"
+                android:button="@null"
+                android:text="כן"
+                android:textAlignment="center"
+                android:textColor="@drawable/text_selector2" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <RadioButton
+                android:id="@+id/no"
+                android:layout_width="130dp"
+                android:layout_height="65dp"
+                android:background="@drawable/button_selector"
+                android:button="@null"
+                android:text="לא"
+                android:textAlignment="center"
+                android:textColor="@drawable/text_selector2" />
+
+        </RadioGroup>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/showDeleteQuestionDialog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/border"
+            android:padding="20dp"
+            android:text="מחיקת שאלה"
+            android:textColor="@android:color/black"
+            android:typeface="monospace"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+</LinearLayout>

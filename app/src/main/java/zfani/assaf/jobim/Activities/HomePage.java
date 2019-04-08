@@ -1,0 +1,681 @@
+package zfani.assaf.jobim.Activities;
+
+import android.app.Dialog;
+import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import zfani.assaf.jobim.Application;
+import zfani.assaf.jobim.Fragments.DetailsFragments.BirthYearFragment;
+import zfani.assaf.jobim.Fragments.DetailsFragments.CityFragment;
+import zfani.assaf.jobim.Fragments.DetailsFragments.EmailFragment;
+import zfani.assaf.jobim.Fragments.DetailsFragments.FullNameFragment;
+import zfani.assaf.jobim.Fragments.FeedFragments.ContactFragment;
+import zfani.assaf.jobim.Fragments.FeedFragments.MapFragment;
+import zfani.assaf.jobim.Fragments.MenuFragments.AboutUsFragment;
+import zfani.assaf.jobim.Fragments.MenuFragments.AllJobsFragment;
+import zfani.assaf.jobim.Fragments.MenuFragments.MyDetailsFragment;
+import zfani.assaf.jobim.Fragments.MenuFragments.MyJobsFragment;
+import zfani.assaf.jobim.Fragments.MenuFragments.NotificationsFragment;
+import zfani.assaf.jobim.Fragments.MenuFragments.SettingsFragment;
+import zfani.assaf.jobim.Models.Job;
+import zfani.assaf.jobim.Models.RoundedImageView;
+import zfani.assaf.jobim.R;
+import zfani.assaf.jobim.Utils.Adapter;
+import zfani.assaf.jobim.Utils.FilteredAdapter;
+import zfani.assaf.jobim.Utils.GPSTracker;
+
+@SuppressWarnings("unused")
+
+public class HomePage extends FragmentActivity {
+
+    public AllJobsFragment allJobsFragment;
+    private FragmentManager fragmentManager;
+    private DrawerLayout drawerLayout;
+    private View drawerMenu;
+    private Drawable background;
+    private MapFragment mapFragment;
+    private Fragment fragmentToReplace;
+
+    static void setupToolBar(final FragmentActivity activity) {
+
+        Toolbar toolbar = (Toolbar) activity.findViewById(R.id.toolBar);
+
+        TextView title = (TextView) toolbar.findViewById(R.id.title);
+
+        View addButton, backButton, closeButton, mapButton, menuButton, nextButton, postButton, saveButton, settingsButton;
+
+        addButton = toolbar.findViewById(R.id.addButton);
+        backButton = toolbar.findViewById(R.id.backButton);
+        closeButton = toolbar.findViewById(R.id.closeButton);
+        mapButton = toolbar.findViewById(R.id.mapButton);
+        menuButton = toolbar.findViewById(R.id.menuButton);
+        nextButton = toolbar.findViewById(R.id.nextButton);
+        postButton = toolbar.findViewById(R.id.postButton);
+        saveButton = toolbar.findViewById(R.id.saveButton);
+        settingsButton = toolbar.findViewById(R.id.settingsButton);
+
+        addButton.setVisibility(View.GONE);
+        backButton.setVisibility(View.GONE);
+        closeButton.setVisibility(View.GONE);
+        nextButton.setVisibility(View.GONE);
+        postButton.setVisibility(View.GONE);
+        saveButton.setVisibility(View.GONE);
+        settingsButton.setVisibility(View.GONE);
+
+        int orange = ContextCompat.getColor(activity, R.color.orange);
+
+        String className = activity.getLocalClassName(), text = "";
+
+        switch (className) {
+
+            case "Activities.AddNewJob": {
+
+                text = "פרסם ג'וב חדש";
+            }
+
+            case "Activities.FillDetails": {
+
+                closeButton.setVisibility(View.VISIBLE);
+                nextButton.setVisibility(View.VISIBLE);
+
+                break;
+            }
+
+            case "Activities.FilterQuestion": {
+
+                text = "שאלת סינון";
+
+                addButton.setVisibility(View.VISIBLE);
+                backButton.setVisibility(View.VISIBLE);
+
+                break;
+            }
+
+            case "Activities.JobsEmployer": {
+
+                menuButton.setEnabled(false);
+
+                menuButton.setBackgroundColor(orange);
+
+                mapButton.setEnabled(false);
+
+                mapButton.setBackgroundColor(orange);
+
+                text = "ג'ובים נוספים ממעסיק זה";
+
+                break;
+            }
+
+            case "Activities.MakingContact": {
+
+                text = "אמצעי יצירת קשר";
+
+                postButton.setVisibility(View.VISIBLE);
+                backButton.setVisibility(View.VISIBLE);
+
+                break;
+            }
+
+            case "Activities.ShowBy": {
+
+                toolbar.setBackground(activity.getDrawable(R.drawable.action_bar_dark));
+
+                menuButton.setEnabled(false);
+
+                mapButton.setEnabled(false);
+
+                break;
+            }
+
+            default: {
+
+                text = activity.getIntent().getStringExtra("Fragment");
+
+                if (text == null) {
+
+                    text = "JOBIM";
+
+                    mapButton.setEnabled(true);
+
+                    mapButton.setBackground(null);
+
+                } else {
+
+                    mapButton.setEnabled(false);
+
+                    mapButton.setBackgroundColor(orange);
+
+                    switch (text) {
+
+                        case "הפרטים שלי":
+                            settingsButton.setVisibility(View.VISIBLE);
+                            break;
+                        case "הגדרות":
+                        case "עריכת שם ותמונה":
+                        case "עריכת עיר מגורים":
+                        case "עריכת שנת לידה":
+                        case "עריכת כתובת מייל":
+                            backButton.setVisibility(View.VISIBLE);
+                            saveButton.setVisibility(View.VISIBLE);
+                            break;
+                    }
+                }
+                break;
+            }
+        }
+
+        title.setText(text);
+    }
+
+    public static void displayDialog(final FragmentActivity activity, final int layout, final String jobId) {
+
+        Dialog dialog = new Dialog(activity) {
+
+            @Override
+            protected void onCreate(Bundle savedInstanceState) {
+
+                super.onCreate(savedInstanceState);
+
+                setContentView(layout);
+
+                View cancel = findViewById(R.id.cancel);
+
+                if (cancel != null)
+                    cancel.setOnClickListener(new View.OnClickListener() {
+
+                        @Override
+                        public void onClick(View v) {
+
+                            dismiss();
+
+                            if (layout == R.layout.fill_details_dialog)
+                                activity.startActivity(new Intent(activity, FillDetails.class));
+                            else if (layout == R.layout.post_job_dialog)
+                                activity.finish();
+                        }
+                    });
+
+                switch (layout) {
+
+                    case R.layout.add_new_job_dialog:
+
+                        findViewById(R.id.call).setOnClickListener(new View.OnClickListener() {
+
+                            @Override
+                            public void onClick(View view) {
+
+                                Intent callIntent = new Intent(Intent.ACTION_DIAL);
+
+                                callIntent.setData(Uri.parse("tel:0509907979"));
+
+                                activity.startActivity(callIntent);
+                            }
+                        });
+
+                        findViewById(R.id.sendEmail).setOnClickListener(new View.OnClickListener() {
+
+                            @Override
+                            public void onClick(View view) {
+
+                                Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:assafzfani@gmail.com"));
+
+                                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "בנוגע ליצירת ג'וב");
+
+                                activity.startActivity(emailIntent);
+                            }
+                        });
+
+                        break;
+
+                    case R.layout.close_dialog:
+
+                        findViewById(R.id.exit).setOnClickListener(new View.OnClickListener() {
+
+                            @Override
+                            public void onClick(View view) {
+
+                                dismiss();
+
+                                Application.sharedPreferences.edit().remove("FromCamera").remove("Image")
+                                        .remove("FullName").remove("City").remove("BirthYear").remove("Email").apply();
+
+                                activity.finish();
+                            }
+                        });
+
+                        break;
+
+                    case R.layout.delete_job_dialog:
+
+                        findViewById(R.id.deleteFromFeed).setOnClickListener(new View.OnClickListener() {
+
+                            @Override
+                            public void onClick(View v) {
+
+                                if (FilteredAdapter.filteredList != null) {
+
+                                    int indexToRemove = FilteredAdapter.filteredList.indexOf(Job.findJobById(jobId));
+
+                                    if (activity.getLocalClassName().equalsIgnoreCase("Activities.HomePage")) {
+
+                                        HomePage homePage = (HomePage) activity;
+
+                                        if (homePage.allJobsFragment.filteredAdapter != null)
+                                            homePage.allJobsFragment.filteredAdapter.remove(indexToRemove);
+                                    } else
+                                        FilteredAdapter.filteredList.remove(indexToRemove);
+                                }
+
+                                new Handler().postDelayed(new Runnable() {
+
+                                    @Override
+                                    public void run() {
+
+                                        Adapter.query.getRef().child(jobId).removeValue();
+                                    }
+                                }, 750);
+
+                                if (activity.getLocalClassName().equalsIgnoreCase("Activities.JobInfo"))
+                                    activity.finish();
+                                else
+                                    ((ViewPager) activity.findViewById(activity.getIntent().getIntExtra("ViewPager", 0))).setCurrentItem(1);
+
+                                dismiss();
+
+                                Toast.makeText(activity, "מעכשיו הג'וב לא יופיע יותר בפיד", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                        break;
+
+                    case R.layout.delete_question_dialog:
+
+                        findViewById(R.id.deleteQuestion).setOnClickListener(new View.OnClickListener() {
+
+                            @Override
+                            public void onClick(View view) {
+
+                                AddNewJob.newJob.setAnswer(false);
+
+                                AddNewJob.newJob.setQuestion(null);
+
+                                dismiss();
+
+                                activity.finish();
+                            }
+                        });
+
+                        break;
+
+                    case R.layout.exit_dialog:
+
+                        findViewById(R.id.exit).setOnClickListener(new View.OnClickListener() {
+
+                            @Override
+                            public void onClick(View v) {
+
+                                dismiss();
+
+                                activity.finish();
+                            }
+                        });
+
+                        break;
+
+                    case R.layout.image_dialog:
+
+                        findViewById(R.id.camera).setOnClickListener(new View.OnClickListener() {
+
+                            @Override
+                            public void onClick(View view) {
+
+                                dismiss();
+
+                                activity.startActivityForResult(new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE), 3);
+                            }
+                        });
+
+                        findViewById(R.id.gallery).setOnClickListener(new View.OnClickListener() {
+
+                            @Override
+                            public void onClick(View view) {
+
+                                dismiss();
+
+                                activity.startActivityForResult
+                                        (new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI), 4);
+                            }
+                        });
+
+
+                        break;
+
+                    case R.layout.sending_mail_dialog:
+
+                        findViewById(R.id.send).setOnClickListener(new View.OnClickListener() {
+
+                            @Override
+                            public void onClick(View view) {
+
+                                dismiss();
+
+                                ContactFragment.contact(activity, jobId, R.id.sendEmail);
+                            }
+                        });
+
+                        break;
+
+                    case R.layout.share_dialog:
+
+                        ((TextView) findViewById(R.id.dialogText)).setText
+                                ("שלחנו ל" + activity.getIntent().getStringExtra("ContactName") + " המלצה על המשרה");
+                        break;
+                }
+            }
+        };
+
+        dialog.show();
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.homepage);
+
+        new GPSTracker(this);
+
+        setupToolBar(this);
+
+        fragmentManager = getSupportFragmentManager();
+
+        fragmentManager.beginTransaction().replace(R.id.mainFragment,
+                allJobsFragment = (AllJobsFragment) AllJobsFragment.newInstance()).commit();
+
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+
+        drawerMenu = findViewById(R.id.drawerMenu);
+
+        background = findViewById(R.id.mapButton).getBackground();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        switch (requestCode) {
+
+            case 1:
+
+                if (resultCode == 1) {
+
+                    allJobsFragment.filterList(findViewById(R.id.mainFragment), data);
+
+                    hideMap();
+                }
+
+                break;
+
+            case 2:
+
+                if (resultCode == 1)
+                    handleMenuButtons(findViewById(R.id.myJobs));
+
+                break;
+
+
+            case 3:
+
+                if (resultCode == RESULT_OK)
+                    FillDetails.saveImageFromCamera(this, data);
+
+                break;
+
+            case 4:
+
+                if (resultCode == RESULT_OK)
+                    FillDetails.saveImageFromGallery(this, data);
+
+                break;
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        if (drawerLayout.isDrawerOpen(drawerMenu))
+            drawerLayout.closeDrawers();
+        else {
+
+            String fragmentName = getIntent().getStringExtra("Fragment");
+
+            if (fragmentName != null)
+
+                switch (fragmentName) {
+
+                    case "הגדרות":
+                    case "עריכת שם ותמונה":
+                    case "עריכת עיר מגורים":
+                    case "עריכת שנת לידה":
+                    case "עריכת כתובת מייל":
+                        handleMenuButtons(findViewById(R.id.myDeatils));
+                        break;
+                    default:
+                        clean(findViewById(R.id.cleanButton));
+                        break;
+                }
+            else
+                displayDialog(this, R.layout.exit_dialog, null);
+        }
+    }
+
+    public void menu(View v) {
+
+        String fullName = Application.sharedPreferences.getString("FullName", null);
+
+        getIntent().putExtra("SmallRound", true);
+
+        FullNameFragment.initSelfie((RoundedImageView) findViewById(R.id.menuSelfie));
+
+        ((TextView) drawerMenu.findViewById(R.id.fullName)).setText(fullName != null ? fullName : "היי אורח!");
+
+        drawerLayout.openDrawer(drawerMenu);
+    }
+
+    public void map(View v) {
+
+        if (GPSTracker.location != null) {
+
+            v.setBackground(v.getBackground() == background ? getDrawable(R.drawable.squares) : background);
+
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+
+            int commit = v.getBackground() == background ?
+                    fragmentTransaction.remove(mapFragment).commit() : fragmentTransaction.add(R.id.mapFragment, mapFragment =
+                    MapFragment.newInstance(GPSTracker.createLatLng(GPSTracker.location))).commit();
+        }
+    }
+
+    public void clean(View v) {
+
+        drawerLayout.closeDrawers();
+
+        hideMap();
+
+        allJobsFragment.clean();
+
+        fragmentManager.beginTransaction().replace(R.id.mainFragment, allJobsFragment).commit();
+
+        getIntent().removeExtra("Fragment");
+
+        HomePage.setupToolBar(HomePage.this);
+    }
+
+    private void hideMap() {
+
+        if (mapFragment != null && mapFragment.isAdded()) {
+
+            fragmentManager.beginTransaction().remove(mapFragment).commitAllowingStateLoss();
+
+            findViewById(R.id.mapButton).setBackground(background);
+        }
+    }
+
+    public void showBy(View v) {
+
+        if (GPSTracker.location != null)
+            startActivityForResult(new Intent(HomePage.this, ShowBy.class), 1);
+    }
+
+    public void handleMenuButtons(View v) {
+
+        drawerLayout.closeDrawers();
+
+        String fragmentName = "";
+
+        switch (v.getId()) {
+
+            case R.id.aboutUs:
+                fragmentName = "קצת עלינו";
+                fragmentToReplace = AboutUsFragment.newInstance();
+                break;
+
+            case R.id.addNewJob:
+                fragmentToReplace = null;
+                startActivityForResult(new Intent(HomePage.this, AddNewJob.class), 2);
+                break;
+
+            case R.id.birthYear:
+                fragmentName = "עריכת שנת לידה";
+                fragmentToReplace = BirthYearFragment.newInstance();
+                break;
+
+            case R.id.city:
+                fragmentName = "עריכת עיר מגורים";
+                fragmentToReplace = CityFragment.newInstance();
+                break;
+
+            case R.id.email:
+                fragmentName = "עריכת כתובת מייל";
+                fragmentToReplace = EmailFragment.newInstance();
+                break;
+
+            case R.id.fullName:
+                fragmentName = "עריכת שם ותמונה";
+                fragmentToReplace = FullNameFragment.newInstance();
+                break;
+
+            case R.id.myDeatils:
+            case R.id.myDeatilsLayout:
+                fragmentName = "הפרטים שלי";
+                fragmentToReplace = MyDetailsFragment.newInstance();
+                break;
+
+            case R.id.myJobs:
+                fragmentName = "הג'ובים שלי";
+                fragmentToReplace = MyJobsFragment.newInstance();
+                break;
+
+            case R.id.notifications:
+                fragmentName = "התראות";
+                fragmentToReplace = NotificationsFragment.newInstance();
+                break;
+
+            case R.id.settingsButton:
+                fragmentName = "הגדרות";
+                fragmentToReplace = SettingsFragment.newInstance();
+                break;
+        }
+
+        if (fragmentToReplace != null) {
+
+            fragmentManager.beginTransaction().replace(R.id.mainFragment, fragmentToReplace, fragmentName).commitAllowingStateLoss();
+
+            getIntent().putExtra("Fragment", fragmentName);
+
+            HomePage.setupToolBar(HomePage.this);
+        }
+    }
+
+    public void handleMyDetailsButtons(View v) {
+
+        handleMenuButtons(Application.sharedPreferences.contains("FullName") ? v : findViewById(R.id.myDeatils));
+    }
+
+    public void website(View v) {
+
+        startActivity(new Intent("android.intent.action.VIEW",
+                Uri.parse("https://www.drushim.co.il/?utm_source=jobim&utm_medium=app&utm_campaign=gowebsite")));
+    }
+
+    public void back(View v) {
+
+        onBackPressed();
+    }
+
+    public void save(View v) {
+
+        boolean result = false;
+
+        switch (getIntent().getStringExtra("Fragment")) {
+
+            case "הגדרות":
+
+                Application.sharedPreferences.edit().putBoolean("EnableNotification",
+                        ((SettingsFragment) fragmentToReplace).toggleButton.isChecked()).apply();
+
+                result = true;
+
+                break;
+
+            case "עריכת שם ותמונה":
+
+                FullNameFragment fullNameFragment = (FullNameFragment) fragmentToReplace;
+
+                result = fullNameFragment.isValidValue();
+
+                break;
+
+            case "עריכת עיר מגורים":
+
+                CityFragment cityFragment = (CityFragment) fragmentToReplace;
+
+                result = cityFragment.isValidValue();
+
+                break;
+
+            case "עריכת שנת לידה":
+
+                BirthYearFragment birthYearFragment = (BirthYearFragment) fragmentToReplace;
+
+                result = birthYearFragment.isValidValue();
+
+                break;
+
+            case "עריכת כתובת מייל":
+
+                EmailFragment emailFragment = (EmailFragment) fragmentToReplace;
+
+                result = emailFragment.isValidValue();
+
+                break;
+        }
+
+        if (result)
+            onBackPressed();
+    }
+}

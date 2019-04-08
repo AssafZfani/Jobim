@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:ignore="HardcodedText">
+
+    <LinearLayout
+        android:id="@+id/jobFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@id/jobFragment">
+
+        <LinearLayout
+            style="@style/LinearLayout"
+            android:onClick="favorite">
+
+            <Button
+                android:id="@+id/favoriteButton"
+                android:layout_width="40dp"
+                android:layout_height="40dp" />
+
+            <TextView
+                android:id="@+id/favoriteText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@android:color/holo_orange_dark"
+                android:typeface="monospace" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/LinearLayout"
+            android:onClick="jobs_employer">
+
+            <Button
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/jobs_employer" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="ג'ובים נוספים\nממעסיק זה"
+                android:textColor="@android:color/holo_orange_dark"
+                android:typeface="monospace" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/LinearLayout"
+            android:onClick="share">
+
+            <Button
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/share" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="שתף עם\nחברים"
+                android:textColor="@android:color/holo_orange_dark"
+                android:typeface="monospace" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/LinearLayout"
+            android:onClick="delete">
+
+            <Button
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/delete2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="הסתר\nג'וב"
+                android:textColor="@android:color/holo_orange_dark"
+                android:typeface="monospace" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

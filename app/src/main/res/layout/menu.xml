@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawerMenu"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="start"
+    android:background="@drawable/menu">
+
+    <LinearLayout
+        android:id="@+id/myDeatilsLayout"
+        style="@style/LinearLayout"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="85dp"
+        android:layout_marginTop="5dp"
+        android:background="@null"
+        android:onClick="handleMyDetailsButtons">
+
+        <zfani.assaf.jobim.Models.RoundedImageView
+            android:id="@+id/menuSelfie"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="2.5dp"
+            android:layout_marginTop="7.5dp"
+            android:background="@null"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/fullName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/colorPrimaryDark"
+            android:typeface="monospace"
+            tools:ignore="HardcodedText" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/myDeatils"
+        style="@style/MenuButton"
+        android:layout_marginTop="80dp" />
+
+    <Button
+        android:id="@+id/notifications"
+        style="@style/MenuButton"
+        android:layout_below="@+id/myDeatils"
+        android:layout_marginTop="-10dp" />
+
+    <Button
+        android:id="@+id/myJobs"
+        style="@style/MenuButton"
+        android:layout_below="@+id/notifications"
+        android:layout_marginTop="-10dp" />
+
+    <Button
+        android:id="@+id/findJobs"
+        style="@style/MenuButton"
+        android:layout_height="80dp"
+        android:layout_below="@+id/myJobs"
+        android:onClick="clean" />
+
+    <Button
+        android:id="@+id/aboutUs"
+        style="@style/MenuButton"
+        android:layout_height="80dp"
+        android:layout_below="@+id/findJobs"
+        android:layout_marginTop="-10dp" />
+
+    <Button
+        android:id="@+id/addNewJob"
+        style="@style/MenuButton"
+        android:layout_height="80dp"
+        android:layout_below="@+id/aboutUs"
+        android:layout_marginTop="-10dp" />
+
+    <Button
+        android:id="@+id/website"
+        style="@style/Base.Widget.AppCompat.Button.Borderless"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_alignParentBottom="true"
+        android:background="@null"
+        android:onClick="website" />
+
+</RelativeLayout>

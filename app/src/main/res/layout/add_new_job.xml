@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/white" />
+
+    <RadioGroup
+        android:id="@+id/fragmentsBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/firmButton"
+            style="@style/FragmentButton"
+            android:background="@drawable/firm" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="1dp" />
+
+        <RadioButton
+            android:id="@+id/jobTypeButton"
+            style="@style/FragmentButton"
+            android:background="@drawable/job_type1" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="1dp" />
+
+        <RadioButton
+            android:id="@+id/jobTitleButton"
+            style="@style/FragmentButton"
+            android:background="@drawable/job_title1" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="1dp" />
+
+        <RadioButton
+            android:id="@+id/addressButton"
+            style="@style/FragmentButton"
+            android:background="@drawable/address1" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="1dp" />
+
+        <RadioButton
+            android:id="@+id/pictureButton"
+            style="@style/FragmentButton"
+            android:background="@drawable/picture1" />
+
+    </RadioGroup>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

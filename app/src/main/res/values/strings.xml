@@ -1,0 +1,37 @@
+<resources>
+
+    <string name="app_name">Jobim</string>
+
+    <string name="shareMessage">חושב/ת שהמשרה הבאה יכולה להתאים לך. לפרטים נוספים: http://m.onelink.me/a8bf6c11. כותרת המשרה:</string>
+
+    <string name="sendMessage1">היי, ראיתי את מודעת הדרושים שלך בג\'ובים. המשרה</string>
+
+    <string name="sendMessage2"> נשמעת מעניינת ואשמח ליצור איתך קשר בנושא. מתי יהיה נוח? תודה!</string>
+
+    <string-array name="firms">
+
+        <item>סופר פארם</item>
+        <item>סלקום</item>
+        <item>הוט - HOT</item>
+        <item>ביטוח ישיר</item>
+        <item>rebar</item>
+        <item>דיוטי פרי</item>
+        <item>FOX</item>
+        <item>מתוקה</item>
+        <item>לה וורה פיצה</item>
+        <item>206 דגים</item>
+        <item>7 ימים</item>
+        <item>Ace</item>
+        <item>AIG</item>
+        <item>ALDO</item>
+        <item>משכנתאות amg</item>
+        <item>amor blub</item>
+        <item>AM:PM</item>
+        <item>anypet</item>
+        <item>ArtLight</item>
+        <item>מתחם שם לאירועים b4</item>
+        <item>מגה בעיר</item>
+
+    </string-array>
+
+</resources>

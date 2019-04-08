@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/my_details"
+    tools:ignore="HardcodedText">
+
+    <zfani.assaf.jobim.Models.RoundedImageView
+        android:id="@+id/selfie"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="10dp"
+        android:background="@null" />
+
+    <TextView
+        android:id="@+id/fullName"
+        style="@style/TextView"
+        android:layout_below="@id/selfie"
+        android:layout_marginTop="22.5dp"
+        android:hint="השם המלא שלי"
+        android:textAlignment="viewStart" />
+
+    <TextView
+        android:id="@+id/city"
+        style="@style/TextView"
+        android:layout_below="@id/fullName"
+        android:layout_marginTop="47.5dp"
+        android:hint="הכתובת שלי" />
+
+    <TextView
+        android:id="@+id/birthYear"
+        style="@style/TextView"
+        android:layout_below="@id/city"
+        android:layout_marginTop="50dp"
+        android:hint="שנת הלידה שלי" />
+
+    <TextView
+        android:id="@+id/email"
+        style="@style/TextView"
+        android:layout_below="@id/birthYear"
+        android:layout_marginTop="50dp"
+        android:hint="המייל שלי"
+        android:textAlignment="viewStart" />
+
+</RelativeLayout>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    tools:ignore="ContentDescription, HardcodedText">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="15dp"
+        android:text="אנא מלאו את הפרטים הבאים כדי ליצור קשר עם המעסיק"
+        android:textColor="@color/colorPrimaryDark"
+        android:typeface="monospace" />
+
+    <zfani.assaf.jobim.Models.RoundedImageView
+        android:id="@+id/selfie"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:background="@drawable/profile_image" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="5dp"
+        android:text="הסלפי שלי"
+        android:textColor="@color/colorPrimaryDark"
+        android:typeface="monospace" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/firstName"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:layout_width="150dp"
+            android:layout_height="45dp"
+            android:layout_marginEnd="5dp"
+            android:background="@drawable/edittext_selector"
+            android:hint="שם פרטי"
+            android:inputType="text"
+            android:textColor="@color/orange"
+            android:typeface="monospace" />
+
+        <EditText
+            android:id="@+id/lastName"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:layout_width="150dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="5dp"
+            android:background="@drawable/edittext_selector"
+            android:hint="שם משפחה"
+            android:inputType="text"
+            android:textColor="@color/orange"
+            android:typeface="monospace" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background1" />
+
+</LinearLayout>

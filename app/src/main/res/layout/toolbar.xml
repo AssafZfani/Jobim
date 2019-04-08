@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/toolBar"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:background="@drawable/action_bar_light"
+    app:contentInsetEnd="0dp"
+    app:contentInsetStart="0dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/menuButton"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="35dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="5dp"
+            android:background="@null"
+            android:onClick="menu" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textSize="20sp"
+            android:typeface="monospace"
+            tools:ignore="RelativeOverlap" />
+
+        <Button
+            android:id="@+id/mapButton"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="30dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="5dp"
+            android:layout_marginTop="5dp"
+            android:onClick="map" />
+
+        <Button
+            android:id="@+id/addButton"
+            style="@style/ToolBarButton"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/add" />
+
+        <Button
+            android:id="@+id/backButton"
+            style="@style/ToolBarButton"
+            android:layout_alignParentStart="true"
+            android:background="@drawable/back_icon"
+            android:onClick="back" />
+
+        <Button
+            android:id="@+id/closeButton"
+            style="@style/ToolBarButton"
+            android:layout_alignParentStart="true"
+            android:background="@drawable/close_icon" />
+
+        <Button
+            android:id="@+id/nextButton"
+            style="@style/ToolBarButton"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/next_icon"
+            android:onClick="next" />
+
+        <Button
+            android:id="@+id/postButton"
+            style="@style/ToolBarButton"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/post"
+            android:onClick="post" />
+
+        <Button
+            android:id="@+id/saveButton"
+            style="@style/ToolBarButton"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/save_icon"
+            android:onClick="save" />
+
+        <Button
+            android:id="@+id/settingsButton"
+            style="@style/ToolBarButton"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/settings_icon"
+            android:onClick="handleMenuButtons" />
+
+    </RelativeLayout>
+
+</android.support.v7.widget.Toolbar>
+

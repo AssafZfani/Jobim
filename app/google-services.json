@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "358542744651",
+    "firebase_url": "https://assaf-zfani-jobim-1.firebaseio.com",
+    "project_id": "assaf-zfani-jobim-1",
+    "storage_bucket": "assaf-zfani-jobim-1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:358542744651:android:ced3f1d0d6109df4",
+        "android_client_info": {
+          "package_name": "zfani.assaf.jobim"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "358542744651-4f980bciob6qkj1inbgi6oq932gki56m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "zfani.assaf.jobim",
+            "certificate_hash": "2C3DEACA3E0676577D3365137E01C91049B7F554"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBP97-u8B2fpywldWfFHhYQQlA6a7E4Rho"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
