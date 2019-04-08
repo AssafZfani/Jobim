@@ -21,9 +21,9 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import zfani.assaf.jobim.Models.Job;
-import zfani.assaf.jobim.Models.JobType;
-import zfani.assaf.jobim.Utils.GPSTracker;
+import zfani.assaf.jobim.models.Job;
+import zfani.assaf.jobim.models.JobType;
+import zfani.assaf.jobim.utils.GPSTracker;
 
 @SuppressWarnings("unused")
 

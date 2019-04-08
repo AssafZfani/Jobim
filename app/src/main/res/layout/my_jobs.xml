@@ -39,16 +39,16 @@
 
     </RadioGroup>
 
-    <android.support.v4.widget.SwipeRefreshLayout
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
         style="@style/SwipeRefreshLayout"
         android:layout_below="@id/myJobsLayout">
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/myJobsRecyclerView"
             style="@style/RecyclerView" />
 
-    </android.support.v4.widget.SwipeRefreshLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <ImageView
         android:id="@+id/message"

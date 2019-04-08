@@ -20,7 +20,7 @@
         android:textColor="@color/colorPrimaryDark"
         android:typeface="monospace" />
 
-    <zfani.assaf.jobim.Models.RoundedImageView
+    <zfani.assaf.jobim.models.RoundedImageView
         android:id="@+id/selfie"
         android:layout_width="100dp"
         android:layout_height="100dp"

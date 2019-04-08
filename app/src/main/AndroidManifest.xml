@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="zfani.assaf.jobim">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -15,7 +16,8 @@
         android:icon="@drawable/icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:ignore="AllowBackup, GoogleAppIndexingWarning">
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -29,17 +31,7 @@
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/orange" />
 
-        <service android:name=".Services.FirebaseMessagingService">
-
-            <intent-filter>
-
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-
-            </intent-filter>
-
-        </service>
-
-        <activity android:name=".Activities.LoadingPage">
+        <activity android:name=".views.activities.SplashActivity">
 
             <intent-filter>
 
@@ -51,32 +43,44 @@
         </activity>
 
         <activity
-            android:name=".Activities.HomePage"
+            android:name=".views.activities.MainActivity"
             android:windowSoftInputMode="adjustNothing" />
 
         <activity
-            android:name=".Activities.ShowBy"
+            android:name=".views.activities.ShowBy"
             android:windowSoftInputMode="adjustNothing" />
 
-        <activity android:name=".Activities.JobInfo" />
+        <activity android:name=".views.activities.JobInfo" />
 
-        <activity android:name=".Activities.JobsEmployer" />
-
-        <activity
-            android:name=".Activities.FillDetails"
-            android:windowSoftInputMode="adjustNothing" />
+        <activity android:name=".views.activities.JobsEmployer" />
 
         <activity
-            android:name=".Activities.AddNewJob"
+            android:name=".views.activities.FillDetails"
             android:windowSoftInputMode="adjustNothing" />
 
         <activity
-            android:name=".Activities.FilterQuestion"
+            android:name=".views.activities.AddNewJob"
             android:windowSoftInputMode="adjustNothing" />
 
         <activity
-            android:name=".Activities.MakingContact"
+            android:name=".views.activities.FilterQuestion"
             android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".views.activities.MakingContact"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <service
+            android:name=".services.FirebaseMessagingService"
+            android:exported="false">
+
+            <intent-filter>
+
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+
+            </intent-filter>
+
+        </service>
 
     </application>
 
