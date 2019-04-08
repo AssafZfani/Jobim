@@ -13,30 +13,20 @@ import zfani.assaf.jobim.views.activities.MainActivity;
 public class DeleteFragment extends Fragment {
 
     public static DeleteFragment newInstance(String jobId) {
-
         DeleteFragment deleteFragment = new DeleteFragment();
-
         Bundle bundle = new Bundle();
-
         bundle.putString("JobId", jobId);
-
         deleteFragment.setArguments(bundle);
-
         return deleteFragment;
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.delete_job_layout, container, false);
-
         view.findViewById(R.id.delete).setOnClickListener(view1 -> {
-
             getActivity().getIntent().putExtra("ViewPager", container.getId());
-
             MainActivity.displayDialog(getActivity(), R.layout.delete_job_dialog, getArguments().getString("JobId"));
         });
-
         return view;
     }
 }

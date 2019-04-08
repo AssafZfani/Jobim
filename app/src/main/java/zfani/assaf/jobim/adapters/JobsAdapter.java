@@ -1,8 +1,10 @@
-package zfani.assaf.jobim.utils;
+package zfani.assaf.jobim.adapters;
 
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -12,11 +14,13 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import zfani.assaf.jobim.R;
 import zfani.assaf.jobim.models.Job;
 import zfani.assaf.jobim.models.JobType;
@@ -24,43 +28,38 @@ import zfani.assaf.jobim.views.fragments.FeedFragments.ContactFragment;
 import zfani.assaf.jobim.views.fragments.FeedFragments.DeleteFragment;
 import zfani.assaf.jobim.views.fragments.FeedFragments.JobFragment;
 
-public class Adapter extends FirebaseRecyclerAdapter<Job, Adapter.ViewHolder> {
+public class JobsAdapter extends FirebaseRecyclerAdapter<Job, JobsAdapter.ViewHolder> {
 
     public static ArrayList<Job> jobsList;
     public static ArrayList<JobType> jobsTypesList;
     public static Query query;
 
-    public Adapter() {
-
-        super(Job.class, R.layout.layouts_container, ViewHolder.class,
-                query = FirebaseDatabase.getInstance().getReference().child("jobs").orderByChild("distance"));
-
-        query.addValueEventListener(new ValueEventListener() {
-
+    public JobsAdapter() {
+        super(new FirebaseRecyclerOptions.Builder<Job>()
+                .setQuery(query = FirebaseDatabase.getInstance().getReference().child("jobs").orderByChild("distance"), Job.class)
+                .build());
+        /*query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
                 jobsList = new ArrayList<>();
-
-                for (DataSnapshot data : dataSnapshot.getChildren())
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
                     jobsList.add(data.getValue(Job.class));
+                }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });
-
+        });*/
         FirebaseDatabase.getInstance().getReference().child("jobs_types").addValueEventListener(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
                 jobsTypesList = new ArrayList<>();
-
-                for (DataSnapshot data : dataSnapshot.getChildren())
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
                     jobsTypesList.add(data.getValue(JobType.class));
+                }
             }
 
             @Override
@@ -70,31 +69,30 @@ public class Adapter extends FirebaseRecyclerAdapter<Job, Adapter.ViewHolder> {
         });
     }
 
-    public Adapter(String key, String value) {
-
-        super(Job.class, R.layout.layouts_container, ViewHolder.class, value.equalsIgnoreCase("true") ?
-                query.getRef().orderByChild(key).equalTo(true) : query.getRef().orderByChild(key).equalTo(value));
+    public JobsAdapter(String key, String value) {
+        super(new FirebaseRecyclerOptions.Builder<Job>().setQuery((value.equalsIgnoreCase("true") ?
+                query.getRef().orderByChild(key).equalTo(true) : query.getRef().orderByChild(key).equalTo(value)), Job.class).build());
     }
 
-    static void populateViewHolder(ViewHolder viewHolder, final Job job) {
+    @NonNull
+    @Override
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new ViewHolder(View.inflate(parent.getContext(), R.layout.layouts_container, null));
+    }
 
-        final FragmentActivity activity = (FragmentActivity) viewHolder.mainView.getContext();
-
+    @Override
+    protected void onBindViewHolder(@NonNull ViewHolder viewHolder, int i, @NonNull Job job) {
         viewHolder.viewPager.setId(View.generateViewId());
-
-        viewHolder.viewPager.setPageTransformer(true, (view, position) -> view.setTranslationX(-position * (view.getWidth() / 50)));
-
-        viewHolder.viewPager.setAdapter(new FragmentPagerAdapter(activity.getSupportFragmentManager()) {
-
+        viewHolder.viewPager.setPageTransformer(true, (view, position) -> view.setTranslationX(-position * (view.getWidth() / 50f)));
+        viewHolder.viewPager.setAdapter(new FragmentPagerAdapter(((AppCompatActivity) viewHolder.itemView.getContext()).getSupportFragmentManager()) {
+            @NonNull
             @Override
             public Fragment getItem(int position) {
-
                 switch (position) {
-
                     case 0:
-                        return ContactFragment.newInstance(job.getId());
+                        return ContactFragment.newInstance(job);
                     case 1:
-                        return JobFragment.newInstance(job.getId());
+                        return JobFragment.newInstance(job);
                     default:
                         return DeleteFragment.newInstance(job.getId());
                 }
@@ -102,32 +100,20 @@ public class Adapter extends FirebaseRecyclerAdapter<Job, Adapter.ViewHolder> {
 
             @Override
             public int getCount() {
-
                 return 3;
             }
         });
-
         viewHolder.viewPager.setCurrentItem(1);
-    }
-
-    @Override
-    protected void populateViewHolder(ViewHolder viewHolder, final Job job, int position) {
-
-        populateViewHolder(viewHolder, job);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        public View mainView;
+        @BindView(R.id.viewPager)
         public ViewPager viewPager;
 
-        public ViewHolder(View mainView) {
-
-            super(mainView);
-
-            this.mainView = mainView;
-
-            this.viewPager = mainView.findViewById(R.id.viewPager);
+        public ViewHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 }

@@ -26,7 +26,7 @@ import zfani.assaf.jobim.R;
 import zfani.assaf.jobim.models.ClusterJobs;
 import zfani.assaf.jobim.models.ClusterJobsRenderer;
 import zfani.assaf.jobim.models.Job;
-import zfani.assaf.jobim.utils.Adapter;
+import zfani.assaf.jobim.adapters.JobsAdapter;
 import zfani.assaf.jobim.utils.FilteredAdapter;
 import zfani.assaf.jobim.utils.GPSTracker;
 
@@ -127,7 +127,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
                                 activity.getIntent().putExtra("Address", v.getText() + "");
 
-                                MapFragment.changeCamera(GPSTracker.getLatLngFromAddress(activity, v.getText() + ""));
+                                MapFragment.changeCamera(GPSTracker.getLatLngFromAddress(activity.getApplication(), v.getText() + ""));
 
                             } catch (Exception e) {
                                 e.printStackTrace();
@@ -152,7 +152,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         clusterManager.setOnClusterItemClickListener(renderer);
         clusterManager.setOnClusterClickListener(renderer);
 
-        for (Job job : FilteredAdapter.filteredList == null ? Adapter.jobsList : FilteredAdapter.filteredList)
+        for (Job job : FilteredAdapter.filteredList == null ? JobsAdapter.jobsList : FilteredAdapter.filteredList)
             hashMap.put(new ClusterJobs(activity, job), job);
 
         clusterManager.addItems(hashMap.keySet());

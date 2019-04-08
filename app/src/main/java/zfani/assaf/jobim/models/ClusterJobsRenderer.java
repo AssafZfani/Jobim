@@ -30,7 +30,7 @@ import java.util.HashMap;
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 import zfani.assaf.jobim.R;
-import zfani.assaf.jobim.utils.Adapter;
+import zfani.assaf.jobim.adapters.JobsAdapter;
 import zfani.assaf.jobim.views.fragments.FeedFragments.JobFragment;
 
 public class ClusterJobsRenderer extends DefaultClusterRenderer<ClusterJobs>
@@ -38,7 +38,7 @@ public class ClusterJobsRenderer extends DefaultClusterRenderer<ClusterJobs>
 
     private Activity activity;
     private HashMap<ClusterJobs, Job> hashMap;
-    private Adapter.ViewHolder viewHolder;
+    private JobsAdapter.ViewHolder viewHolder;
     private TextView txt;
 
     public ClusterJobsRenderer(Activity activity, GoogleMap map, ClusterManager<ClusterJobs> clusterManager, HashMap<ClusterJobs, Job> hashMap) {
@@ -123,13 +123,13 @@ public class ClusterJobsRenderer extends DefaultClusterRenderer<ClusterJobs>
 
     private boolean createClusterDialog(final Cluster cluster) {
 
-        viewHolder = new Adapter.ViewHolder(View.inflate(activity, R.layout.layouts_container, null));
+        viewHolder = new JobsAdapter.ViewHolder(View.inflate(activity, R.layout.layouts_container, null));
 
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 550);
 
         layoutParams.weight = 8;
 
-        viewHolder.mainView.setLayoutParams(layoutParams);
+        viewHolder.itemView.setLayoutParams(layoutParams);
 
         viewHolder.viewPager.setAdapter(new PagerAdapter() {
 
@@ -174,7 +174,7 @@ public class ClusterJobsRenderer extends DefaultClusterRenderer<ClusterJobs>
 
         container.addView(btn1);
 
-        container.addView(viewHolder.mainView);
+        container.addView(viewHolder.itemView);
 
         container.addView(btn2);
 

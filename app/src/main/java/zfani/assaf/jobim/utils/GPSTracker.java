@@ -1,6 +1,7 @@
 package zfani.assaf.jobim.utils;
 
 import android.app.Activity;
+import android.app.Application;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -33,8 +34,8 @@ public class GPSTracker {
         return null;
     }
 
-    public static int getDistanceFromAddress(Activity activity, String address) {
-        LatLng latLng = getLatLngFromAddress(activity, address);
+    public static int getDistanceFromAddress(Application application, String address) {
+        LatLng latLng = getLatLngFromAddress(application, address);
         if (latLng != null) {
             Location loc1 = new Location("");
             loc1.setLatitude(latLng.latitude);
@@ -47,9 +48,9 @@ public class GPSTracker {
         return 0;
     }
 
-    public static LatLng getLatLngFromAddress(final Activity activity, final String address) {
+    public static LatLng getLatLngFromAddress(final Application application, final String address) {
         try {
-            Address foundAddress = new Geocoder(activity).getFromLocationName(address, 1).get(0);
+            Address foundAddress = new Geocoder(application).getFromLocationName(address, 1).get(0);
             return new LatLng(foundAddress.getLatitude(), foundAddress.getLongitude());
         } catch (IOException e) {
             e.printStackTrace();

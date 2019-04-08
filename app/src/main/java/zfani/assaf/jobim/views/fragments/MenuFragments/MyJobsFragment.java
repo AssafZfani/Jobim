@@ -15,9 +15,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import zfani.assaf.jobim.R;
+import zfani.assaf.jobim.adapters.JobsAdapter;
 import zfani.assaf.jobim.models.Job;
 import zfani.assaf.jobim.models.NewJob;
-import zfani.assaf.jobim.utils.Adapter;
 import zfani.assaf.jobim.utils.GPSTracker;
 import zfani.assaf.jobim.views.activities.AddNewJob;
 
@@ -100,7 +100,7 @@ public class MyJobsFragment extends Fragment implements SwipeRefreshLayout.OnRef
 
         if (newJob != null) {
 
-            DatabaseReference job = Adapter.query.getRef().push();
+            DatabaseReference job = JobsAdapter.query.getRef().push();
 
             String branch = newJob.getBranchName();
 
@@ -152,7 +152,7 @@ public class MyJobsFragment extends Fragment implements SwipeRefreshLayout.OnRef
 
         recyclerView.getItemAnimator().setRemoveDuration(750);
 
-        recyclerView.setAdapter(new Adapter(key, "true"));
+        recyclerView.setAdapter(new JobsAdapter(key, "true"));
     }
 
     void setMessageVisibility() {

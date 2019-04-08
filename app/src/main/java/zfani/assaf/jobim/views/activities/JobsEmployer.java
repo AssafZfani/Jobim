@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import zfani.assaf.jobim.R;
-import zfani.assaf.jobim.utils.Adapter;
+import zfani.assaf.jobim.adapters.JobsAdapter;
 
 public class JobsEmployer extends FragmentActivity implements SwipeRefreshLayout.OnRefreshListener {
 
@@ -49,6 +49,6 @@ public class JobsEmployer extends FragmentActivity implements SwipeRefreshLayout
 
         recyclerView.getItemAnimator().setRemoveDuration(750);
 
-        recyclerView.setAdapter(new Adapter("firm", getIntent().getStringExtra("Firm")));
+        recyclerView.setAdapter(new JobsAdapter("firm", getIntent().getStringExtra("Firm")));
     }
 }

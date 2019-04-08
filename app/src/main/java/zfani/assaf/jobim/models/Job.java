@@ -1,11 +1,14 @@
 package zfani.assaf.jobim.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
-import zfani.assaf.jobim.utils.Adapter;
+import zfani.assaf.jobim.adapters.JobsAdapter;
 import zfani.assaf.jobim.utils.FilteredAdapter;
 
 @SuppressWarnings("unused")
-public class Job implements Comparable<Job> {
+public class Job implements Parcelable, Comparable<Job> {
 
     protected String address, firm, id, title;
     int businessNumber, distance;
@@ -28,12 +31,29 @@ public class Job implements Comparable<Job> {
         this.title = title;
     }
 
-    public static Job findJobById(String jobId) {
-        for (Job job : FilteredAdapter.filteredList == null ? Adapter.jobsList : FilteredAdapter.filteredList)
-            if (job.getId().equalsIgnoreCase(jobId))
-                return job;
-        return null;
+    protected Job(Parcel in) {
+        address = in.readString();
+        firm = in.readString();
+        id = in.readString();
+        title = in.readString();
+        businessNumber = in.readInt();
+        distance = in.readInt();
+        applied = in.readByte() != 0;
+        favorite = in.readByte() != 0;
+        posted = in.readByte() != 0;
     }
+
+    public static final Creator<Job> CREATOR = new Creator<Job>() {
+        @Override
+        public Job createFromParcel(Parcel in) {
+            return new Job(in);
+        }
+
+        @Override
+        public Job[] newArray(int size) {
+            return new Job[size];
+        }
+    };
 
     public String getAddress() {
         return address;
@@ -88,5 +108,23 @@ public class Job implements Comparable<Job> {
         int businessNumber1 = this.getBusinessNumber();
         int businessNumber2 = job.getBusinessNumber();
         return Integer.compare(businessNumber1, businessNumber2);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(address);
+        dest.writeString(firm);
+        dest.writeString(id);
+        dest.writeString(title);
+        dest.writeInt(businessNumber);
+        dest.writeInt(distance);
+        dest.writeByte((byte) (applied ? 1 : 0));
+        dest.writeByte((byte) (favorite ? 1 : 0));
+        dest.writeByte((byte) (posted ? 1 : 0));
     }
 }

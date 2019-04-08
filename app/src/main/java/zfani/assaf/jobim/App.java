@@ -23,9 +23,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import androidx.annotation.NonNull;
-import zfani.assaf.jobim.models.Job;
 import zfani.assaf.jobim.models.JobType;
-import zfani.assaf.jobim.utils.GPSTracker;
 
 @SuppressWarnings("unused")
 
@@ -33,7 +31,7 @@ public class App extends Application {
 
     public static SharedPreferences sharedPreferences;
 
-    private static String loadJSONFromAsset(InputStream is) {
+    public static String loadJSONFromAsset(InputStream is) {
         String json = null;
         try {
             int size = is.available();
@@ -45,51 +43,6 @@ public class App extends Application {
             ex.printStackTrace();
         }
         return json;
-    }
-
-    public static void loadJobs(final Activity activity) {
-        final DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("jobs");
-        ref.addValueEventListener(new ValueEventListener() {
-
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (!dataSnapshot.hasChildren()) {
-                    InputStream is = null;
-                    try {
-                        is = activity.getAssets().open("jobs.json");
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    try {
-                        JSONObject obj = new JSONObject(loadJSONFromAsset(is));
-                        JSONArray jsonArray = obj.getJSONArray("jobs");
-                        for (int i = 0; i <= jsonArray.length(); i++) {
-                            JSONObject object = jsonArray.getJSONObject(i);
-                            String address = object.getString("Address");
-                            DatabaseReference job = ref.push();
-                            job.setValue(new Job(
-                                    address,
-                                    object.getBoolean("Applied"),
-                                    object.getInt("BusinessNumber"),
-                                    GPSTracker.getDistanceFromAddress(activity, address),
-                                    object.getBoolean("Favorite"),
-                                    object.getString("Firm"),
-                                    job.getKey(),
-                                    false,
-                                    object.getString("Title")
-                            ));
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
     }
 
     public static void loadJobsTypes(final Activity activity) {

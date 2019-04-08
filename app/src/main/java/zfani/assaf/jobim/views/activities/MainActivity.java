@@ -23,7 +23,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import zfani.assaf.jobim.App;
 import zfani.assaf.jobim.R;
-import zfani.assaf.jobim.utils.Adapter;
+import zfani.assaf.jobim.adapters.JobsAdapter;
 import zfani.assaf.jobim.utils.GPSTracker;
 import zfani.assaf.jobim.views.fragments.DetailsFragments.BirthYearFragment;
 import zfani.assaf.jobim.views.fragments.DetailsFragments.CityFragment;
@@ -186,7 +186,7 @@ public class MainActivity extends AppCompatActivity {
                                 } else
                                     FilteredAdapter.filteredList.remove(indexToRemove);
                             }*/
-                            new Handler().postDelayed(() -> Adapter.query.getRef().child(jobId).removeValue(), 750);
+                            new Handler().postDelayed(() -> JobsAdapter.query.getRef().child(jobId).removeValue(), 750);
                             if (activity.getLocalClassName().equalsIgnoreCase("Activities.JobInfo"))
                                 activity.finish();
                             else
@@ -222,7 +222,7 @@ public class MainActivity extends AppCompatActivity {
                     case R.layout.sending_mail_dialog:
                         findViewById(R.id.send).setOnClickListener(view -> {
                             dismiss();
-                            ContactFragment.contact(activity, jobId, R.id.sendEmail);
+                            ContactFragment.contact(activity, null, R.id.sendEmail);
                         });
                         break;
                     case R.layout.share_dialog:

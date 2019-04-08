@@ -12,8 +12,8 @@ import android.widget.TextView;
 import androidx.fragment.app.FragmentActivity;
 import zfani.assaf.jobim.App;
 import zfani.assaf.jobim.R;
+import zfani.assaf.jobim.adapters.JobsAdapter;
 import zfani.assaf.jobim.models.Job;
-import zfani.assaf.jobim.utils.Adapter;
 import zfani.assaf.jobim.utils.GPSTracker;
 import zfani.assaf.jobim.views.fragments.FeedFragments.ContactFragment;
 import zfani.assaf.jobim.views.fragments.FeedFragments.JobFragment;
@@ -21,24 +21,17 @@ import zfani.assaf.jobim.views.fragments.FeedFragments.MapFragment;
 
 public class JobInfo extends FragmentActivity {
 
-    private String jobId;
     private Job job;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.job_info);
-
-        jobId = getIntent().getStringExtra("JobId");
-
-        job = Job.findJobById(jobId);
-
+        job = getIntent().getParcelableExtra("Job");
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.jobFragment, JobFragment.newInstance(jobId))
-                .add(R.id.contactLayout, ContactFragment.newInstance(jobId))
-                .add(R.id.mapLayout, MapFragment.newInstance(GPSTracker.getLatLngFromAddress(this, job.getAddress()))).commit();
+                .add(R.id.jobFragment, JobFragment.newInstance(job))
+                .add(R.id.contactLayout, ContactFragment.newInstance(job))
+                .add(R.id.mapLayout, MapFragment.newInstance(GPSTracker.getLatLngFromAddress(getApplication(), job.getAddress()))).commit();
 
         findViewById(R.id.favoriteButton).setBackgroundResource(job.isFavorite() ? R.drawable.remove2 : R.drawable.favorite2);
 
@@ -47,7 +40,7 @@ public class JobInfo extends FragmentActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == RESULT_OK) {
 
             ContentResolver contentResolver = getContentResolver();
@@ -70,19 +63,19 @@ public class JobInfo extends FragmentActivity {
 
             String text = "הי! " + App.sharedPreferences.getString("FullName", "משתמש/ת Jobim") + " " +
                     getResources().getString(R.string.shareMessage) + " " + job.getFirm() + " מחפשת " +
-                    Adapter.jobsTypesList.get(job.getBusinessNumber() - 1).getJobType();
+                    JobsAdapter.jobsTypesList.get(job.getBusinessNumber() - 1).getJobType();
 
             SmsManager.getDefault().sendTextMessage(phoneNumber, null, text, null, null);
 
             getIntent().putExtra("ContactName", contactName);
 
-            MainActivity.displayDialog(this, R.layout.share_dialog, jobId);
+            MainActivity.displayDialog(this, R.layout.share_dialog, job.getId());
         }
     }
 
     public void delete(View v) {
 
-        MainActivity.displayDialog(this, R.layout.delete_job_dialog, jobId);
+        MainActivity.displayDialog(this, R.layout.delete_job_dialog, job.getId());
     }
 
     public void share(View v) {

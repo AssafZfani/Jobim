@@ -11,7 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import zfani.assaf.jobim.R;
-import zfani.assaf.jobim.utils.Adapter;
+import zfani.assaf.jobim.adapters.JobsAdapter;
 import zfani.assaf.jobim.views.activities.AddNewJob;
 
 public class JobTitleFragment extends Fragment {
@@ -48,7 +48,7 @@ public class JobTitleFragment extends Fragment {
         if (businessNumber != -1) {
 
             lookingFor.setText(AddNewJob.newJob.getFirm() + (branchName == null ? "" : " " +
-                    branchName) + " מחפשת " + Adapter.jobsTypesList.get(businessNumber).getJobType());
+                    branchName) + " מחפשת " + JobsAdapter.jobsTypesList.get(businessNumber).getJobType());
         }
 
         return super.getView();

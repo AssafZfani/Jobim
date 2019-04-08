@@ -21,8 +21,8 @@ import java.util.ArrayList;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.ListFragment;
 import zfani.assaf.jobim.R;
+import zfani.assaf.jobim.adapters.JobsAdapter;
 import zfani.assaf.jobim.models.JobType;
-import zfani.assaf.jobim.utils.Adapter;
 import zfani.assaf.jobim.views.activities.AddNewJob;
 
 public class JobTypeFragment extends ListFragment {
@@ -85,10 +85,10 @@ public class JobTypeFragment extends ListFragment {
         if (isShowByActivity)
             businessesNumbers = new ArrayList<>();
 
-        jobsTypes = s == null ? Adapter.jobsTypesList : new ArrayList<>();
+        jobsTypes = s == null ? JobsAdapter.jobsTypesList : new ArrayList<>();
 
         if (s != null)
-            for (JobType jobType : Adapter.jobsTypesList)
+            for (JobType jobType : JobsAdapter.jobsTypesList)
                 if (jobType.getJobType().contains(s))
                     jobsTypes.add(jobType);
 

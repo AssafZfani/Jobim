@@ -8,9 +8,10 @@ import java.util.ArrayList;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import zfani.assaf.jobim.R;
+import zfani.assaf.jobim.adapters.JobsAdapter;
 import zfani.assaf.jobim.models.Job;
 
-public class FilteredAdapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
+public class FilteredAdapter extends RecyclerView.Adapter<JobsAdapter.ViewHolder> {
 
     public static ArrayList<Job> filteredList;
 
@@ -18,7 +19,7 @@ public class FilteredAdapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
         filteredList = new ArrayList<>();
 
-        for (Job job : Adapter.jobsList)
+        for (Job job : JobsAdapter.jobsList)
             if ((firm.isEmpty() || job.getFirm().equalsIgnoreCase(firm)) &&
                     (location.isEmpty() || job.getAddress().endsWith(location)))
                 if (businessesNumbers == null)
@@ -30,15 +31,15 @@ public class FilteredAdapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
     @NonNull
     @Override
-    public Adapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public JobsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        return new Adapter.ViewHolder(View.inflate(parent.getContext(), R.layout.layouts_container, null));
+        return new JobsAdapter.ViewHolder(View.inflate(parent.getContext(), R.layout.layouts_container, null));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final Adapter.ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(@NonNull final JobsAdapter.ViewHolder viewHolder, int position) {
 
-        Adapter.populateViewHolder(viewHolder, filteredList.get(position));
+        //JobsAdapter.populateViewHolder(viewHolder, filteredList.get(position));
     }
 
     @Override

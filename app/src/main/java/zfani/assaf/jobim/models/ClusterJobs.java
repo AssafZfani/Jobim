@@ -21,6 +21,6 @@ public class ClusterJobs implements ClusterItem {
     @Override
     public LatLng getPosition() {
 
-        return GPSTracker.getLatLngFromAddress(activity, job.getAddress());
+        return GPSTracker.getLatLngFromAddress(activity.getApplication(), job.getAddress());
     }
 }
