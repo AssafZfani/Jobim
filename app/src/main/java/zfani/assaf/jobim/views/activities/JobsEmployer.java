@@ -2,11 +2,11 @@ package zfani.assaf.jobim.views.activities;
 
 import android.os.Bundle;
 import android.os.Handler;
+
 import androidx.fragment.app.FragmentActivity;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import zfani.assaf.jobim.R;
 import zfani.assaf.jobim.utils.Adapter;
 
@@ -24,11 +24,11 @@ public class JobsEmployer extends FragmentActivity implements SwipeRefreshLayout
 
         MainActivity.setupToolBar(this);
 
-        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
+        swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
 
         swipeRefreshLayout.setOnRefreshListener(this);
 
-        recyclerView = ((RecyclerView) findViewById(R.id.jobsEmployerRecyclerView));
+        recyclerView = findViewById(R.id.jobsEmployerRecyclerView);
 
         onRefresh();
     }
@@ -36,12 +36,7 @@ public class JobsEmployer extends FragmentActivity implements SwipeRefreshLayout
     @Override
     public void onRefresh() {
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                swipeRefreshLayout.setRefreshing(false);
-            }
-        }, 3000);
+        new Handler().postDelayed(() -> swipeRefreshLayout.setRefreshing(false), 3000);
 
         refreshList();
     }

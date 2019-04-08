@@ -1,13 +1,13 @@
 package zfani.assaf.jobim.utils;
 
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
-import zfani.assaf.jobim.models.Job;
+import androidx.recyclerview.widget.RecyclerView;
 import zfani.assaf.jobim.R;
+import zfani.assaf.jobim.models.Job;
 
 public class FilteredAdapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 

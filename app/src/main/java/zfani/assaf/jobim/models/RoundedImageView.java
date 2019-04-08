@@ -12,8 +12,9 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import androidx.appcompat.widget.AppCompatImageView;
 import android.util.AttributeSet;
+
+import androidx.appcompat.widget.AppCompatImageView;
 
 public class RoundedImageView extends AppCompatImageView {
 

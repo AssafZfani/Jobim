@@ -8,25 +8,24 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 import android.util.Base64;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.RadioGroup;
 
 import java.io.ByteArrayOutputStream;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 import zfani.assaf.jobim.Application;
+import zfani.assaf.jobim.R;
+import zfani.assaf.jobim.models.RoundedImageView;
 import zfani.assaf.jobim.views.fragments.DetailsFragments.BirthYearFragment;
 import zfani.assaf.jobim.views.fragments.DetailsFragments.CityFragment;
 import zfani.assaf.jobim.views.fragments.DetailsFragments.EmailFragment;
 import zfani.assaf.jobim.views.fragments.DetailsFragments.FullNameFragment;
-import zfani.assaf.jobim.models.RoundedImageView;
-import zfani.assaf.jobim.R;
 
 public class FillDetails extends FragmentActivity {
 
@@ -40,7 +39,7 @@ public class FillDetails extends FragmentActivity {
 
     static void saveImageFromCamera(Activity activity, Intent data) {
 
-        RoundedImageView selfie = (RoundedImageView) activity.findViewById(R.id.selfie);
+        RoundedImageView selfie = activity.findViewById(R.id.selfie);
 
         Bitmap bitmap = (Bitmap) data.getExtras().get("data");
 
@@ -60,7 +59,7 @@ public class FillDetails extends FragmentActivity {
 
     static void saveImageFromGallery(Activity activity, Intent data) {
 
-        RoundedImageView selfie = (RoundedImageView) activity.findViewById(R.id.selfie);
+        RoundedImageView selfie = activity.findViewById(R.id.selfie);
 
         Uri selectedImage = data.getData();
 
@@ -92,14 +91,7 @@ public class FillDetails extends FragmentActivity {
 
         MainActivity.setupToolBar(this);
 
-        findViewById(R.id.closeButton).setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-
-                onBackPressed();
-            }
-        });
+        findViewById(R.id.closeButton).setOnClickListener(view -> onBackPressed());
 
         drawableResources = new int[4];
 
@@ -108,49 +100,39 @@ public class FillDetails extends FragmentActivity {
         drawableResources[1] = R.drawable.birth_year2;
         drawableResources[0] = R.drawable.email2;
 
-        fragmentsBar = (RadioGroup) findViewById(R.id.fragmentsBar);
+        fragmentsBar = findViewById(R.id.fragmentsBar);
 
-        fragmentsBar.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        fragmentsBar.setOnCheckedChangeListener((radioGroup, checkedId) -> {
 
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
+            if (checkedId != -1) {
 
-                if (checkedId != -1) {
+                int currentFragment = viewPager.getCurrentItem(), nextFragment;
 
-                    int currentFragment = viewPager.getCurrentItem(), nextFragment;
+                switch (checkedId) {
 
-                    switch (checkedId) {
-
-                        case R.id.emailButton:
-                            nextFragment = 0;
-                            break;
-                        case R.id.birthYearButton:
-                            nextFragment = 1;
-                            break;
-                        case R.id.cityButton:
-                            nextFragment = 2;
-                            break;
-                        default:
-                            nextFragment = 3;
-                            break;
-                    }
-
-                    hideKeyboard();
-
-                    moveToAnotherFragment(currentFragment, nextFragment, checkedId);
+                    case R.id.emailButton:
+                        nextFragment = 0;
+                        break;
+                    case R.id.birthYearButton:
+                        nextFragment = 1;
+                        break;
+                    case R.id.cityButton:
+                        nextFragment = 2;
+                        break;
+                    default:
+                        nextFragment = 3;
+                        break;
                 }
+
+                hideKeyboard();
+
+                moveToAnotherFragment(currentFragment, nextFragment, checkedId);
             }
         });
 
-        viewPager = (ViewPager) findViewById(R.id.viewPager);
+        viewPager = findViewById(R.id.viewPager);
 
-        viewPager.setOnTouchListener(new View.OnTouchListener() {
-
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                return true;
-            }
-        });
+        viewPager.setOnTouchListener((view, motionEvent) -> true);
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 

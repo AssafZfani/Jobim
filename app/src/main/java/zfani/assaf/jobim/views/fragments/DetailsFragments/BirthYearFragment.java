@@ -1,12 +1,12 @@
 package zfani.assaf.jobim.views.fragments.DetailsFragments;
 
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.NumberPicker;
 
+import androidx.fragment.app.Fragment;
 import zfani.assaf.jobim.Application;
 import zfani.assaf.jobim.R;
 
@@ -24,7 +24,7 @@ public class BirthYearFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.birth_year_fragment, container, false);
 
-        numberPicker = ((NumberPicker) view.findViewById(R.id.years));
+        numberPicker = view.findViewById(R.id.years);
 
         numberPicker.setMinValue(1900);
 

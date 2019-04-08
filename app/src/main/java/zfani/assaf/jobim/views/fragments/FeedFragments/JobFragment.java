@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +13,13 @@ import android.widget.TextView;
 import java.io.IOException;
 import java.text.DecimalFormat;
 
-import zfani.assaf.jobim.views.activities.JobInfo;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
+import zfani.assaf.jobim.R;
 import zfani.assaf.jobim.models.Job;
 import zfani.assaf.jobim.models.JobType;
-import zfani.assaf.jobim.R;
 import zfani.assaf.jobim.utils.Adapter;
+import zfani.assaf.jobim.views.activities.JobInfo;
 
 public class JobFragment extends Fragment {
 
@@ -58,14 +58,7 @@ public class JobFragment extends Fragment {
 
         viewHolderJob.setCircle(job.getBusinessNumber());
 
-        view.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                viewHolderJob.activity.startActivity(new Intent(viewHolderJob.activity, JobInfo.class).putExtra("JobId", job.getId()));
-            }
-        });
+        view.setOnClickListener(v -> viewHolderJob.activity.startActivity(new Intent(viewHolderJob.activity, JobInfo.class).putExtra("JobId", job.getId())));
     }
 
     @Override

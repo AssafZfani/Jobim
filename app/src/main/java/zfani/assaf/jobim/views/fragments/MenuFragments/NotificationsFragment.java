@@ -2,8 +2,6 @@ package zfani.assaf.jobim.views.fragments.MenuFragments;
 
 import android.content.Context;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import android.text.format.DateFormat;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
@@ -13,6 +11,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import zfani.assaf.jobim.Application;
 import zfani.assaf.jobim.R;
 
@@ -34,7 +34,7 @@ public class NotificationsFragment extends Fragment {
 
             view.findViewById(R.id.message).setVisibility(View.INVISIBLE);
 
-            ListView notifications = (ListView) view.findViewById(R.id.notifications);
+            ListView notifications = view.findViewById(R.id.notifications);
 
             final Context context = container.getContext();
 
@@ -48,9 +48,9 @@ public class NotificationsFragment extends Fragment {
                     if (convertView == null)
                         convertView = View.inflate(context, R.layout.notification_item, null);
 
-                    TextView notification = (TextView) convertView.findViewById(R.id.notification);
+                    TextView notification = convertView.findViewById(R.id.notification);
 
-                    TextView date = (TextView) convertView.findViewById(R.id.date);
+                    TextView date = convertView.findViewById(R.id.date);
 
                     notification.setText(Application.sharedPreferences.getString("notification" + (notificationsCount - position), ""));
 

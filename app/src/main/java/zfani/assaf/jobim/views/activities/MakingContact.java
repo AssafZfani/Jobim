@@ -2,15 +2,14 @@ package zfani.assaf.jobim.views.activities;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import androidx.fragment.app.FragmentActivity;
-import androidx.core.content.ContextCompat;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentActivity;
 import zfani.assaf.jobim.Application;
 import zfani.assaf.jobim.R;
 
@@ -41,9 +40,9 @@ public class MakingContact extends FragmentActivity {
 
         checkBoxes = new CheckBox[3];
 
-        checkBoxes[0] = (CheckBox) findViewById(R.id.sendMessageCheckBox);
-        checkBoxes[1] = (CheckBox) findViewById(R.id.callCheckBox);
-        checkBoxes[2] = (CheckBox) findViewById(R.id.sendEmailCheckBox);
+        checkBoxes[0] = findViewById(R.id.sendMessageCheckBox);
+        checkBoxes[1] = findViewById(R.id.callCheckBox);
+        checkBoxes[2] = findViewById(R.id.sendEmailCheckBox);
 
         images = new View[3];
 
@@ -51,14 +50,14 @@ public class MakingContact extends FragmentActivity {
         images[1] = findViewById(R.id.image2);
         images[2] = findViewById(R.id.image3);
 
-        contactText = (TextView) findViewById(R.id.contactText);
+        contactText = findViewById(R.id.contactText);
 
         phoneLayout = findViewById(R.id.phoneLayout);
         emailLayout = findViewById(R.id.emailLayout);
 
-        email = (EditText) findViewById(R.id.email);
-        phoneNumber = (EditText) findViewById(R.id.phoneNumber);
-        smsNumber = (EditText) findViewById(R.id.smsNumber);
+        email = findViewById(R.id.email);
+        phoneNumber = findViewById(R.id.phoneNumber);
+        smsNumber = findViewById(R.id.smsNumber);
     }
 
     @Override
@@ -74,27 +73,23 @@ public class MakingContact extends FragmentActivity {
 
             checkBoxes[i].setTag(i);
 
-            checkBoxes[i].setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            checkBoxes[i].setOnCheckedChangeListener((compoundButton, checked) -> {
 
-                @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+                compoundButton.setTextColor(ContextCompat.getColor(MakingContact.this, checked ? R.color.orange : android.R.color.darker_gray));
 
-                    compoundButton.setTextColor(ContextCompat.getColor(MakingContact.this, checked ? R.color.orange : android.R.color.darker_gray));
+                layouts[(int) compoundButton.getTag()].setBackgroundColor(checked ? Color.parseColor("#f1f1f1") : Color.WHITE);
 
-                    layouts[(int) compoundButton.getTag()].setBackgroundColor(checked ? Color.parseColor("#f1f1f1") : Color.WHITE);
+                switch ((int) compoundButton.getTag()) {
 
-                    switch ((int) compoundButton.getTag()) {
-
-                        case 0:
-                            images[0].setBackgroundResource(checked ? R.drawable.send_message1 : R.drawable.send_message2);
-                            break;
-                        case 1:
-                            images[1].setBackgroundResource(checked ? R.drawable.call1 : R.drawable.call2);
-                            break;
-                        default:
-                            images[2].setBackgroundResource(checked ? R.drawable.send_email1 : R.drawable.send_email2);
-                            break;
-                    }
+                    case 0:
+                        images[0].setBackgroundResource(checked ? R.drawable.send_message1 : R.drawable.send_message2);
+                        break;
+                    case 1:
+                        images[1].setBackgroundResource(checked ? R.drawable.call1 : R.drawable.call2);
+                        break;
+                    default:
+                        images[2].setBackgroundResource(checked ? R.drawable.send_email1 : R.drawable.send_email2);
+                        break;
                 }
             });
 
@@ -102,40 +97,36 @@ public class MakingContact extends FragmentActivity {
 
             layouts[i].setTag(i);
 
-            layouts[i].setOnClickListener(new View.OnClickListener() {
+            layouts[i].setOnClickListener(view -> {
 
-                @Override
-                public void onClick(View view) {
+                boolean showPhoneNumber = false, showEmailLayout = false;
 
-                    boolean showPhoneNumber = false, showEmailLayout = false;
+                switch ((int) view.getTag()) {
 
-                    switch ((int) view.getTag()) {
-
-                        case 0:
-                            contactText.setText("ההודעה תשלח למספר");
-                            showPhoneNumber = false;
-                            break;
-                        case 1:
-                            contactText.setText("השיחה תופנה למספר");
-                            showPhoneNumber = true;
-                            break;
-                        default:
-                            contactText.setText("המייל ישלח לכתובת");
-                            showEmailLayout = true;
-                            break;
-                    }
-
-                    phoneLayout.setVisibility(showEmailLayout ? View.GONE : View.VISIBLE);
-
-                    if (phoneLayout.getVisibility() == View.VISIBLE) {
-
-                        phoneNumber.setVisibility(showPhoneNumber ? View.VISIBLE : View.GONE);
-
-                        smsNumber.setVisibility(showPhoneNumber ? View.GONE : View.VISIBLE);
-                    }
-
-                    emailLayout.setVisibility(showEmailLayout ? View.VISIBLE : View.GONE);
+                    case 0:
+                        contactText.setText("ההודעה תשלח למספר");
+                        showPhoneNumber = false;
+                        break;
+                    case 1:
+                        contactText.setText("השיחה תופנה למספר");
+                        showPhoneNumber = true;
+                        break;
+                    default:
+                        contactText.setText("המייל ישלח לכתובת");
+                        showEmailLayout = true;
+                        break;
                 }
+
+                phoneLayout.setVisibility(showEmailLayout ? View.GONE : View.VISIBLE);
+
+                if (phoneLayout.getVisibility() == View.VISIBLE) {
+
+                    phoneNumber.setVisibility(showPhoneNumber ? View.VISIBLE : View.GONE);
+
+                    smsNumber.setVisibility(showPhoneNumber ? View.GONE : View.VISIBLE);
+                }
+
+                emailLayout.setVisibility(showEmailLayout ? View.VISIBLE : View.GONE);
             });
 
             layouts[0].performClick();
@@ -148,14 +139,7 @@ public class MakingContact extends FragmentActivity {
         phoneNumber.setText(phone);
         smsNumber.setText(phone);
 
-        findViewById(R.id.backButton).setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-
-                onBackPressed();
-            }
-        });
+        findViewById(R.id.backButton).setOnClickListener(view -> onBackPressed());
     }
 
     public void post(View v) {

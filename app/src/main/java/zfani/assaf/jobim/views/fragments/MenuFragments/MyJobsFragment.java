@@ -2,10 +2,6 @@ package zfani.assaf.jobim.views.fragments.MenuFragments;
 
 import android.os.Bundle;
 import android.os.Handler;
-import androidx.fragment.app.Fragment;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,12 +9,16 @@ import android.widget.RadioGroup;
 
 import com.google.firebase.database.DatabaseReference;
 
-import zfani.assaf.jobim.views.activities.AddNewJob;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import zfani.assaf.jobim.R;
 import zfani.assaf.jobim.models.Job;
 import zfani.assaf.jobim.models.NewJob;
-import zfani.assaf.jobim.R;
 import zfani.assaf.jobim.utils.Adapter;
 import zfani.assaf.jobim.utils.GPSTracker;
+import zfani.assaf.jobim.views.activities.AddNewJob;
 
 public class MyJobsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
@@ -37,42 +37,38 @@ public class MyJobsFragment extends Fragment implements SwipeRefreshLayout.OnRef
 
         View view = inflater.inflate(R.layout.my_jobs, container, false);
 
-        myJobsLayout = (RadioGroup) view.findViewById(R.id.myJobsLayout);
+        myJobsLayout = view.findViewById(R.id.myJobsLayout);
 
-        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
 
         swipeRefreshLayout.setOnRefreshListener(this);
 
-        recyclerView = (RecyclerView) view.findViewById(R.id.myJobsRecyclerView);
+        recyclerView = view.findViewById(R.id.myJobsRecyclerView);
 
         message = view.findViewById(R.id.message);
 
-        myJobsLayout.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        myJobsLayout.setOnCheckedChangeListener((radioGroup, i) -> {
 
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+            onRefresh();
 
-                onRefresh();
+            setMessageVisibility();
 
-                setMessageVisibility();
+            int messageDrawable = 0;
 
-                int messageDrawable = 0;
+            switch (i) {
 
-                switch (i) {
-
-                    case R.id.favoriteTab:
-                        messageDrawable = R.drawable.no_favorites_message;
-                        break;
-                    case R.id.appliedTab:
-                        messageDrawable = R.drawable.no_applies_message;
-                        break;
-                    case R.id.postedTab:
-                        messageDrawable = R.drawable.no_posted_jobs_message;
-                        break;
-                }
-
-                message.setBackgroundResource(messageDrawable);
+                case R.id.favoriteTab:
+                    messageDrawable = R.drawable.no_favorites_message;
+                    break;
+                case R.id.appliedTab:
+                    messageDrawable = R.drawable.no_applies_message;
+                    break;
+                case R.id.postedTab:
+                    messageDrawable = R.drawable.no_posted_jobs_message;
+                    break;
             }
+
+            message.setBackgroundResource(messageDrawable);
         });
 
         recyclerView.addOnChildAttachStateChangeListener(new RecyclerView.OnChildAttachStateChangeListener() {
@@ -119,13 +115,7 @@ public class MyJobsFragment extends Fragment implements SwipeRefreshLayout.OnRef
     @Override
     public void onRefresh() {
 
-        new Handler().postDelayed(new Runnable() {
-
-            @Override
-            public void run() {
-                swipeRefreshLayout.setRefreshing(false);
-            }
-        }, 3000);
+        new Handler().postDelayed(() -> swipeRefreshLayout.setRefreshing(false), 3000);
 
         if (GPSTracker.location != null)
             refreshList();

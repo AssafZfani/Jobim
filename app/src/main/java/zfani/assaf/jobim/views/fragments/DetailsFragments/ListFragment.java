@@ -6,8 +6,6 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Gravity;
@@ -33,9 +31,11 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import zfani.assaf.jobim.views.activities.AddNewJob;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import zfani.assaf.jobim.R;
 import zfani.assaf.jobim.utils.GPSTracker;
+import zfani.assaf.jobim.views.activities.AddNewJob;
 
 public class ListFragment extends Fragment {
 
@@ -69,21 +69,17 @@ public class ListFragment extends Fragment {
 
                 radioButton.setHint(data.get(position));
 
-                radioButton.setOnClickListener(new View.OnClickListener() {
+                radioButton.setOnClickListener(view -> {
 
-                    @Override
-                    public void onClick(View view) {
+                    if (isShowByActivity)
+                        activity.getIntent().putExtra("Firm", radioButton.getHint());
+                    else {
 
-                        if (isShowByActivity)
-                            activity.getIntent().putExtra("Firm", radioButton.getHint());
-                        else {
+                        AddNewJob.newJob.setAddress(radioButton.getHint().toString());
 
-                            AddNewJob.newJob.setAddress(radioButton.getHint().toString());
+                        AddNewJob.newJob.setDistance(activity);
 
-                            AddNewJob.newJob.setDistance(activity);
-
-                            activity.findViewById(R.id.pictureButton).performClick();
-                        }
+                        activity.findViewById(R.id.pictureButton).performClick();
                     }
                 });
 

@@ -3,7 +3,6 @@ package zfani.assaf.jobim.views.fragments.NewJobFragments;
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -11,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -20,11 +18,12 @@ import android.widget.Toast;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.ListFragment;
-import zfani.assaf.jobim.views.activities.AddNewJob;
-import zfani.assaf.jobim.models.JobType;
 import zfani.assaf.jobim.R;
+import zfani.assaf.jobim.models.JobType;
 import zfani.assaf.jobim.utils.Adapter;
+import zfani.assaf.jobim.views.activities.AddNewJob;
 
 public class JobTypeFragment extends ListFragment {
 
@@ -86,7 +85,7 @@ public class JobTypeFragment extends ListFragment {
         if (isShowByActivity)
             businessesNumbers = new ArrayList<>();
 
-        jobsTypes = s == null ? Adapter.jobsTypesList : new ArrayList<JobType>();
+        jobsTypes = s == null ? Adapter.jobsTypesList : new ArrayList<>();
 
         if (s != null)
             for (JobType jobType : Adapter.jobsTypesList)
@@ -113,22 +112,18 @@ public class JobTypeFragment extends ListFragment {
 
                     checkBox.setHint(jobType.getJobType());
 
-                    checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
 
-                        @Override
-                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        if (isChecked) {
+                            if (!businessesNumbers.contains(jobType.getId()))
+                                businessesNumbers.add(jobType.getId());
+                        } else
+                            businessesNumbers.remove(((Integer) jobType.getId()));
 
-                            if (isChecked) {
-                                if (!businessesNumbers.contains(jobType.getId()))
-                                    businessesNumbers.add(jobType.getId());
-                            } else
-                                businessesNumbers.remove(((Integer) jobType.getId()));
+                        jobType.setSelected(isChecked);
 
-                            jobType.setSelected(isChecked);
-
-                            if (!businessesNumbers.isEmpty())
-                                activity.getIntent().putIntegerArrayListExtra("BusinessesNumbers", businessesNumbers);
-                        }
+                        if (!businessesNumbers.isEmpty())
+                            activity.getIntent().putIntegerArrayListExtra("BusinessesNumbers", businessesNumbers);
                     });
 
                     checkBox.setChecked(jobType.isSelected());
@@ -144,15 +139,11 @@ public class JobTypeFragment extends ListFragment {
 
                     radioButton.setHint(jobType.getJobType());
 
-                    radioButton.setOnClickListener(new View.OnClickListener() {
+                    radioButton.setOnClickListener(view -> {
 
-                        @Override
-                        public void onClick(View view) {
+                        AddNewJob.newJob.setBusinessNumber(jobType.getId());
 
-                            AddNewJob.newJob.setBusinessNumber(jobType.getId());
-
-                            activity.findViewById(R.id.jobTitleButton).performClick();
-                        }
+                        activity.findViewById(R.id.jobTitleButton).performClick();
                     });
 
                     int addedJobType = AddNewJob.newJob.getBusinessNumber();

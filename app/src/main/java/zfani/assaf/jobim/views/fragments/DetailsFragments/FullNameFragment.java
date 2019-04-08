@@ -2,8 +2,6 @@ package zfani.assaf.jobim.views.fragments.DetailsFragments;
 
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,10 +9,12 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import zfani.assaf.jobim.views.activities.MainActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import zfani.assaf.jobim.Application;
-import zfani.assaf.jobim.models.RoundedImageView;
 import zfani.assaf.jobim.R;
+import zfani.assaf.jobim.models.RoundedImageView;
+import zfani.assaf.jobim.views.activities.MainActivity;
 
 public class FullNameFragment extends Fragment {
 
@@ -48,13 +48,13 @@ public class FullNameFragment extends Fragment {
 
         activity.getIntent().putExtra("SmallRound", false);
 
-        RoundedImageView selfie = (RoundedImageView) view.findViewById(R.id.selfie);
+        RoundedImageView selfie = view.findViewById(R.id.selfie);
 
         initSelfie(selfie);
 
-        firstName = (EditText) view.findViewById(R.id.firstName);
+        firstName = view.findViewById(R.id.firstName);
 
-        lastName = (EditText) view.findViewById(R.id.lastName);
+        lastName = view.findViewById(R.id.lastName);
 
         String fullName = Application.sharedPreferences.getString("FullName", null);
 
@@ -67,14 +67,7 @@ public class FullNameFragment extends Fragment {
             lastName.setText(fullName.substring(lastSpace + 1, fullName.length()));
         }
 
-        view.findViewById(R.id.selfie).setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-
-                MainActivity.displayDialog(activity, R.layout.image_dialog, null);
-            }
-        });
+        view.findViewById(R.id.selfie).setOnClickListener(view1 -> MainActivity.displayDialog(activity, R.layout.image_dialog, null));
 
         return view;
     }

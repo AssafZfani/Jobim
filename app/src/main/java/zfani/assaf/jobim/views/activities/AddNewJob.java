@@ -3,22 +3,21 @@ package zfani.assaf.jobim.views.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.RadioGroup;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+import zfani.assaf.jobim.R;
+import zfani.assaf.jobim.models.NewJob;
 import zfani.assaf.jobim.views.fragments.NewJobFragments.AddressFragment;
 import zfani.assaf.jobim.views.fragments.NewJobFragments.FirmFragment;
 import zfani.assaf.jobim.views.fragments.NewJobFragments.JobTitleFragment;
 import zfani.assaf.jobim.views.fragments.NewJobFragments.JobTypeFragment;
 import zfani.assaf.jobim.views.fragments.NewJobFragments.PictureFragment;
-import zfani.assaf.jobim.models.NewJob;
-import zfani.assaf.jobim.R;
 
 public class AddNewJob extends FragmentActivity {
 
@@ -43,14 +42,7 @@ public class AddNewJob extends FragmentActivity {
 
         newJob = new NewJob();
 
-        findViewById(R.id.closeButton).setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-
-                onBackPressed();
-            }
-        });
+        findViewById(R.id.closeButton).setOnClickListener(view -> onBackPressed());
 
         drawableResources = new int[5];
 
@@ -60,52 +52,42 @@ public class AddNewJob extends FragmentActivity {
         drawableResources[1] = R.drawable.address2;
         drawableResources[0] = R.drawable.picture2;
 
-        fragmentsBar = (RadioGroup) findViewById(R.id.fragmentsBar);
+        fragmentsBar = findViewById(R.id.fragmentsBar);
 
-        fragmentsBar.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        fragmentsBar.setOnCheckedChangeListener((radioGroup, checkedId) -> {
 
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
+            if (checkedId != -1) {
 
-                if (checkedId != -1) {
+                int currentFragment = viewPager.getCurrentItem(), nextFragment;
 
-                    int currentFragment = viewPager.getCurrentItem(), nextFragment;
+                switch (checkedId) {
 
-                    switch (checkedId) {
-
-                        case R.id.pictureButton:
-                            nextFragment = 0;
-                            break;
-                        case R.id.addressButton:
-                            nextFragment = 1;
-                            break;
-                        case R.id.jobTitleButton:
-                            nextFragment = 2;
-                            break;
-                        case R.id.jobTypeButton:
-                            nextFragment = 3;
-                            break;
-                        default:
-                            nextFragment = 4;
-                            break;
-                    }
-
-                    hideKeyboard();
-
-                    moveToAnotherFragment(currentFragment, nextFragment, checkedId);
+                    case R.id.pictureButton:
+                        nextFragment = 0;
+                        break;
+                    case R.id.addressButton:
+                        nextFragment = 1;
+                        break;
+                    case R.id.jobTitleButton:
+                        nextFragment = 2;
+                        break;
+                    case R.id.jobTypeButton:
+                        nextFragment = 3;
+                        break;
+                    default:
+                        nextFragment = 4;
+                        break;
                 }
+
+                hideKeyboard();
+
+                moveToAnotherFragment(currentFragment, nextFragment, checkedId);
             }
         });
 
-        viewPager = (ViewPager) findViewById(R.id.viewPager);
+        viewPager = findViewById(R.id.viewPager);
 
-        viewPager.setOnTouchListener(new View.OnTouchListener() {
-
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                return true;
-            }
-        });
+        viewPager.setOnTouchListener((view, motionEvent) -> true);
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 

@@ -1,7 +1,6 @@
 package zfani.assaf.jobim.views.fragments.DetailsFragments;
 
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -10,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
 import zfani.assaf.jobim.Application;
 import zfani.assaf.jobim.R;
 import zfani.assaf.jobim.utils.GPSTracker;
@@ -28,7 +28,7 @@ public class CityFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.city_fragment, container, false);
 
-        city = (AutoCompleteTextView) view.findViewById(R.id.city);
+        city = view.findViewById(R.id.city);
 
         String address = Application.sharedPreferences.getString("City", null);
 
@@ -66,14 +66,7 @@ public class CityFragment extends Fragment {
             }
         });
 
-        view.findViewById(R.id.resetButton).setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-
-                city.setText("");
-            }
-        });
+        view.findViewById(R.id.resetButton).setOnClickListener(view1 -> city.setText(""));
 
         return view;
     }

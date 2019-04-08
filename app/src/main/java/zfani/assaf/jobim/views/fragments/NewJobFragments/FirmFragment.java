@@ -1,16 +1,16 @@
 package zfani.assaf.jobim.views.fragments.NewJobFragments;
 
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+import zfani.assaf.jobim.R;
 import zfani.assaf.jobim.views.activities.AddNewJob;
 import zfani.assaf.jobim.views.activities.MainActivity;
-import zfani.assaf.jobim.R;
 
 public class FirmFragment extends Fragment {
 
@@ -27,9 +27,9 @@ public class FirmFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.firm_fragment, container, false);
 
-        firmName = (EditText) view.findViewById(R.id.firmName);
+        firmName = view.findViewById(R.id.firmName);
 
-        branchName = (EditText) view.findViewById(R.id.branchName);
+        branchName = view.findViewById(R.id.branchName);
 
         support = view.findViewById(R.id.support);
 
@@ -41,14 +41,7 @@ public class FirmFragment extends Fragment {
 
         super.onStart();
 
-        support.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-
-                MainActivity.displayDialog(getActivity(), R.layout.add_new_job_dialog, null);
-            }
-        });
+        support.setOnClickListener(view -> MainActivity.displayDialog(getActivity(), R.layout.add_new_job_dialog, null));
     }
 
     public boolean isValidValue() {

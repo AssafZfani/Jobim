@@ -1,7 +1,6 @@
 package zfani.assaf.jobim.models;
 
 import androidx.annotation.NonNull;
-
 import zfani.assaf.jobim.utils.Adapter;
 import zfani.assaf.jobim.utils.FilteredAdapter;
 
@@ -18,7 +17,6 @@ public class Job implements Comparable<Job> {
 
     public Job(String address, boolean applied, int businessNumber, int distance,
                boolean favorite, String firm, String id, boolean posted, String title) {
-
         this.address = address;
         this.applied = applied;
         this.businessNumber = businessNumber;
@@ -31,11 +29,9 @@ public class Job implements Comparable<Job> {
     }
 
     public static Job findJobById(String jobId) {
-
         for (Job job : FilteredAdapter.filteredList == null ? Adapter.jobsList : FilteredAdapter.filteredList)
             if (job.getId().equalsIgnoreCase(jobId))
                 return job;
-
         return null;
     }
 
@@ -89,17 +85,8 @@ public class Job implements Comparable<Job> {
 
     @Override
     public int compareTo(@NonNull Job job) {
-
         int businessNumber1 = this.getBusinessNumber();
-
         int businessNumber2 = job.getBusinessNumber();
-
-        if (businessNumber1 > businessNumber2)
-            return 1;
-
-        if (businessNumber2 > businessNumber1)
-            return -1;
-
-        return 0;
+        return Integer.compare(businessNumber1, businessNumber2);
     }
 }

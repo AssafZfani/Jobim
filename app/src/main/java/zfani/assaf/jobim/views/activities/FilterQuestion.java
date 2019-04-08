@@ -1,12 +1,12 @@
 package zfani.assaf.jobim.views.activities;
 
 import android.os.Bundle;
-import androidx.fragment.app.FragmentActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import androidx.fragment.app.FragmentActivity;
 import zfani.assaf.jobim.R;
 
 public class FilterQuestion extends FragmentActivity {
@@ -24,9 +24,9 @@ public class FilterQuestion extends FragmentActivity {
 
         MainActivity.setupToolBar(this);
 
-        question = (EditText) findViewById(R.id.question);
+        question = findViewById(R.id.question);
 
-        radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
+        radioGroup = findViewById(R.id.radioGroup);
 
         showDeleteQuestionDialog = findViewById(R.id.showDeleteQuestionDialog);
     }
@@ -36,33 +36,22 @@ public class FilterQuestion extends FragmentActivity {
 
         super.onStart();
 
-        findViewById(R.id.backButton).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.backButton).setOnClickListener(view -> onBackPressed());
 
-            @Override
-            public void onClick(View view) {
+        findViewById(R.id.addButton).setOnClickListener(view -> {
 
-                onBackPressed();
-            }
-        });
+            String questionText = question.getText().toString();
 
-        findViewById(R.id.addButton).setOnClickListener(new View.OnClickListener() {
+            if (questionText.isEmpty() ||
+                    (radioGroup.getCheckedRadioButtonId() != R.id.yes && radioGroup.getCheckedRadioButtonId() != R.id.no))
+                Toast.makeText(FilterQuestion.this, "בחרו את התשובה הרצויה", Toast.LENGTH_SHORT).show();
+            else {
 
-            @Override
-            public void onClick(View view) {
+                AddNewJob.newJob.setQuestion(questionText);
 
-                String questionText = question.getText().toString();
+                AddNewJob.newJob.setAnswer(radioGroup.getCheckedRadioButtonId() == R.id.yes);
 
-                if (questionText.isEmpty() ||
-                        (radioGroup.getCheckedRadioButtonId() != R.id.yes && radioGroup.getCheckedRadioButtonId() != R.id.no))
-                    Toast.makeText(FilterQuestion.this, "בחרו את התשובה הרצויה", Toast.LENGTH_SHORT).show();
-                else {
-
-                    AddNewJob.newJob.setQuestion(questionText);
-
-                    AddNewJob.newJob.setAnswer(radioGroup.getCheckedRadioButtonId() == R.id.yes);
-
-                    finish();
-                }
+                finish();
             }
         });
 
@@ -77,13 +66,6 @@ public class FilterQuestion extends FragmentActivity {
             showDeleteQuestionDialog.setVisibility(View.VISIBLE);
         }
 
-        showDeleteQuestionDialog.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-
-                MainActivity.displayDialog((FragmentActivity) view.getContext(), R.layout.delete_question_dialog, null);
-            }
-        });
+        showDeleteQuestionDialog.setOnClickListener(view -> MainActivity.displayDialog((FragmentActivity) view.getContext(), R.layout.delete_question_dialog, null));
     }
 }

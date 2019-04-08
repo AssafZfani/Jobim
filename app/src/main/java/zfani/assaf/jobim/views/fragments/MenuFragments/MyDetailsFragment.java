@@ -4,18 +4,17 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
-import zfani.assaf.jobim.views.activities.FillDetails;
+import androidx.fragment.app.Fragment;
 import zfani.assaf.jobim.Application;
-import zfani.assaf.jobim.views.fragments.DetailsFragments.FullNameFragment;
-import zfani.assaf.jobim.models.RoundedImageView;
 import zfani.assaf.jobim.R;
+import zfani.assaf.jobim.views.activities.FillDetails;
+import zfani.assaf.jobim.views.fragments.DetailsFragments.FullNameFragment;
 
 public class MyDetailsFragment extends Fragment {
 
@@ -66,7 +65,7 @@ public class MyDetailsFragment extends Fragment {
 
                 activity.getIntent().putExtra("SmallRound", false);
 
-                FullNameFragment.initSelfie((RoundedImageView) view.findViewById(R.id.selfie));
+                FullNameFragment.initSelfie(view.findViewById(R.id.selfie));
             }
         }
     }

@@ -3,18 +3,17 @@ package zfani.assaf.jobim.views.fragments.NewJobFragments;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
-import androidx.core.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import zfani.assaf.jobim.R;
 import zfani.assaf.jobim.views.activities.AddNewJob;
 import zfani.assaf.jobim.views.activities.FilterQuestion;
-import zfani.assaf.jobim.R;
 
 public class PictureFragment extends Fragment {
 
@@ -33,27 +32,13 @@ public class PictureFragment extends Fragment {
 
         activity = getActivity();
 
-        CheckBox checkBox = (CheckBox) view.findViewById(R.id.checkBox);
+        CheckBox checkBox = view.findViewById(R.id.checkBox);
 
-        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        checkBox.setOnCheckedChangeListener((compoundButton, b) -> AddNewJob.newJob.setFitForTeens(b));
 
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+        addFilterQuestion = view.findViewById(R.id.addFilterQuestion);
 
-                AddNewJob.newJob.setFitForTeens(b);
-            }
-        });
-
-        addFilterQuestion = (Button) view.findViewById(R.id.addFilterQuestion);
-
-        addFilterQuestion.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-
-                activity.startActivity(new Intent(activity, FilterQuestion.class));
-            }
-        });
+        addFilterQuestion.setOnClickListener(view1 -> activity.startActivity(new Intent(activity, FilterQuestion.class)));
 
         return view;
     }

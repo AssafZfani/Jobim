@@ -1,13 +1,13 @@
 package zfani.assaf.jobim.views.fragments.DetailsFragments;
 
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
 import zfani.assaf.jobim.Application;
 import zfani.assaf.jobim.R;
 
@@ -27,7 +27,7 @@ public class EmailFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.email_fragment, container, false);
 
-        email = (EditText) view.findViewById(R.id.email);
+        email = view.findViewById(R.id.email);
 
         email.requestFocus();
 

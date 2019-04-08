@@ -1,15 +1,15 @@
 package zfani.assaf.jobim.views.fragments.NewJobFragments;
 
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+import zfani.assaf.jobim.R;
 import zfani.assaf.jobim.views.activities.AddNewJob;
 import zfani.assaf.jobim.views.fragments.DetailsFragments.ListFragment;
-import zfani.assaf.jobim.R;
 
 public class AddressFragment extends Fragment {
 

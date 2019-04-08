@@ -9,19 +9,19 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Telephony;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import zfani.assaf.jobim.views.activities.MainActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import zfani.assaf.jobim.Application;
-import zfani.assaf.jobim.models.Job;
 import zfani.assaf.jobim.R;
+import zfani.assaf.jobim.models.Job;
 import zfani.assaf.jobim.utils.Adapter;
+import zfani.assaf.jobim.views.activities.MainActivity;
 
 public class ContactFragment extends Fragment {
 
@@ -201,36 +201,21 @@ public class ContactFragment extends Fragment {
         if (job != null)
             favorite.setBackgroundResource(job.isFavorite() ? R.drawable.remove1 : R.drawable.favorite1);
 
-        favorite.setOnClickListener(new View.OnClickListener() {
+        favorite.setOnClickListener(view13 -> favorite(job));
 
-            @Override
-            public void onClick(View view) {
+        sendEmail.setOnClickListener(view12 -> {
 
-                favorite(job);
-            }
-        });
-
-        sendEmail.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-
-                if (job != null)
-                    MainActivity.displayDialog(activity, Application.sharedPreferences.contains("FullName") ?
-                            R.layout.sending_mail_dialog : R.layout.fill_details_dialog, job.getId());
-            }
+            if (job != null)
+                MainActivity.displayDialog(activity, Application.sharedPreferences.contains("FullName") ?
+                        R.layout.sending_mail_dialog : R.layout.fill_details_dialog, job.getId());
         });
 
         View.OnClickListener listener;
 
-        call.setOnClickListener(listener = new View.OnClickListener() {
+        call.setOnClickListener(listener = view1 -> {
 
-            @Override
-            public void onClick(View view) {
-
-                if (job != null)
-                    contact(activity, job.getId(), view.getId());
-            }
+            if (job != null)
+                contact(activity, job.getId(), view1.getId());
         });
 
         sendMessage.setOnClickListener(listener);

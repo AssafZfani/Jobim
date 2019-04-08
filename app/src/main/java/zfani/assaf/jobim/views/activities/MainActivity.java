@@ -21,7 +21,6 @@ import androidx.viewpager.widget.ViewPager;
 import zfani.assaf.jobim.Application;
 import zfani.assaf.jobim.R;
 import zfani.assaf.jobim.models.Job;
-import zfani.assaf.jobim.models.RoundedImageView;
 import zfani.assaf.jobim.utils.Adapter;
 import zfani.assaf.jobim.utils.FilteredAdapter;
 import zfani.assaf.jobim.utils.GPSTracker;
@@ -37,8 +36,6 @@ import zfani.assaf.jobim.views.fragments.MenuFragments.MyDetailsFragment;
 import zfani.assaf.jobim.views.fragments.MenuFragments.MyJobsFragment;
 import zfani.assaf.jobim.views.fragments.MenuFragments.NotificationsFragment;
 import zfani.assaf.jobim.views.fragments.MenuFragments.SettingsFragment;
-
-@SuppressWarnings("unused")
 
 public class MainActivity extends FragmentActivity {
 
@@ -145,128 +142,83 @@ public class MainActivity extends FragmentActivity {
                 setContentView(layout);
                 View cancel = findViewById(R.id.cancel);
                 if (cancel != null) {
-                    cancel.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            dismiss();
-                            if (layout == R.layout.fill_details_dialog) {
-                                activity.startActivity(new Intent(activity, FillDetails.class));
-                            } else if (layout == R.layout.post_job_dialog) {
-                                activity.finish();
-                            }
+                    cancel.setOnClickListener(v -> {
+                        dismiss();
+                        if (layout == R.layout.fill_details_dialog) {
+                            activity.startActivity(new Intent(activity, FillDetails.class));
+                        } else if (layout == R.layout.post_job_dialog) {
+                            activity.finish();
                         }
                     });
                 }
                 switch (layout) {
                     case R.layout.add_new_job_dialog:
-                        findViewById(R.id.call).setOnClickListener(new View.OnClickListener() {
-
-                            @Override
-                            public void onClick(View view) {
-                                Intent callIntent = new Intent(Intent.ACTION_DIAL);
-                                callIntent.setData(Uri.parse("tel:0509907979"));
-                                activity.startActivity(callIntent);
-                            }
+                        findViewById(R.id.call).setOnClickListener(view -> {
+                            Intent callIntent = new Intent(Intent.ACTION_DIAL);
+                            callIntent.setData(Uri.parse("tel:0509907979"));
+                            activity.startActivity(callIntent);
                         });
-                        findViewById(R.id.sendEmail).setOnClickListener(new View.OnClickListener() {
-
-                            @Override
-                            public void onClick(View view) {
-                                Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:assafzfani@gmail.com"));
-                                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "בנוגע ליצירת ג'וב");
-                                activity.startActivity(emailIntent);
-                            }
+                        findViewById(R.id.sendEmail).setOnClickListener(view -> {
+                            Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:assafzfani@gmail.com"));
+                            emailIntent.putExtra(Intent.EXTRA_SUBJECT, "בנוגע ליצירת ג'וב");
+                            activity.startActivity(emailIntent);
                         });
                         break;
                     case R.layout.close_dialog:
-                        findViewById(R.id.exit).setOnClickListener(new View.OnClickListener() {
-
-                            @Override
-                            public void onClick(View view) {
-                                dismiss();
-                                Application.sharedPreferences.edit().remove("FromCamera").remove("Image").remove("FullName").remove("City").remove("BirthYear").remove("Email").apply();
-                                activity.finish();
-                            }
+                        findViewById(R.id.exit).setOnClickListener(view -> {
+                            dismiss();
+                            Application.sharedPreferences.edit().remove("FromCamera").remove("Image").remove("FullName").remove("City").remove("BirthYear").remove("Email").apply();
+                            activity.finish();
                         });
                         break;
                     case R.layout.delete_job_dialog:
-                        findViewById(R.id.deleteFromFeed).setOnClickListener(new View.OnClickListener() {
-
-                            @Override
-                            public void onClick(View v) {
-                                if (FilteredAdapter.filteredList != null) {
-                                    int indexToRemove = FilteredAdapter.filteredList.indexOf(Job.findJobById(jobId));
-                                    if (activity.getLocalClassName().equalsIgnoreCase("Activities.MainActivity")) {
-                                        MainActivity mainActivity = (MainActivity) activity;
-                                        if (mainActivity.allJobsFragment.filteredAdapter != null)
-                                            mainActivity.allJobsFragment.filteredAdapter.remove(indexToRemove);
-                                    } else
-                                        FilteredAdapter.filteredList.remove(indexToRemove);
-                                }
-                                new Handler().postDelayed(new Runnable() {
-
-                                    @Override
-                                    public void run() {
-                                        Adapter.query.getRef().child(jobId).removeValue();
-                                    }
-                                }, 750);
-                                if (activity.getLocalClassName().equalsIgnoreCase("Activities.JobInfo"))
-                                    activity.finish();
-                                else
-                                    ((ViewPager) activity.findViewById(activity.getIntent().getIntExtra("ViewPager", 0))).setCurrentItem(1);
-                                dismiss();
-                                Toast.makeText(activity, "מעכשיו הג'וב לא יופיע יותר בפיד", Toast.LENGTH_SHORT).show();
+                        findViewById(R.id.deleteFromFeed).setOnClickListener(v -> {
+                            if (FilteredAdapter.filteredList != null) {
+                                int indexToRemove = FilteredAdapter.filteredList.indexOf(Job.findJobById(jobId));
+                                if (activity.getLocalClassName().equalsIgnoreCase("Activities.MainActivity")) {
+                                    MainActivity mainActivity = (MainActivity) activity;
+                                    if (mainActivity.allJobsFragment.filteredAdapter != null)
+                                        mainActivity.allJobsFragment.filteredAdapter.remove(indexToRemove);
+                                } else
+                                    FilteredAdapter.filteredList.remove(indexToRemove);
                             }
+                            new Handler().postDelayed(() -> Adapter.query.getRef().child(jobId).removeValue(), 750);
+                            if (activity.getLocalClassName().equalsIgnoreCase("Activities.JobInfo"))
+                                activity.finish();
+                            else
+                                ((ViewPager) activity.findViewById(activity.getIntent().getIntExtra("ViewPager", 0))).setCurrentItem(1);
+                            dismiss();
+                            Toast.makeText(activity, "מעכשיו הג'וב לא יופיע יותר בפיד", Toast.LENGTH_SHORT).show();
                         });
                         break;
                     case R.layout.delete_question_dialog:
-                        findViewById(R.id.deleteQuestion).setOnClickListener(new View.OnClickListener() {
-
-                            @Override
-                            public void onClick(View view) {
-                                AddNewJob.newJob.setAnswer(false);
-                                AddNewJob.newJob.setQuestion(null);
-                                dismiss();
-                                activity.finish();
-                            }
+                        findViewById(R.id.deleteQuestion).setOnClickListener(view -> {
+                            AddNewJob.newJob.setAnswer(false);
+                            AddNewJob.newJob.setQuestion(null);
+                            dismiss();
+                            activity.finish();
                         });
                         break;
                     case R.layout.exit_dialog:
-                        findViewById(R.id.exit).setOnClickListener(new View.OnClickListener() {
-
-                            @Override
-                            public void onClick(View v) {
-                                dismiss();
-                                activity.finish();
-                            }
+                        findViewById(R.id.exit).setOnClickListener(v -> {
+                            dismiss();
+                            activity.finish();
                         });
                         break;
                     case R.layout.image_dialog:
-                        findViewById(R.id.camera).setOnClickListener(new View.OnClickListener() {
-
-                            @Override
-                            public void onClick(View view) {
-                                dismiss();
-                                activity.startActivityForResult(new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE), 3);
-                            }
+                        findViewById(R.id.camera).setOnClickListener(view -> {
+                            dismiss();
+                            activity.startActivityForResult(new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE), 3);
                         });
-                        findViewById(R.id.gallery).setOnClickListener(new View.OnClickListener() {
-
-                            @Override
-                            public void onClick(View view) {
-                                dismiss();
-                                activity.startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI), 4);
-                            }
+                        findViewById(R.id.gallery).setOnClickListener(view -> {
+                            dismiss();
+                            activity.startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI), 4);
                         });
                         break;
                     case R.layout.sending_mail_dialog:
-                        findViewById(R.id.send).setOnClickListener(new View.OnClickListener() {
-
-                            @Override
-                            public void onClick(View view) {
-                                dismiss();
-                                ContactFragment.contact(activity, jobId, R.id.sendEmail);
-                            }
+                        findViewById(R.id.send).setOnClickListener(view -> {
+                            dismiss();
+                            ContactFragment.contact(activity, jobId, R.id.sendEmail);
                         });
                         break;
                     case R.layout.share_dialog:
@@ -343,7 +295,7 @@ public class MainActivity extends FragmentActivity {
     public void menu(View v) {
         String fullName = Application.sharedPreferences.getString("FullName", null);
         getIntent().putExtra("SmallRound", true);
-        FullNameFragment.initSelfie((RoundedImageView) findViewById(R.id.menuSelfie));
+        FullNameFragment.initSelfie(findViewById(R.id.menuSelfie));
         ((TextView) drawerMenu.findViewById(R.id.fullName)).setText(fullName != null ? fullName : "היי אורח!");
         drawerLayout.openDrawer(drawerMenu);
     }

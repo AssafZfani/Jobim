@@ -1,19 +1,19 @@
 package zfani.assaf.jobim.views.activities;
 
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+import zfani.assaf.jobim.R;
+import zfani.assaf.jobim.utils.GPSTracker;
 import zfani.assaf.jobim.views.fragments.DetailsFragments.ListFragment;
 import zfani.assaf.jobim.views.fragments.FeedFragments.MapFragment;
 import zfani.assaf.jobim.views.fragments.NewJobFragments.JobTypeFragment;
-import zfani.assaf.jobim.R;
-import zfani.assaf.jobim.utils.GPSTracker;
 
 public class ShowBy extends FragmentActivity {
 
@@ -28,11 +28,11 @@ public class ShowBy extends FragmentActivity {
 
         final EditText[] editTexts = new EditText[3];
 
-        editTexts[0] = (EditText) findViewById(R.id.editText1);
-        editTexts[1] = (EditText) findViewById(R.id.editText2);
-        editTexts[2] = (EditText) findViewById(R.id.editText3);
+        editTexts[0] = findViewById(R.id.editText1);
+        editTexts[1] = findViewById(R.id.editText2);
+        editTexts[2] = findViewById(R.id.editText3);
 
-        final ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
+        final ViewPager viewPager = findViewById(R.id.viewPager);
 
         viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
 
@@ -59,38 +59,34 @@ public class ShowBy extends FragmentActivity {
             }
         });
 
-        final RadioGroup radioGroup = (RadioGroup) findViewById(R.id.fragmentsBar);
+        final RadioGroup radioGroup = findViewById(R.id.fragmentsBar);
 
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
 
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
+            int item;
 
-                int item;
+            switch (checkedId) {
 
-                switch (checkedId) {
-
-                    case R.id.button1:
-                        item = 2;
-                        break;
-                    case R.id.button2:
-                        item = 1;
-                        break;
-                    default:
-                        item = 0;
-                        break;
-                }
-
-                for (int i = 0; i < editTexts.length; i++)
-                    if (i != item)
-                        editTexts[i].setVisibility(View.INVISIBLE);
-
-                editTexts[item].setVisibility(View.VISIBLE);
-
-                editTexts[item].requestFocus();
-
-                viewPager.setCurrentItem(item);
+                case R.id.button1:
+                    item = 2;
+                    break;
+                case R.id.button2:
+                    item = 1;
+                    break;
+                default:
+                    item = 0;
+                    break;
             }
+
+            for (int i = 0; i < editTexts.length; i++)
+                if (i != item)
+                    editTexts[i].setVisibility(View.INVISIBLE);
+
+            editTexts[item].setVisibility(View.VISIBLE);
+
+            editTexts[item].requestFocus();
+
+            viewPager.setCurrentItem(item);
         });
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {

@@ -5,19 +5,19 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import androidx.fragment.app.FragmentActivity;
 import android.telephony.SmsManager;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.fragment.app.FragmentActivity;
 import zfani.assaf.jobim.Application;
+import zfani.assaf.jobim.R;
+import zfani.assaf.jobim.models.Job;
+import zfani.assaf.jobim.utils.Adapter;
+import zfani.assaf.jobim.utils.GPSTracker;
 import zfani.assaf.jobim.views.fragments.FeedFragments.ContactFragment;
 import zfani.assaf.jobim.views.fragments.FeedFragments.JobFragment;
 import zfani.assaf.jobim.views.fragments.FeedFragments.MapFragment;
-import zfani.assaf.jobim.models.Job;
-import zfani.assaf.jobim.R;
-import zfani.assaf.jobim.utils.Adapter;
-import zfani.assaf.jobim.utils.GPSTracker;
 
 public class JobInfo extends FragmentActivity {
 

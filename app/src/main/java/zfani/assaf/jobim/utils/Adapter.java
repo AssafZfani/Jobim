@@ -1,10 +1,5 @@
 package zfani.assaf.jobim.utils;
 
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -16,12 +11,17 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
+import zfani.assaf.jobim.R;
+import zfani.assaf.jobim.models.Job;
+import zfani.assaf.jobim.models.JobType;
 import zfani.assaf.jobim.views.fragments.FeedFragments.ContactFragment;
 import zfani.assaf.jobim.views.fragments.FeedFragments.DeleteFragment;
 import zfani.assaf.jobim.views.fragments.FeedFragments.JobFragment;
-import zfani.assaf.jobim.models.Job;
-import zfani.assaf.jobim.models.JobType;
-import zfani.assaf.jobim.R;
 
 public class Adapter extends FirebaseRecyclerAdapter<Job, Adapter.ViewHolder> {
 
@@ -81,14 +81,7 @@ public class Adapter extends FirebaseRecyclerAdapter<Job, Adapter.ViewHolder> {
 
         viewHolder.viewPager.setId(View.generateViewId());
 
-        viewHolder.viewPager.setPageTransformer(true, new ViewPager.PageTransformer() {
-
-            @Override
-            public void transformPage(View view, float position) {
-
-                view.setTranslationX(-position * (view.getWidth() / 50));
-            }
-        });
+        viewHolder.viewPager.setPageTransformer(true, (view, position) -> view.setTranslationX(-position * (view.getWidth() / 50)));
 
         viewHolder.viewPager.setAdapter(new FragmentPagerAdapter(activity.getSupportFragmentManager()) {
 
@@ -133,7 +126,7 @@ public class Adapter extends FirebaseRecyclerAdapter<Job, Adapter.ViewHolder> {
 
             this.mainView = mainView;
 
-            this.viewPager = (ViewPager) mainView.findViewById(R.id.viewPager);
+            this.viewPager = mainView.findViewById(R.id.viewPager);
         }
     }
 }

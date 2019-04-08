@@ -1,13 +1,13 @@
 package zfani.assaf.jobim.views.fragments.FeedFragments;
 
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import zfani.assaf.jobim.views.activities.MainActivity;
+import androidx.fragment.app.Fragment;
 import zfani.assaf.jobim.R;
+import zfani.assaf.jobim.views.activities.MainActivity;
 
 public class DeleteFragment extends Fragment {
 
@@ -29,15 +29,11 @@ public class DeleteFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.delete_job_layout, container, false);
 
-        view.findViewById(R.id.delete).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.delete).setOnClickListener(view1 -> {
 
-            @Override
-            public void onClick(View view) {
+            getActivity().getIntent().putExtra("ViewPager", container.getId());
 
-                getActivity().getIntent().putExtra("ViewPager", container.getId());
-
-                MainActivity.displayDialog(getActivity(), R.layout.delete_job_dialog, getArguments().getString("JobId"));
-            }
+            MainActivity.displayDialog(getActivity(), R.layout.delete_job_dialog, getArguments().getString("JobId"));
         });
 
         return view;

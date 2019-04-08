@@ -2,15 +2,12 @@ package zfani.assaf.jobim.views.fragments.FeedFragments;
 
 import android.app.Activity;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -23,10 +20,11 @@ import com.google.maps.android.clustering.ClusterManager;
 
 import java.util.HashMap;
 
+import androidx.fragment.app.Fragment;
+import zfani.assaf.jobim.R;
 import zfani.assaf.jobim.models.ClusterJobs;
 import zfani.assaf.jobim.models.ClusterJobsRenderer;
 import zfani.assaf.jobim.models.Job;
-import zfani.assaf.jobim.R;
 import zfani.assaf.jobim.utils.Adapter;
 import zfani.assaf.jobim.utils.FilteredAdapter;
 import zfani.assaf.jobim.utils.GPSTracker;
@@ -84,38 +82,23 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
             map.setMyLocationEnabled(true);
 
-            map.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
+            map.setOnMyLocationButtonClickListener(() -> {
 
-                @Override
-                public boolean onMyLocationButtonClick() {
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
 
-                    map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
-
-                    return false;
-                }
+                return false;
             });
 
-            googleMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
-
-                @Override
-                public void onMapLoaded() {
-
-                    loadMarkersToMap(activity);
-                }
-            });
+            googleMap.setOnMapLoadedCallback(() -> loadMarkersToMap(activity));
         } else if (activityName.equalsIgnoreCase("Activities.ShowBy")) {
 
-            final EditText editText = (EditText) activity.findViewById(R.id.editText2);
+            final EditText editText = activity.findViewById(R.id.editText2);
 
-            googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            googleMap.setOnMapClickListener(latLng1 -> {
 
-                @Override
-                public void onMapClick(LatLng latLng) {
+                editText.setText(GPSTracker.getAddressFromLatLng(activity, latLng1, null));
 
-                    editText.setText(GPSTracker.getAddressFromLatLng(activity, latLng, null));
-
-                    changeCamera(latLng);
-                }
+                changeCamera(latLng1);
             });
 
             editText.addTextChangedListener(new TextWatcher() {
@@ -135,26 +118,22 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
                     activity.getIntent().putExtra("Address", s + "");
 
-                    editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                    editText.setOnEditorActionListener((v, actionId, event) -> {
 
-                        @Override
-                        public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                        if (v.getText().length() != 0) {
 
-                            if (v.getText().length() != 0) {
+                            try {
 
-                                try {
+                                activity.getIntent().putExtra("Address", v.getText() + "");
 
-                                    activity.getIntent().putExtra("Address", v.getText() + "");
+                                MapFragment.changeCamera(GPSTracker.getLatLngFromAddress(activity, v.getText() + ""));
 
-                                    MapFragment.changeCamera(GPSTracker.getLatLngFromAddress(activity, v.getText() + ""));
-
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
-
-                            return false;
                         }
+
+                        return false;
                     });
                 }
             });

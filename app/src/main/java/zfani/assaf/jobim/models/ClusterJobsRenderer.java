@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
-import androidx.viewpager.widget.PagerAdapter;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,9 +27,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
-import zfani.assaf.jobim.views.fragments.FeedFragments.JobFragment;
+import androidx.viewpager.widget.PagerAdapter;
 import zfani.assaf.jobim.R;
 import zfani.assaf.jobim.utils.Adapter;
+import zfani.assaf.jobim.views.fragments.FeedFragments.JobFragment;
 
 public class ClusterJobsRenderer extends DefaultClusterRenderer<ClusterJobs>
         implements ClusterManager.OnClusterClickListener<ClusterJobs>, ClusterManager.OnClusterItemClickListener<ClusterJobs> {
@@ -224,21 +224,17 @@ public class ClusterJobsRenderer extends DefaultClusterRenderer<ClusterJobs>
 
         btn.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
-        btn.setOnClickListener(new View.OnClickListener() {
+        btn.setOnClickListener(view -> {
 
-            @Override
-            public void onClick(View view) {
+            if (next && viewHolder.viewPager.getCurrentItem() - 1 >= 0)
+                viewHolder.viewPager.setCurrentItem(viewHolder.viewPager.getCurrentItem() - 1);
 
-                if (next && viewHolder.viewPager.getCurrentItem() - 1 >= 0)
-                    viewHolder.viewPager.setCurrentItem(viewHolder.viewPager.getCurrentItem() - 1);
+            if (!next && viewHolder.viewPager.getCurrentItem() + 1 <= viewHolder.viewPager.getAdapter().getCount())
+                viewHolder.viewPager.setCurrentItem(viewHolder.viewPager.getCurrentItem() + 1);
 
-                if (!next && viewHolder.viewPager.getCurrentItem() + 1 <= viewHolder.viewPager.getAdapter().getCount())
-                    viewHolder.viewPager.setCurrentItem(viewHolder.viewPager.getCurrentItem() + 1);
+            int count = viewHolder.viewPager.getAdapter().getCount();
 
-                int count = viewHolder.viewPager.getAdapter().getCount();
-
-                txt.setText("ג'וב " + count + "/" + (count - viewHolder.viewPager.getCurrentItem()));
-            }
+            txt.setText("ג'וב " + count + "/" + (count - viewHolder.viewPager.getCurrentItem()));
         });
 
         return btn;
