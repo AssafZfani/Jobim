@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:ignore="ContentDescription, HardcodedText, LabelFor">
 
-    <include layout="@layout/toolbar" />
+    <include layout="@layout/view_action_bar" />
 
     <LinearLayout
         android:id="@+id/layout1"

@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -22,9 +23,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import zfani.assaf.jobim.App;
 import zfani.assaf.jobim.R;
-import zfani.assaf.jobim.models.Job;
 import zfani.assaf.jobim.utils.Adapter;
-import zfani.assaf.jobim.utils.FilteredAdapter;
 import zfani.assaf.jobim.utils.GPSTracker;
 import zfani.assaf.jobim.views.fragments.DetailsFragments.BirthYearFragment;
 import zfani.assaf.jobim.views.fragments.DetailsFragments.CityFragment;
@@ -37,14 +36,12 @@ import zfani.assaf.jobim.views.fragments.MenuFragments.AllJobsFragment;
 import zfani.assaf.jobim.views.fragments.MenuFragments.MyDetailsFragment;
 import zfani.assaf.jobim.views.fragments.MenuFragments.MyJobsFragment;
 import zfani.assaf.jobim.views.fragments.MenuFragments.NotificationsFragment;
-import zfani.assaf.jobim.views.fragments.MenuFragments.SettingsFragment;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends AppCompatActivity {
 
-    public AllJobsFragment allJobsFragment;
     @BindView(R.id.drawerLayout)
     DrawerLayout drawerLayout;
-    @BindView(R.id.toolBar)
+    @BindView(R.id.toolbar)
     Toolbar toolBar;
     @BindView(R.id.drawerMenu)
     View drawerMenu;
@@ -54,25 +51,25 @@ public class MainActivity extends FragmentActivity {
     private Fragment fragmentToReplace;
 
     static void setupToolBar(final FragmentActivity activity) {
-        Toolbar toolbar = activity.findViewById(R.id.toolBar);
+        Toolbar toolbar = activity.findViewById(R.id.toolbar);
         TextView title = toolbar.findViewById(R.id.title);
         View addButton, backButton, closeButton, mapButton, menuButton, nextButton, postButton, saveButton, settingsButton;
-        addButton = toolbar.findViewById(R.id.addButton);
-        backButton = toolbar.findViewById(R.id.backButton);
-        closeButton = toolbar.findViewById(R.id.closeButton);
+        /*addButton = view_action_bar.findViewById(R.id.addButton);
+        backButton = view_action_bar.findViewById(R.id.backButton);
+        closeButton = view_action_bar.findViewById(R.id.closeButton);*/
         mapButton = toolbar.findViewById(R.id.mapButton);
         menuButton = toolbar.findViewById(R.id.menuButton);
-        nextButton = toolbar.findViewById(R.id.nextButton);
-        postButton = toolbar.findViewById(R.id.postButton);
-        saveButton = toolbar.findViewById(R.id.saveButton);
-        settingsButton = toolbar.findViewById(R.id.settingsButton);
-        addButton.setVisibility(View.GONE);
+        /*nextButton = view_action_bar.findViewById(R.id.nextButton);
+        postButton = view_action_bar.findViewById(R.id.postButton);
+        saveButton = view_action_bar.findViewById(R.id.saveButton);
+        settingsButton = view_action_bar.findViewById(R.id.settingsButton);*/
+        /*addButton.setVisibility(View.GONE);
         backButton.setVisibility(View.GONE);
         closeButton.setVisibility(View.GONE);
         nextButton.setVisibility(View.GONE);
         postButton.setVisibility(View.GONE);
         saveButton.setVisibility(View.GONE);
-        settingsButton.setVisibility(View.GONE);
+        settingsButton.setVisibility(View.GONE);*/
         int orange = ContextCompat.getColor(activity, R.color.orange);
         String className = activity.getLocalClassName(), text = "";
         switch (className) {
@@ -80,14 +77,14 @@ public class MainActivity extends FragmentActivity {
                 text = "פרסם ג'וב חדש";
             }
             case "Activities.FillDetails": {
-                closeButton.setVisibility(View.VISIBLE);
-                nextButton.setVisibility(View.VISIBLE);
+                /*closeButton.setVisibility(View.VISIBLE);
+                nextButton.setVisibility(View.VISIBLE);*/
                 break;
             }
             case "Activities.FilterQuestion": {
                 text = "שאלת סינון";
-                addButton.setVisibility(View.VISIBLE);
-                backButton.setVisibility(View.VISIBLE);
+                /*addButton.setVisibility(View.VISIBLE);
+                backButton.setVisibility(View.VISIBLE);*/
                 break;
             }
             case "Activities.JobsEmployer": {
@@ -100,8 +97,8 @@ public class MainActivity extends FragmentActivity {
             }
             case "Activities.MakingContact": {
                 text = "אמצעי יצירת קשר";
-                postButton.setVisibility(View.VISIBLE);
-                backButton.setVisibility(View.VISIBLE);
+                /*postButton.setVisibility(View.VISIBLE);
+                backButton.setVisibility(View.VISIBLE);*/
                 break;
             }
             case "Activities.ShowBy": {
@@ -121,15 +118,15 @@ public class MainActivity extends FragmentActivity {
                     mapButton.setBackgroundColor(orange);
                     switch (text) {
                         case "הפרטים שלי":
-                            settingsButton.setVisibility(View.VISIBLE);
+                            //settingsButton.setVisibility(View.VISIBLE);
                             break;
                         case "הגדרות":
                         case "עריכת שם ותמונה":
                         case "עריכת עיר מגורים":
                         case "עריכת שנת לידה":
                         case "עריכת כתובת מייל":
-                            backButton.setVisibility(View.VISIBLE);
-                            saveButton.setVisibility(View.VISIBLE);
+                            /*backButton.setVisibility(View.VISIBLE);
+                            saveButton.setVisibility(View.VISIBLE);*/
                             break;
                     }
                 }
@@ -179,15 +176,16 @@ public class MainActivity extends FragmentActivity {
                         break;
                     case R.layout.delete_job_dialog:
                         findViewById(R.id.deleteFromFeed).setOnClickListener(v -> {
-                            if (FilteredAdapter.filteredList != null) {
+                            /*if (FilteredAdapter.filteredList != null) {
                                 int indexToRemove = FilteredAdapter.filteredList.indexOf(Job.findJobById(jobId));
                                 if (activity.getLocalClassName().equalsIgnoreCase("Activities.MainActivity")) {
                                     MainActivity mainActivity = (MainActivity) activity;
-                                    if (mainActivity.allJobsFragment.filteredAdapter != null)
+                                    if (mainActivity.allJobsFragment.filteredAdapter != null) {
                                         mainActivity.allJobsFragment.filteredAdapter.remove(indexToRemove);
+                                    }
                                 } else
                                     FilteredAdapter.filteredList.remove(indexToRemove);
-                            }
+                            }*/
                             new Handler().postDelayed(() -> Adapter.query.getRef().child(jobId).removeValue(), 750);
                             if (activity.getLocalClassName().equalsIgnoreCase("Activities.JobInfo"))
                                 activity.finish();
@@ -242,9 +240,9 @@ public class MainActivity extends FragmentActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         new GPSTracker(this);
-        setupToolBar(this);
+        setSupportActionBar(toolBar);
         fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.mainFragment, allJobsFragment = (AllJobsFragment) AllJobsFragment.newInstance()).commit();
+        fragmentManager.beginTransaction().replace(R.id.fragmentContainer, new AllJobsFragment()).commit();
         background = findViewById(R.id.mapButton).getBackground();
     }
 
@@ -253,7 +251,7 @@ public class MainActivity extends FragmentActivity {
         switch (requestCode) {
             case 1:
                 if (resultCode == 1) {
-                    allJobsFragment.filterList(findViewById(R.id.mainFragment), data);
+                    //allJobsFragment.filterList(findViewById(R.id.fragmentContainer), data);
                     hideMap();
                 }
                 break;
@@ -318,8 +316,8 @@ public class MainActivity extends FragmentActivity {
     public void clean(View v) {
         drawerLayout.closeDrawers();
         hideMap();
-        allJobsFragment.clean();
-        fragmentManager.beginTransaction().replace(R.id.mainFragment, allJobsFragment).commit();
+        //allJobsFragment.clean();
+        //fragmentManager.beginTransaction().replace(R.id.fragmentContainer, allJobsFragment).commit();
         getIntent().removeExtra("Fragment");
         MainActivity.setupToolBar(MainActivity.this);
     }
@@ -378,13 +376,13 @@ public class MainActivity extends FragmentActivity {
                 fragmentName = "התראות";
                 fragmentToReplace = NotificationsFragment.newInstance();
                 break;
-            case R.id.settingsButton:
+            /*case R.id.settingsButton:
                 fragmentName = "הגדרות";
                 fragmentToReplace = SettingsFragment.newInstance();
-                break;
+                break;*/
         }
         if (fragmentToReplace != null) {
-            fragmentManager.beginTransaction().replace(R.id.mainFragment, fragmentToReplace, fragmentName).commitAllowingStateLoss();
+            fragmentManager.beginTransaction().replace(R.id.fragmentContainer, fragmentToReplace, fragmentName).commitAllowingStateLoss();
             getIntent().putExtra("Fragment", fragmentName);
             MainActivity.setupToolBar(MainActivity.this);
         }
@@ -398,7 +396,7 @@ public class MainActivity extends FragmentActivity {
         startActivity(new Intent("android.intent.action.VIEW", Uri.parse("https://www.drushim.co.il/?utm_source=jobim&utm_medium=app&utm_campaign=gowebsite")));
     }
 
-    public void back(View v) {
+    /*public void back(View v) {
         onBackPressed();
     }
 
@@ -429,5 +427,5 @@ public class MainActivity extends FragmentActivity {
         if (result) {
             onBackPressed();
         }
-    }
+    }*/
 }

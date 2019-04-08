@@ -4,12 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include layout="@layout/toolbar" />
+    <include layout="@layout/view_action_bar" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
         style="@style/SwipeRefreshLayout"
-        android:layout_below="@id/toolBar">
+        android:layout_below="@id/toolbar">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/jobsEmployerRecyclerView"

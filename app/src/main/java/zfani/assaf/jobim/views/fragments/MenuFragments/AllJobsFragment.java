@@ -39,11 +39,6 @@ public class AllJobsFragment extends Fragment implements SwipeRefreshLayout.OnRe
     private RecyclerView recyclerView;
     private View message;
 
-    public static Fragment newInstance() {
-
-        return new AllJobsFragment();
-    }
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 

@@ -36,9 +36,9 @@ public class FilterQuestion extends FragmentActivity {
 
         super.onStart();
 
-        findViewById(R.id.backButton).setOnClickListener(view -> onBackPressed());
+        //findViewById(R.id.backButton).setOnClickListener(view -> onBackPressed());
 
-        findViewById(R.id.addButton).setOnClickListener(view -> {
+        /*findViewById(R.id.addButton).setOnClickListener(view -> {
 
             String questionText = question.getText().toString();
 
@@ -53,7 +53,7 @@ public class FilterQuestion extends FragmentActivity {
 
                 finish();
             }
-        });
+        });*/
 
         String addedQuestion = AddNewJob.newJob.getQuestion();
 

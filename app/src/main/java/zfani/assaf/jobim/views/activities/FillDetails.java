@@ -91,7 +91,7 @@ public class FillDetails extends FragmentActivity {
 
         MainActivity.setupToolBar(this);
 
-        findViewById(R.id.closeButton).setOnClickListener(view -> onBackPressed());
+        //findViewById(R.id.closeButton).setOnClickListener(view -> onBackPressed());
 
         drawableResources = new int[4];
 
@@ -144,7 +144,7 @@ public class FillDetails extends FragmentActivity {
             @Override
             public void onPageSelected(int position) {
 
-                findViewById(R.id.nextButton).setBackgroundResource(position == 0 ? R.drawable.save_icon : R.drawable.next_icon);
+                //findViewById(R.id.nextButton).setBackgroundResource(position == 0 ? R.drawable.save_icon : R.drawable.next_icon);
             }
 
             @Override

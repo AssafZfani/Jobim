@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:ignore="HardcodedText, ContentDescription">
 
-    <include layout="@layout/toolbar" />
+    <include layout="@layout/view_action_bar" />
 
     <RelativeLayout
         android:id="@+id/title"

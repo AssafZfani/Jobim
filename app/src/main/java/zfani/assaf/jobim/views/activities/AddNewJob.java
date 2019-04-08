@@ -42,7 +42,7 @@ public class AddNewJob extends FragmentActivity {
 
         newJob = new NewJob();
 
-        findViewById(R.id.closeButton).setOnClickListener(view -> onBackPressed());
+        //findViewById(R.id.closeButton).setOnClickListener(view -> onBackPressed());
 
         drawableResources = new int[5];
 
@@ -99,7 +99,7 @@ public class AddNewJob extends FragmentActivity {
             @Override
             public void onPageSelected(int position) {
 
-                findViewById(R.id.nextButton).setBackgroundResource(position == 0 ? R.drawable.save_icon : R.drawable.next_icon);
+                //findViewById(R.id.nextButton).setBackgroundResource(position == 0 ? R.drawable.save_icon : R.drawable.next_icon);
             }
 
             @Override

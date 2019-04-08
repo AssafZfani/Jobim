@@ -139,7 +139,7 @@ public class MakingContact extends FragmentActivity {
         phoneNumber.setText(phone);
         smsNumber.setText(phone);
 
-        findViewById(R.id.backButton).setOnClickListener(view -> onBackPressed());
+        //findViewById(R.id.backButton).setOnClickListener(view -> onBackPressed());
     }
 
     public void post(View v) {
