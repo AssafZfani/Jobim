@@ -5,6 +5,7 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import zfani.assaf.jobim.R;
 import zfani.assaf.jobim.models.Job;
@@ -27,14 +28,15 @@ public class FilteredAdapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
                         filteredList.add(job);
     }
 
+    @NonNull
     @Override
-    public Adapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public Adapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         return new Adapter.ViewHolder(View.inflate(parent.getContext(), R.layout.layouts_container, null));
     }
 
     @Override
-    public void onBindViewHolder(final Adapter.ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(@NonNull final Adapter.ViewHolder viewHolder, int position) {
 
         Adapter.populateViewHolder(viewHolder, filteredList.get(position));
     }

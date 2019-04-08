@@ -6,8 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ToggleButton;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import zfani.assaf.jobim.Application;
+import zfani.assaf.jobim.App;
 import zfani.assaf.jobim.R;
 
 public class SettingsFragment extends Fragment {
@@ -20,13 +21,13 @@ public class SettingsFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.settings, container, false);
 
         toggleButton = view.findViewById(R.id.toogleButton);
 
-        toggleButton.setChecked(Application.sharedPreferences.getBoolean("EnableNotification", true));
+        toggleButton.setChecked(App.sharedPreferences.getBoolean("EnableNotification", true));
 
         return view;
     }

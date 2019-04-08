@@ -20,6 +20,7 @@ import com.google.maps.android.clustering.ClusterManager;
 
 import java.util.HashMap;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import zfani.assaf.jobim.R;
 import zfani.assaf.jobim.models.ClusterJobs;
@@ -56,7 +57,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.map, container, false);
 

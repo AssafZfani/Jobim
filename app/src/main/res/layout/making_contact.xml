@@ -13,10 +13,10 @@
         android:id="@+id/layout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="10dp"
-        android:paddingEnd="15dp"
         android:paddingStart="5dp"
-        android:paddingTop="10dp">
+        android:paddingTop="10dp"
+        android:paddingEnd="15dp"
+        android:paddingBottom="10dp">
 
         <include
             android:id="@+id/sendMessageCheckBox"
@@ -45,10 +45,10 @@
         android:id="@+id/layout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="10dp"
-        android:paddingEnd="15dp"
         android:paddingStart="5dp"
-        android:paddingTop="10dp">
+        android:paddingTop="10dp"
+        android:paddingEnd="15dp"
+        android:paddingBottom="10dp">
 
         <include
             android:id="@+id/callCheckBox"
@@ -77,10 +77,10 @@
         android:id="@+id/layout3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="10dp"
-        android:paddingEnd="15dp"
         android:paddingStart="5dp"
-        android:paddingTop="10dp">
+        android:paddingTop="10dp"
+        android:paddingEnd="15dp"
+        android:paddingBottom="10dp">
 
         <include
             android:id="@+id/sendEmailCheckBox"
@@ -110,8 +110,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:paddingBottom="10dp"
         android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         android:textColor="@android:color/black"
         android:typeface="monospace" />
 

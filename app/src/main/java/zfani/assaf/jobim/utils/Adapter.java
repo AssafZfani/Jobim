@@ -11,6 +11,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -37,7 +38,7 @@ public class Adapter extends FirebaseRecyclerAdapter<Job, Adapter.ViewHolder> {
         query.addValueEventListener(new ValueEventListener() {
 
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 jobsList = new ArrayList<>();
 
@@ -46,7 +47,7 @@ public class Adapter extends FirebaseRecyclerAdapter<Job, Adapter.ViewHolder> {
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });
@@ -54,7 +55,7 @@ public class Adapter extends FirebaseRecyclerAdapter<Job, Adapter.ViewHolder> {
         FirebaseDatabase.getInstance().getReference().child("jobs_types").addValueEventListener(new ValueEventListener() {
 
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 jobsTypesList = new ArrayList<>();
 
@@ -63,7 +64,7 @@ public class Adapter extends FirebaseRecyclerAdapter<Job, Adapter.ViewHolder> {
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });

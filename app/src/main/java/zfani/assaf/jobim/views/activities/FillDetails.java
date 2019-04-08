@@ -19,7 +19,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
-import zfani.assaf.jobim.Application;
+import zfani.assaf.jobim.App;
 import zfani.assaf.jobim.R;
 import zfani.assaf.jobim.models.RoundedImageView;
 import zfani.assaf.jobim.views.fragments.DetailsFragments.BirthYearFragment;
@@ -52,9 +52,9 @@ public class FillDetails extends FragmentActivity {
 
         String imageEncoded = Base64.encodeToString(byteArrayOutputStream.toByteArray(), Base64.DEFAULT);
 
-        Application.sharedPreferences.edit().putBoolean("FromCamera", true).apply();
+        App.sharedPreferences.edit().putBoolean("FromCamera", true).apply();
 
-        Application.sharedPreferences.edit().putString("Image", imageEncoded).apply();
+        App.sharedPreferences.edit().putString("Image", imageEncoded).apply();
     }
 
     static void saveImageFromGallery(Activity activity, Intent data) {
@@ -71,9 +71,9 @@ public class FillDetails extends FragmentActivity {
 
             cursor.moveToFirst();
 
-            Application.sharedPreferences.edit().putBoolean("FromCamera", false).apply();
+            App.sharedPreferences.edit().putBoolean("FromCamera", false).apply();
 
-            Application.sharedPreferences.edit().putString("Image",
+            App.sharedPreferences.edit().putString("Image",
                     cursor.getString(cursor.getColumnIndex(filePathColumn[0]))).apply();
 
             cursor.close();
@@ -259,9 +259,9 @@ public class FillDetails extends FragmentActivity {
 
             } else {
 
-                if (Application.sharedPreferences.getString("City", null) == null)
+                if (App.sharedPreferences.getString("City", null) == null)
                     moveToAnotherFragment(currentFragment, 2, R.id.cityButton);
-                else if (Application.sharedPreferences.getInt("BirthYear", 0) == 0)
+                else if (App.sharedPreferences.getInt("BirthYear", 0) == 0)
                     moveToAnotherFragment(currentFragment, 1, R.id.birthYearButton);
                 else
                     finish();

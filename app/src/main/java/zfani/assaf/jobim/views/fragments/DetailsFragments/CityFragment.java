@@ -9,8 +9,9 @@ import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import zfani.assaf.jobim.Application;
+import zfani.assaf.jobim.App;
 import zfani.assaf.jobim.R;
 import zfani.assaf.jobim.utils.GPSTracker;
 
@@ -24,13 +25,13 @@ public class CityFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.city_fragment, container, false);
 
         city = view.findViewById(R.id.city);
 
-        String address = Application.sharedPreferences.getString("City", null);
+        String address = App.sharedPreferences.getString("City", null);
 
         if (address != null)
             city.setText(address);
@@ -39,7 +40,7 @@ public class CityFragment extends Fragment {
             address = GPSTracker.getAddressFromLatLng(getActivity(), null, GPSTracker.location);
 
             if (address != null)
-                city.setText(address.substring(address.lastIndexOf(", ") + 2, address.length()));
+                city.setText(address.substring(address.lastIndexOf(", ") + 2));
         }
 
         final String cityText = address;
@@ -78,7 +79,7 @@ public class CityFragment extends Fragment {
         boolean result = !cityText.isEmpty();
 
         if (result)
-            Application.sharedPreferences.edit().putString("City", cityText).apply();
+            App.sharedPreferences.edit().putString("City", cityText).apply();
         else
             Toast.makeText(getActivity(), "חובה לבחור עיר מגורים מהרשימה", Toast.LENGTH_SHORT).show();
 

@@ -9,9 +9,10 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import zfani.assaf.jobim.Application;
+import zfani.assaf.jobim.App;
 import zfani.assaf.jobim.R;
 import zfani.assaf.jobim.models.RoundedImageView;
 import zfani.assaf.jobim.views.activities.MainActivity;
@@ -28,19 +29,19 @@ public class FullNameFragment extends Fragment {
 
     public static void initSelfie(RoundedImageView selfie) {
 
-        String image = Application.sharedPreferences.getString("Image", null);
+        String image = App.sharedPreferences.getString("Image", null);
 
         if (image != null) {
 
             byte[] b = Base64.decode(image, Base64.DEFAULT);
 
-            selfie.setImageBitmap(Application.sharedPreferences.getBoolean
+            selfie.setImageBitmap(App.sharedPreferences.getBoolean
                     ("FromCamera", true) ? BitmapFactory.decodeByteArray(b, 0, b.length) : BitmapFactory.decodeFile(image));
         }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.full_name_fragment, container, false);
 
@@ -56,7 +57,7 @@ public class FullNameFragment extends Fragment {
 
         lastName = view.findViewById(R.id.lastName);
 
-        String fullName = Application.sharedPreferences.getString("FullName", null);
+        String fullName = App.sharedPreferences.getString("FullName", null);
 
         if (fullName != null) {
 
@@ -64,7 +65,7 @@ public class FullNameFragment extends Fragment {
 
             firstName.setText(fullName.substring(0, lastSpace));
 
-            lastName.setText(fullName.substring(lastSpace + 1, fullName.length()));
+            lastName.setText(fullName.substring(lastSpace + 1));
         }
 
         view.findViewById(R.id.selfie).setOnClickListener(view1 -> MainActivity.displayDialog(activity, R.layout.image_dialog, null));
@@ -79,7 +80,7 @@ public class FullNameFragment extends Fragment {
         boolean result = !firstNameText.isEmpty() && !lastNameText.isEmpty();
 
         if (result)
-            Application.sharedPreferences.edit().putString("FullName", firstNameText + " " + lastNameText).apply();
+            App.sharedPreferences.edit().putString("FullName", firstNameText + " " + lastNameText).apply();
         else
             Toast.makeText(activity, "חובה למלא שם פרטי ושם משפחה", Toast.LENGTH_SHORT).show();
 

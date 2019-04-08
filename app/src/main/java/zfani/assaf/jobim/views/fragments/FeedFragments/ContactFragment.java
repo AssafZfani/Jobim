@@ -15,9 +15,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import zfani.assaf.jobim.Application;
+import zfani.assaf.jobim.App;
 import zfani.assaf.jobim.R;
 import zfani.assaf.jobim.models.Job;
 import zfani.assaf.jobim.utils.Adapter;
@@ -51,7 +52,7 @@ public class ContactFragment extends Fragment {
 
         final Job job = Job.findJobById(jobId);
 
-        if (Application.sharedPreferences.contains("FullName") && job != null) {
+        if (App.sharedPreferences.contains("FullName") && job != null) {
 
             if (id != R.id.call) {
 
@@ -177,7 +178,7 @@ public class ContactFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.contact_layout, container, false);
 
@@ -206,7 +207,7 @@ public class ContactFragment extends Fragment {
         sendEmail.setOnClickListener(view12 -> {
 
             if (job != null)
-                MainActivity.displayDialog(activity, Application.sharedPreferences.contains("FullName") ?
+                MainActivity.displayDialog(activity, App.sharedPreferences.contains("FullName") ?
                         R.layout.sending_mail_dialog : R.layout.fill_details_dialog, job.getId());
         });
 

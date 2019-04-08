@@ -10,8 +10,8 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
         android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
         android:gravity="center"
         android:text="מיקום הג'וב"
         android:textColor="@android:color/black"
@@ -25,13 +25,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="25dp"
-        android:layout_marginBottom="25dp"
-        android:layout_marginEnd="25dp"
         android:layout_marginStart="25dp"
         android:layout_marginTop="20dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="25dp"
         android:background="@drawable/edittext"
-        android:paddingEnd="0dp"
-        android:paddingStart="5dp">
+        android:paddingStart="5dp"
+        android:paddingEnd="0dp">
 
         <ImageView
             android:layout_width="20dp"
@@ -49,8 +49,8 @@
             android:background="@drawable/edittext"
             android:hint="חפש כתובת"
             android:inputType="text"
-            android:paddingEnd="10dp"
             android:paddingStart="10dp"
+            android:paddingEnd="10dp"
             android:textAlignment="textStart"
             android:textSize="17.5sp"
             android:typeface="monospace" />

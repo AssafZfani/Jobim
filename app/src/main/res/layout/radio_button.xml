@@ -5,9 +5,9 @@
     android:layout_height="wrap_content"
     android:button="@android:color/transparent"
     android:drawablePadding="10dp"
-    android:paddingBottom="10dp"
-    android:paddingEnd="25dp"
     android:paddingStart="15dp"
     android:paddingTop="10dp"
+    android:paddingEnd="25dp"
+    android:paddingBottom="10dp"
     android:textDirection="rtl"
     android:typeface="monospace" />

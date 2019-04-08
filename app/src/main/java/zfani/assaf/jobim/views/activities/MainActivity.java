@@ -18,7 +18,9 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
-import zfani.assaf.jobim.Application;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import zfani.assaf.jobim.App;
 import zfani.assaf.jobim.R;
 import zfani.assaf.jobim.models.Job;
 import zfani.assaf.jobim.utils.Adapter;
@@ -40,9 +42,13 @@ import zfani.assaf.jobim.views.fragments.MenuFragments.SettingsFragment;
 public class MainActivity extends FragmentActivity {
 
     public AllJobsFragment allJobsFragment;
+    @BindView(R.id.drawerLayout)
+    DrawerLayout drawerLayout;
+    @BindView(R.id.toolBar)
+    Toolbar toolBar;
+    @BindView(R.id.drawerMenu)
+    View drawerMenu;
     private FragmentManager fragmentManager;
-    private DrawerLayout drawerLayout;
-    private View drawerMenu;
     private Drawable background;
     private MapFragment mapFragment;
     private Fragment fragmentToReplace;
@@ -167,7 +173,7 @@ public class MainActivity extends FragmentActivity {
                     case R.layout.close_dialog:
                         findViewById(R.id.exit).setOnClickListener(view -> {
                             dismiss();
-                            Application.sharedPreferences.edit().remove("FromCamera").remove("Image").remove("FullName").remove("City").remove("BirthYear").remove("Email").apply();
+                            App.sharedPreferences.edit().remove("FromCamera").remove("Image").remove("FullName").remove("City").remove("BirthYear").remove("Email").apply();
                             activity.finish();
                         });
                         break;
@@ -233,13 +239,12 @@ public class MainActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.homepage);
+        setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
         new GPSTracker(this);
         setupToolBar(this);
         fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.mainFragment, allJobsFragment = (AllJobsFragment) AllJobsFragment.newInstance()).commit();
-        drawerLayout = findViewById(R.id.drawerLayout);
-        drawerMenu = findViewById(R.id.drawerMenu);
         background = findViewById(R.id.mapButton).getBackground();
     }
 
@@ -293,7 +298,7 @@ public class MainActivity extends FragmentActivity {
     }
 
     public void menu(View v) {
-        String fullName = Application.sharedPreferences.getString("FullName", null);
+        String fullName = App.sharedPreferences.getString("FullName", null);
         getIntent().putExtra("SmallRound", true);
         FullNameFragment.initSelfie(findViewById(R.id.menuSelfie));
         ((TextView) drawerMenu.findViewById(R.id.fullName)).setText(fullName != null ? fullName : "היי אורח!");
@@ -361,7 +366,7 @@ public class MainActivity extends FragmentActivity {
                 fragmentToReplace = FullNameFragment.newInstance();
                 break;
             case R.id.myDeatils:
-            case R.id.myDeatilsLayout:
+            case R.id.myDetailsLayout:
                 fragmentName = "הפרטים שלי";
                 fragmentToReplace = MyDetailsFragment.newInstance();
                 break;
@@ -386,7 +391,7 @@ public class MainActivity extends FragmentActivity {
     }
 
     public void handleMyDetailsButtons(View v) {
-        handleMenuButtons(Application.sharedPreferences.contains("FullName") ? v : findViewById(R.id.myDeatils));
+        handleMenuButtons(App.sharedPreferences.contains("FullName") ? v : findViewById(R.id.myDeatils));
     }
 
     public void website(View v) {
@@ -401,7 +406,7 @@ public class MainActivity extends FragmentActivity {
         boolean result = false;
         switch (getIntent().getStringExtra("Fragment")) {
             case "הגדרות":
-                Application.sharedPreferences.edit().putBoolean("EnableNotification", ((SettingsFragment) fragmentToReplace).toggleButton.isChecked()).apply();
+                App.sharedPreferences.edit().putBoolean("EnableNotification", ((SettingsFragment) fragmentToReplace).toggleButton.isChecked()).apply();
                 result = true;
                 break;
             case "עריכת שם ותמונה":

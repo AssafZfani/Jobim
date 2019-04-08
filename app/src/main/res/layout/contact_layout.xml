@@ -11,10 +11,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginBottom="15dp"
-        android:layout_marginEnd="15sp"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="30dp">
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="15sp"
+        android:layout_marginBottom="15dp">
 
         <LinearLayout
             android:id="@+id/sendEmail"
@@ -105,8 +105,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:text="תנאים טובים למתאימים"
         android:textColor="@android:color/black" />
 

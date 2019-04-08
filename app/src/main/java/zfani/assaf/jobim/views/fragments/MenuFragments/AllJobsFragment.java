@@ -17,12 +17,13 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import zfani.assaf.jobim.Application;
+import zfani.assaf.jobim.App;
 import zfani.assaf.jobim.R;
 import zfani.assaf.jobim.models.JobType;
 import zfani.assaf.jobim.utils.Adapter;
@@ -44,7 +45,7 @@ public class AllJobsFragment extends Fragment implements SwipeRefreshLayout.OnRe
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.all_jobs_fragment, container, false);
 
@@ -126,7 +127,7 @@ public class AllJobsFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
         String address = data.getStringExtra("Address") == null ? "" : data.getStringExtra("Address");
 
-        String location = address.isEmpty() ? address : address.substring(address.indexOf(", ") + 2, address.length());
+        String location = address.isEmpty() ? address : address.substring(address.indexOf(", ") + 2);
 
         String firm = data.getStringExtra("Firm") == null ? "" : data.getStringExtra("Firm");
 
@@ -179,7 +180,7 @@ public class AllJobsFragment extends Fragment implements SwipeRefreshLayout.OnRe
         Activity activity = getActivity();
 
         if (Adapter.jobsList == null)
-            Application.loadJobs(activity);
+            App.loadJobs(activity);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
 
@@ -192,13 +193,13 @@ public class AllJobsFragment extends Fragment implements SwipeRefreshLayout.OnRe
         recyclerView.addOnChildAttachStateChangeListener(new RecyclerView.OnChildAttachStateChangeListener() {
 
             @Override
-            public void onChildViewAttachedToWindow(View view) {
+            public void onChildViewAttachedToWindow(@NonNull View view) {
 
                 setMessageVisibility();
             }
 
             @Override
-            public void onChildViewDetachedFromWindow(View view) {
+            public void onChildViewDetachedFromWindow(@NonNull View view) {
 
                 setMessageVisibility();
             }

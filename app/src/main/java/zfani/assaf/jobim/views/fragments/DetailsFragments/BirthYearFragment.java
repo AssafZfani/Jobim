@@ -6,8 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.NumberPicker;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import zfani.assaf.jobim.Application;
+import zfani.assaf.jobim.App;
 import zfani.assaf.jobim.R;
 
 public class BirthYearFragment extends Fragment {
@@ -20,7 +21,7 @@ public class BirthYearFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.birth_year_fragment, container, false);
 
@@ -30,7 +31,7 @@ public class BirthYearFragment extends Fragment {
 
         numberPicker.setMaxValue(2002);
 
-        int birthYear = Application.sharedPreferences.getInt("BirthYear", 0);
+        int birthYear = App.sharedPreferences.getInt("BirthYear", 0);
 
         numberPicker.setValue(birthYear != 0 ? birthYear : 1990);
 
@@ -41,7 +42,7 @@ public class BirthYearFragment extends Fragment {
 
     public boolean isValidValue() {
 
-        Application.sharedPreferences.edit().putInt("BirthYear", numberPicker.getValue()).apply();
+        App.sharedPreferences.edit().putInt("BirthYear", numberPicker.getValue()).apply();
 
         return true;
     }

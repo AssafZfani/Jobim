@@ -12,8 +12,8 @@
         android:id="@+id/lookingFor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
         android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
         android:gravity="center"
         android:textColor="@android:color/black"
         android:textDirection="rtl"
@@ -22,8 +22,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="25dp"
         android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
         android:orientation="vertical">
 
         <EditText
@@ -36,8 +36,8 @@
             android:hint="כותרת קולעת (עד 50 תווים)"
             android:inputType="text"
             android:maxEms="50"
-            android:paddingEnd="10dp"
             android:paddingStart="10dp"
+            android:paddingEnd="10dp"
             android:textAlignment="textStart"
             android:textColor="@color/orange"
             android:typeface="monospace" />
@@ -51,9 +51,9 @@
             android:gravity="top"
             android:hint="תנו תיאור קצר של הג'וב ב-2/3 משפטים"
             android:inputType="text"
-            android:paddingEnd="10dp"
             android:paddingStart="10dp"
             android:paddingTop="10dp"
+            android:paddingEnd="10dp"
             android:textColor="@color/orange"
             android:typeface="monospace" />
 

@@ -12,16 +12,16 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="35dp"
         android:layout_marginStart="35dp"
+        android:layout_marginEnd="35dp"
         android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginBottom="10dp"
             android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
             android:gravity="center"
             android:text="כל מועמד שירצה ליצור קשר איתכם\nיהיה חייב לענות על שאלת הסינון"
             android:textColor="@android:color/black"
@@ -36,9 +36,9 @@
             android:gravity="top"
             android:hint="השאלה שלכם..."
             android:inputType="text"
-            android:paddingEnd="10dp"
             android:paddingStart="10dp"
             android:paddingTop="10dp"
+            android:paddingEnd="10dp"
             android:textColor="@color/orange"
             android:typeface="monospace" />
 
@@ -46,8 +46,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginBottom="15dp"
             android:layout_marginTop="10dp"
+            android:layout_marginBottom="15dp"
             android:gravity="center"
             android:text="בחרו את התשובה הרצויה"
             android:textColor="@android:color/black"

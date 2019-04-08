@@ -20,9 +20,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="30dp"
         android:layout_marginStart="30dp"
         android:layout_marginTop="40dp"
+        android:layout_marginEnd="30dp"
         android:orientation="horizontal">
 
         <AutoCompleteTextView
@@ -33,8 +33,8 @@
             android:background="@drawable/edittext"
             android:hint="עיר מגורים"
             android:inputType="text"
-            android:paddingEnd="0dp"
             android:paddingStart="25dp"
+            android:paddingEnd="0dp"
             android:textAlignment="viewStart"
             android:textColor="@color/orange"
             android:textSize="15sp"

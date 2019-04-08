@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
-import zfani.assaf.jobim.Application;
+import zfani.assaf.jobim.App;
 import zfani.assaf.jobim.R;
 
 import static android.util.Patterns.EMAIL_ADDRESS;
@@ -132,9 +132,9 @@ public class MakingContact extends FragmentActivity {
             layouts[0].performClick();
         }
 
-        email.setText(Application.sharedPreferences.getString("Email", ""));
+        email.setText(App.sharedPreferences.getString("Email", ""));
 
-        String phone = Application.sharedPreferences.getString("PhoneNumber", "");
+        String phone = App.sharedPreferences.getString("PhoneNumber", "");
 
         phoneNumber.setText(phone);
         smsNumber.setText(phone);

@@ -11,8 +11,8 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="25dp"
         android:layout_marginTop="15dp"
+        android:layout_marginBottom="25dp"
         android:gravity="center"
         android:text="כמה פרטים אחרונים (לא חובה)"
         android:textColor="@android:color/black"
@@ -21,11 +21,11 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
-        android:layout_marginEnd="30dp"
         android:layout_marginStart="30dp"
-        android:drawablePadding="10dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="15dp"
         android:drawableStart="@drawable/picture"
+        android:drawablePadding="10dp"
         android:gravity="center_vertical"
         android:text="מומלץ לצרף תמונת אווירה הקשורה לתפקיד או לבית העסק.\nלא להעלות סתם לוגו..."
         android:textColor="@android:color/black"
@@ -35,11 +35,11 @@
         android:id="@+id/checkBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
         android:layout_marginStart="20dp"
+        android:layout_marginBottom="20dp"
         android:button="@android:color/transparent"
-        android:drawablePadding="10dp"
         android:drawableStart="@drawable/checkbox"
+        android:drawablePadding="10dp"
         android:text="מתאים לבני נוער"
         android:textColor="@color/orange" />
 
@@ -47,8 +47,8 @@
         android:id="@+id/addFilterQuestion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
         android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:typeface="monospace" />
 
     <View

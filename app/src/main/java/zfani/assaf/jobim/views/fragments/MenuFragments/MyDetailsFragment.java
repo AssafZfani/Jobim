@@ -10,8 +10,9 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import zfani.assaf.jobim.Application;
+import zfani.assaf.jobim.App;
 import zfani.assaf.jobim.R;
 import zfani.assaf.jobim.views.activities.FillDetails;
 import zfani.assaf.jobim.views.fragments.DetailsFragments.FullNameFragment;
@@ -27,7 +28,7 @@ public class MyDetailsFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         activity = getActivity();
 
@@ -45,7 +46,7 @@ public class MyDetailsFragment extends Fragment {
 
             ((InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(view.getWindowToken(), 0);
 
-            if (!Application.sharedPreferences.contains("FullName") && !needToFillDetails) {
+            if (!App.sharedPreferences.contains("FullName") && !needToFillDetails) {
 
                 startActivity(new Intent(activity, FillDetails.class));
 
@@ -53,15 +54,15 @@ public class MyDetailsFragment extends Fragment {
 
             } else {
 
-                ((TextView) view.findViewById(R.id.fullName)).setText(Application.sharedPreferences.getString("FullName", ""));
+                ((TextView) view.findViewById(R.id.fullName)).setText(App.sharedPreferences.getString("FullName", ""));
 
-                ((TextView) view.findViewById(R.id.city)).setText(Application.sharedPreferences.getString("City", ""));
+                ((TextView) view.findViewById(R.id.city)).setText(App.sharedPreferences.getString("City", ""));
 
-                int birthYear = Application.sharedPreferences.getInt("BirthYear", 0);
+                int birthYear = App.sharedPreferences.getInt("BirthYear", 0);
 
                 ((TextView) view.findViewById(R.id.birthYear)).setText(birthYear != 0 ? birthYear + "" : "");
 
-                ((TextView) view.findViewById(R.id.email)).setText(Application.sharedPreferences.getString("Email", ""));
+                ((TextView) view.findViewById(R.id.email)).setText(App.sharedPreferences.getString("Email", ""));
 
                 activity.getIntent().putExtra("SmallRound", false);
 

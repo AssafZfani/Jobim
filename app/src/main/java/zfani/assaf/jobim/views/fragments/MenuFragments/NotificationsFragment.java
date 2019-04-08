@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import zfani.assaf.jobim.Application;
+import zfani.assaf.jobim.App;
 import zfani.assaf.jobim.R;
 
 public class NotificationsFragment extends Fragment {
@@ -24,11 +24,11 @@ public class NotificationsFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.notifications, container, false);
 
-        final int notificationsCount = Application.sharedPreferences.getInt("NotificationsCount", 0);
+        final int notificationsCount = App.sharedPreferences.getInt("NotificationsCount", 0);
 
         if (notificationsCount != 0) {
 
@@ -52,9 +52,9 @@ public class NotificationsFragment extends Fragment {
 
                     TextView date = convertView.findViewById(R.id.date);
 
-                    notification.setText(Application.sharedPreferences.getString("notification" + (notificationsCount - position), ""));
+                    notification.setText(App.sharedPreferences.getString("notification" + (notificationsCount - position), ""));
 
-                    Long dateOrTime = Application.sharedPreferences.getLong("time" + (notificationsCount - position), 0);
+                    Long dateOrTime = App.sharedPreferences.getLong("time" + (notificationsCount - position), 0);
 
                     date.setText(DateFormat.format(DateUtils.isToday(dateOrTime) ? "HH:mm" : "dd.MM.yy", dateOrTime));
 

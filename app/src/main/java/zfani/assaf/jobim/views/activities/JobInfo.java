@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.fragment.app.FragmentActivity;
-import zfani.assaf.jobim.Application;
+import zfani.assaf.jobim.App;
 import zfani.assaf.jobim.R;
 import zfani.assaf.jobim.models.Job;
 import zfani.assaf.jobim.utils.Adapter;
@@ -68,7 +68,7 @@ public class JobInfo extends FragmentActivity {
                 cursor.close();
             }
 
-            String text = "הי! " + Application.sharedPreferences.getString("FullName", "משתמש/ת Jobim") + " " +
+            String text = "הי! " + App.sharedPreferences.getString("FullName", "משתמש/ת Jobim") + " " +
                     getResources().getString(R.string.shareMessage) + " " + job.getFirm() + " מחפשת " +
                     Adapter.jobsTypesList.get(job.getBusinessNumber() - 1).getJobType();
 

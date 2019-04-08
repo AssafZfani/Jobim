@@ -13,6 +13,7 @@ import android.widget.TextView;
 import java.io.IOException;
 import java.text.DecimalFormat;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import zfani.assaf.jobim.R;
@@ -62,7 +63,7 @@ public class JobFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.job_layout, container, false);
 
