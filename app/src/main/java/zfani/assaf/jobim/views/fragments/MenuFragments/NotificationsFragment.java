@@ -32,7 +32,7 @@ public class NotificationsFragment extends Fragment {
 
         if (notificationsCount != 0) {
 
-            view.findViewById(R.id.message).setVisibility(View.INVISIBLE);
+            view.findViewById(R.id.ivLocationMessage).setVisibility(View.INVISIBLE);
 
             ListView notifications = view.findViewById(R.id.notifications);
 

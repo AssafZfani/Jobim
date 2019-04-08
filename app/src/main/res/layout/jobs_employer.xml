@@ -8,12 +8,15 @@
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
-        style="@style/SwipeRefreshLayout"
-        android:layout_below="@id/toolbar">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar"
+        android:layout_margin="5dp">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/jobsEmployerRecyclerView"
-            style="@style/RecyclerView" />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

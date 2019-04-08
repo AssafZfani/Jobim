@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/allJobsLayout"
     android:layout_width="match_parent"
+    android:padding="7.5dp"
     android:layout_height="wrap_content"
-    tools:ignore="ContentDescription, HardcodedText">
+    tools:ignore="ContentDescription">
 
     <Button
         android:id="@+id/cleanButton"
@@ -14,7 +14,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="3dp"
-        android:layout_marginEnd="7dp"
         android:onClick="clean"
         android:text="נקה"
         android:visibility="gone" />
@@ -23,9 +22,7 @@
         android:id="@+id/showByLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="7dp"
         android:layout_marginTop="7dp"
-        android:layout_marginEnd="7dp"
         android:layout_toStartOf="@id/cleanButton"
         android:gravity="center">
 
@@ -62,17 +59,20 @@
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
-        style="@style/SwipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_below="@id/showByLayout">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/allJobsRecyclerView"
-            style="@style/RecyclerView" />
+            android:id="@+id/rvAllJobs"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <ImageView
-        android:id="@+id/message"
+        android:id="@+id/ivLocationMessage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"

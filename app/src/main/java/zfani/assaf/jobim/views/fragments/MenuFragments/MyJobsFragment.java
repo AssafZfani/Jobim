@@ -46,7 +46,7 @@ public class MyJobsFragment extends Fragment implements SwipeRefreshLayout.OnRef
 
         recyclerView = view.findViewById(R.id.myJobsRecyclerView);
 
-        message = view.findViewById(R.id.message);
+        message = view.findViewById(R.id.ivLocationMessage);
 
         myJobsLayout.setOnCheckedChangeListener((radioGroup, i) -> {
 
