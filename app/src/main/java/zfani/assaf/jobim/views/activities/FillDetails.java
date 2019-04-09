@@ -15,6 +15,7 @@ import android.widget.RadioGroup;
 
 import java.io.ByteArrayOutputStream;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -38,78 +39,48 @@ public class FillDetails extends FragmentActivity {
     private EmailFragment emailFragment;
 
     static void saveImageFromCamera(Activity activity, Intent data) {
-
         RoundedImageView selfie = activity.findViewById(R.id.selfie);
-
         Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-
         selfie.setImageBitmap(bitmap);
-
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-
-        if (bitmap != null)
+        if (bitmap != null) {
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-
+        }
         String imageEncoded = Base64.encodeToString(byteArrayOutputStream.toByteArray(), Base64.DEFAULT);
-
         App.sharedPreferences.edit().putBoolean("FromCamera", true).apply();
-
         App.sharedPreferences.edit().putString("Image", imageEncoded).apply();
     }
 
     static void saveImageFromGallery(Activity activity, Intent data) {
-
         RoundedImageView selfie = activity.findViewById(R.id.selfie);
-
         Uri selectedImage = data.getData();
-
         String[] filePathColumn = {MediaStore.Images.Media.DATA};
-
         Cursor cursor = activity.getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-
         if (cursor != null) {
-
             cursor.moveToFirst();
-
             App.sharedPreferences.edit().putBoolean("FromCamera", false).apply();
-
-            App.sharedPreferences.edit().putString("Image",
-                    cursor.getString(cursor.getColumnIndex(filePathColumn[0]))).apply();
-
+            App.sharedPreferences.edit().putString("Image", cursor.getString(cursor.getColumnIndex(filePathColumn[0]))).apply();
             cursor.close();
         }
-
         selfie.setImageURI(selectedImage);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.fill_details);
-
         MainActivity.setupToolBar(this);
-
         //findViewById(R.id.closeButton).setOnClickListener(view -> onBackPressed());
-
         drawableResources = new int[4];
-
         drawableResources[3] = R.drawable.full_name;
         drawableResources[2] = R.drawable.city2;
         drawableResources[1] = R.drawable.birth_year2;
         drawableResources[0] = R.drawable.email2;
-
         fragmentsBar = findViewById(R.id.fragmentsBar);
-
         fragmentsBar.setOnCheckedChangeListener((radioGroup, checkedId) -> {
-
             if (checkedId != -1) {
-
                 int currentFragment = viewPager.getCurrentItem(), nextFragment;
-
                 switch (checkedId) {
-
                     case R.id.emailButton:
                         nextFragment = 0;
                         break;
@@ -123,19 +94,13 @@ public class FillDetails extends FragmentActivity {
                         nextFragment = 3;
                         break;
                 }
-
                 hideKeyboard();
-
                 moveToAnotherFragment(currentFragment, nextFragment, checkedId);
             }
         });
-
         viewPager = findViewById(R.id.viewPager);
-
         viewPager.setOnTouchListener((view, motionEvent) -> true);
-
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -143,7 +108,6 @@ public class FillDetails extends FragmentActivity {
 
             @Override
             public void onPageSelected(int position) {
-
                 //findViewById(R.id.nextButton).setBackgroundResource(position == 0 ? R.drawable.save_icon : R.drawable.next_icon);
             }
 
@@ -152,14 +116,12 @@ public class FillDetails extends FragmentActivity {
 
             }
         });
-
         viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
 
+            @NonNull
             @Override
             public Fragment getItem(int position) {
-
                 switch (position) {
-
                     case 0:
                         return emailFragment = EmailFragment.newInstance();
                     case 1:
@@ -176,63 +138,50 @@ public class FillDetails extends FragmentActivity {
                 return 4;
             }
         });
-
         viewPager.setCurrentItem(3);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        if (resultCode == RESULT_OK)
-            if (requestCode == 3)
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == 3) {
                 saveImageFromCamera(this, data);
-            else if (requestCode == 4)
+            }
+            else if (requestCode == 4) {
                 saveImageFromGallery(this, data);
+            }
+        }
     }
 
     @Override
     public void onBackPressed() {
-
         MainActivity.displayDialog(this, R.layout.close_dialog, null);
     }
 
-    private boolean canMovetoFragment(int fragmentNumber) {
-
+    private boolean canMoveToFragment(int fragmentNumber) {
         switch (fragmentNumber) {
-
             default:
-
                 return fullNameFragment.isValidValue();
-
             case 2:
-
                 return cityFragment.isValidValue();
-
             case 1:
-
                 return birthYearFragment.isValidValue();
-
             case 0:
-
                 return emailFragment.isValidValue();
         }
     }
 
     private void hideKeyboard() {
-
         View view = getCurrentFocus();
-
-        if (view != null)
-            ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE))
-                    .hideSoftInputFromWindow(view.getWindowToken(), 0);
+        if (view != null) {
+            ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 
     private void moveToAnotherFragment(int currentFragment, int nextFragment, int checkedId) {
-
         int button;
-
         switch (currentFragment) {
-
             case 3:
                 button = R.id.nameButton;
                 break;
@@ -246,40 +195,32 @@ public class FillDetails extends FragmentActivity {
                 button = R.id.emailButton;
                 break;
         }
-
-        if (canMovetoFragment(currentFragment))
-
+        if (canMoveToFragment(currentFragment))
             if (nextFragment != -1) {
-
                 viewPager.setCurrentItem(nextFragment);
-
                 findViewById(button).setBackgroundResource(R.drawable.completed1);
-
                 findViewById(checkedId).setBackgroundResource(drawableResources[nextFragment]);
-
             } else {
-
-                if (App.sharedPreferences.getString("City", null) == null)
+                if (App.sharedPreferences.getString("City", null) == null) {
                     moveToAnotherFragment(currentFragment, 2, R.id.cityButton);
-                else if (App.sharedPreferences.getInt("BirthYear", 0) == 0)
+                }
+                else if (App.sharedPreferences.getInt("BirthYear", 0) == 0) {
                     moveToAnotherFragment(currentFragment, 1, R.id.birthYearButton);
-                else
+                }
+                else {
                     finish();
+                }
             }
-        else
+        else {
             fragmentsBar.clearCheck();
+        }
     }
 
     public void next(View v) {
-
         hideKeyboard();
-
         int fragmentNumber = viewPager.getCurrentItem();
-
         int checkedId;
-
         switch (fragmentNumber - 1) {
-
             case 2:
                 checkedId = R.id.cityButton;
                 break;
@@ -290,7 +231,6 @@ public class FillDetails extends FragmentActivity {
                 checkedId = R.id.emailButton;
                 break;
         }
-
         moveToAnotherFragment(fragmentNumber, fragmentNumber - 1, checkedId);
     }
 }

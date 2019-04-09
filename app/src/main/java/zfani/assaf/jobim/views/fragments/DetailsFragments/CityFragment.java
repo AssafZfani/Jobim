@@ -17,7 +17,7 @@ import zfani.assaf.jobim.utils.GPSTracker;
 
 public class CityFragment extends Fragment {
 
-    AutoCompleteTextView city;
+    private AutoCompleteTextView city;
 
     public static CityFragment newInstance() {
 

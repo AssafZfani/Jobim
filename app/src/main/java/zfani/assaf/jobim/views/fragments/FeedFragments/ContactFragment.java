@@ -20,8 +20,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import zfani.assaf.jobim.App;
 import zfani.assaf.jobim.R;
-import zfani.assaf.jobim.models.Job;
 import zfani.assaf.jobim.adapters.JobsAdapter;
+import zfani.assaf.jobim.models.Job;
 import zfani.assaf.jobim.views.activities.MainActivity;
 
 public class ContactFragment extends Fragment {

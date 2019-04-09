@@ -3,32 +3,35 @@ package zfani.assaf.jobim.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+
 import androidx.annotation.NonNull;
-import zfani.assaf.jobim.adapters.JobsAdapter;
-import zfani.assaf.jobim.utils.FilteredAdapter;
 
 @SuppressWarnings("unused")
 public class Job implements Parcelable, Comparable<Job> {
 
-    protected String address, firm, id, title;
-    int businessNumber, distance;
-    private boolean applied, favorite, posted;
+     ArrayList<Integer> color;
+     String address, firm, id, title, type;
+     int businessNumber, distance;
+     boolean applied, favorite, posted;
 
     Job() {
 
     }
 
-    public Job(String address, boolean applied, int businessNumber, int distance,
-               boolean favorite, String firm, String id, boolean posted, String title) {
+    public Job(String address, boolean applied, int businessNumber, ArrayList<Integer> color, int distance,
+               boolean favorite, String firm, String id, boolean posted, String title, String type) {
         this.address = address;
         this.applied = applied;
         this.businessNumber = businessNumber;
+        this.color = color;
         this.distance = distance;
         this.favorite = favorite;
         this.firm = firm;
         this.id = id;
         this.posted = posted;
         this.title = title;
+        this.type = type;
     }
 
     protected Job(Parcel in) {
@@ -36,6 +39,7 @@ public class Job implements Parcelable, Comparable<Job> {
         firm = in.readString();
         id = in.readString();
         title = in.readString();
+        type = in.readString();
         businessNumber = in.readInt();
         distance = in.readInt();
         applied = in.readByte() != 0;
@@ -71,6 +75,10 @@ public class Job implements Parcelable, Comparable<Job> {
         return businessNumber;
     }
 
+    public ArrayList<Integer> getColor() {
+        return color;
+    }
+
     public int getDistance() {
         return distance;
     }
@@ -103,11 +111,13 @@ public class Job implements Parcelable, Comparable<Job> {
         return title;
     }
 
+    public String getType() {
+        return type;
+    }
+
     @Override
     public int compareTo(@NonNull Job job) {
-        int businessNumber1 = this.getBusinessNumber();
-        int businessNumber2 = job.getBusinessNumber();
-        return Integer.compare(businessNumber1, businessNumber2);
+        return Integer.compare(getBusinessNumber(), job.getBusinessNumber());
     }
 
     @Override
@@ -121,6 +131,7 @@ public class Job implements Parcelable, Comparable<Job> {
         dest.writeString(firm);
         dest.writeString(id);
         dest.writeString(title);
+        dest.writeString(type);
         dest.writeInt(businessNumber);
         dest.writeInt(distance);
         dest.writeByte((byte) (applied ? 1 : 0));

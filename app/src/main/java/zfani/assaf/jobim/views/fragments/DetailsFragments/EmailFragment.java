@@ -16,7 +16,7 @@ import static android.util.Patterns.EMAIL_ADDRESS;
 
 public class EmailFragment extends Fragment {
 
-    EditText email;
+    private EditText email;
 
     public static EmailFragment newInstance() {
 

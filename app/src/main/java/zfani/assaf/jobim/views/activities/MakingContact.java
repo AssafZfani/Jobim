@@ -17,11 +17,15 @@ import static android.util.Patterns.EMAIL_ADDRESS;
 
 public class MakingContact extends FragmentActivity {
 
-    View[] layouts, images;
-    CheckBox[] checkBoxes;
-    TextView contactText;
-    View phoneLayout, emailLayout;
-    EditText email, phoneNumber, smsNumber;
+    private View[] layouts;
+    private View[] images;
+    private CheckBox[] checkBoxes;
+    private TextView contactText;
+    private View phoneLayout;
+    private View emailLayout;
+    private EditText email;
+    private EditText phoneNumber;
+    private EditText smsNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

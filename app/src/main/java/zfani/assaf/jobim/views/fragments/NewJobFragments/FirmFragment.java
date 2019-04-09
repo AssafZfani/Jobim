@@ -15,7 +15,8 @@ import zfani.assaf.jobim.views.activities.MainActivity;
 
 public class FirmFragment extends Fragment {
 
-    EditText firmName, branchName;
+    private EditText firmName;
+    private EditText branchName;
     private View support;
 
     public static FirmFragment newInstance() {

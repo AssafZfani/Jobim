@@ -13,7 +13,7 @@ import zfani.assaf.jobim.R;
 
 public class BirthYearFragment extends Fragment {
 
-    NumberPicker numberPicker;
+    private NumberPicker numberPicker;
 
     public static BirthYearFragment newInstance() {
 
@@ -41,9 +41,7 @@ public class BirthYearFragment extends Fragment {
     }
 
     public boolean isValidValue() {
-
         App.sharedPreferences.edit().putInt("BirthYear", numberPicker.getValue()).apply();
-
         return true;
     }
 }

@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.ListFragment;
 import zfani.assaf.jobim.R;
-import zfani.assaf.jobim.adapters.JobsAdapter;
 import zfani.assaf.jobim.models.JobType;
 import zfani.assaf.jobim.views.activities.AddNewJob;
 
@@ -37,7 +36,7 @@ public class JobTypeFragment extends ListFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         activity = getActivity();
 

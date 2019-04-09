@@ -18,7 +18,7 @@ import androidx.appcompat.widget.AppCompatImageView;
 
 public class RoundedImageView extends AppCompatImageView {
 
-    private Activity activity;
+    private final Activity activity;
 
     public RoundedImageView(Context context, AttributeSet attrs) {
 
@@ -27,7 +27,7 @@ public class RoundedImageView extends AppCompatImageView {
         this.activity = (Activity) context;
     }
 
-    public static Bitmap getCroppedBitmap(Bitmap bmp, int radius) {
+    private static Bitmap getCroppedBitmap(Bitmap bmp, int radius) {
 
         Bitmap bitmap;
 

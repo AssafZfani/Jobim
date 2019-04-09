@@ -9,8 +9,8 @@ import zfani.assaf.jobim.utils.GPSTracker;
 
 public class ClusterJobs implements ClusterItem {
 
-    Job job;
-    private Activity activity;
+    final Job job;
+    private final Activity activity;
 
     public ClusterJobs(Activity activity, Job job) {
 

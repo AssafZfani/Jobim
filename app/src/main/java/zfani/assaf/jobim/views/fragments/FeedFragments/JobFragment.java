@@ -41,12 +41,11 @@ public class JobFragment extends Fragment {
             viewHolderJob.setAddress(job.getAddress());
             viewHolderJob.setTitle(job.getTitle());
         }
-            JobType jobType = allJobsViewModel.getJobTypeLiveList().getValue().get(job.getBusinessNumber() - 1);
-            viewHolderJob.setDistance(job.getDistance());
-            viewHolderJob.setLayout(jobType.getColor().toArray(new Integer[3]));
-            viewHolderJob.setLookingFor(job.getFirm() + " מחפשת " + jobType.getJobType());
+        viewHolderJob.setDistance(job.getDistance());
+        viewHolderJob.setLayout(job.getColor().toArray(new Integer[3]));
+        viewHolderJob.setLookingFor(job.getFirm() + " מחפשת " + job.getType());
         viewHolderJob.setCircle(job.getBusinessNumber());
-        view.setOnClickListener(v -> viewHolderJob.activity.startActivity(new Intent(viewHolderJob.activity, JobInfo.class).putExtra("JobId", job.getId())));
+        view.setOnClickListener(v -> viewHolderJob.activity.startActivity(new Intent(viewHolderJob.activity, JobInfo.class).putExtra("Job", job)));
     }
 
     @Override
@@ -62,8 +61,8 @@ public class JobFragment extends Fragment {
 
     private static class ViewHolderJob extends RecyclerView.ViewHolder {
 
-        Activity activity;
-        View view;
+        final Activity activity;
+        final View view;
 
         ViewHolderJob(View view) {
 

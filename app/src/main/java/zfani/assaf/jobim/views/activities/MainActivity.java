@@ -248,6 +248,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case 1:
                 if (resultCode == 1) {
@@ -256,16 +257,19 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
             case 2:
-                if (resultCode == 1)
+                if (resultCode == 1) {
                     handleMenuButtons(findViewById(R.id.myJobs));
+                }
                 break;
             case 3:
-                if (resultCode == RESULT_OK)
+                if (resultCode == RESULT_OK) {
                     FillDetails.saveImageFromCamera(this, data);
+                }
                 break;
             case 4:
-                if (resultCode == RESULT_OK)
+                if (resultCode == RESULT_OK) {
                     FillDetails.saveImageFromGallery(this, data);
+                }
                 break;
         }
     }
@@ -307,9 +311,11 @@ public class MainActivity extends AppCompatActivity {
         if (GPSTracker.location != null) {
             v.setBackground(v.getBackground() == background ? getDrawable(R.drawable.squares) : background);
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            int commit = v.getBackground() == background ?
-                    fragmentTransaction.remove(mapFragment).commit() : fragmentTransaction.add(R.id.mapFragment, mapFragment =
-                    MapFragment.newInstance(GPSTracker.createLatLng(GPSTracker.location))).commit();
+            if (v.getBackground() == background) {
+                fragmentTransaction.remove(mapFragment).commit();
+            } else {
+                fragmentTransaction.add(R.id.mapFragment, mapFragment = MapFragment.newInstance(GPSTracker.createLatLng(GPSTracker.location))).commit();
+            }
         }
     }
 
@@ -335,7 +341,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void handleMenuButtons(View v) {
+    private void handleMenuButtons(View v) {
         drawerLayout.closeDrawers();
         String fragmentName = "";
         switch (v.getId()) {

@@ -23,16 +23,16 @@ import java.util.HashMap;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import zfani.assaf.jobim.R;
+import zfani.assaf.jobim.adapters.JobsAdapter;
 import zfani.assaf.jobim.models.ClusterJobs;
 import zfani.assaf.jobim.models.ClusterJobsRenderer;
 import zfani.assaf.jobim.models.Job;
-import zfani.assaf.jobim.adapters.JobsAdapter;
 import zfani.assaf.jobim.utils.FilteredAdapter;
 import zfani.assaf.jobim.utils.GPSTracker;
 
 public class MapFragment extends Fragment implements OnMapReadyCallback {
 
-    static GoogleMap googleMap;
+    private static GoogleMap googleMap;
 
     public static MapFragment newInstance(LatLng latLng) {
 
@@ -47,7 +47,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         return mapFragment;
     }
 
-    static void changeCamera(LatLng latLng) {
+    private static void changeCamera(LatLng latLng) {
 
         googleMap.clear();
 

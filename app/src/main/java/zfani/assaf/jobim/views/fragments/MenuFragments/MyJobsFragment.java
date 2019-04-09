@@ -98,7 +98,7 @@ public class MyJobsFragment extends Fragment implements SwipeRefreshLayout.OnRef
 
         myJobsLayout.check(newJob == null ? R.id.favoriteTab : R.id.postedTab);
 
-        if (newJob != null) {
+        /*if (newJob != null) {
 
             DatabaseReference job = JobsAdapter.query.getRef().push();
 
@@ -106,7 +106,7 @@ public class MyJobsFragment extends Fragment implements SwipeRefreshLayout.OnRef
 
             job.setValue(new Job(newJob.getAddress(), false, newJob.getBusinessNumber(), newJob.getDistance(), false,
                     newJob.getFirm() + (branch == null ? "" : " " + newJob.getBranchName()), job.getKey(), true, newJob.getTitle()));
-        }
+        }*/
 
         AddNewJob.newJob = null;
 
@@ -122,7 +122,7 @@ public class MyJobsFragment extends Fragment implements SwipeRefreshLayout.OnRef
             refreshList();
     }
 
-    void refreshList() {
+    private void refreshList() {
 
         int messageDrawable = 0;
 
@@ -155,7 +155,7 @@ public class MyJobsFragment extends Fragment implements SwipeRefreshLayout.OnRef
         recyclerView.setAdapter(new JobsAdapter(key, "true"));
     }
 
-    void setMessageVisibility() {
+    private void setMessageVisibility() {
 
         RecyclerView.Adapter adapter = recyclerView.getAdapter();
 

@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.RadioGroup;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -22,13 +23,13 @@ import zfani.assaf.jobim.views.fragments.NewJobFragments.PictureFragment;
 public class AddNewJob extends FragmentActivity {
 
     public static NewJob newJob;
-    FirmFragment firmFragment;
-    JobTypeFragment jobTypeFragment;
-    JobTitleFragment jobTitleFragment;
-    AddressFragment addressFragment;
-    PictureFragment pictureFragment;
-    RadioGroup fragmentsBar;
-    ViewPager viewPager;
+    private FirmFragment firmFragment;
+    private JobTypeFragment jobTypeFragment;
+    private JobTitleFragment jobTitleFragment;
+    private AddressFragment addressFragment;
+    private PictureFragment pictureFragment;
+    private RadioGroup fragmentsBar;
+    private ViewPager viewPager;
     private int[] drawableResources;
 
     @Override
@@ -110,6 +111,7 @@ public class AddNewJob extends FragmentActivity {
 
         viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
 
+            @NonNull
             @Override
             public Fragment getItem(int position) {
 
@@ -134,68 +136,48 @@ public class AddNewJob extends FragmentActivity {
                 return 5;
             }
         });
-
         viewPager.setCurrentItem(4);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
+        super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == 1) {
-
             setResult(1);
-
             finish();
         }
     }
 
     @Override
     public void onBackPressed() {
-
         MainActivity.displayDialog(this, R.layout.close_dialog, null);
     }
 
-    private boolean canMovetoFragment(int fragmentNumber) {
-
+    private boolean canMoveToFragment(int fragmentNumber) {
         switch (fragmentNumber) {
-
             default:
-
                 return firmFragment.isValidValue();
-
             case 3:
-
                 return jobTypeFragment.isValidValue();
-
             case 2:
-
                 return jobTitleFragment.isValidValue();
-
             case 1:
-
                 return addressFragment.isValidValue();
-
             case 0:
-
                 return true;
         }
     }
 
     private void hideKeyboard() {
-
         View view = getCurrentFocus();
-
-        if (view != null)
-            ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE))
-                    .hideSoftInputFromWindow(view.getWindowToken(), 0);
+        if (view != null) {
+            ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 
-    void moveToAnotherFragment(int currentFragment, int nextFragment, int checkedId) {
-
+    private void moveToAnotherFragment(int currentFragment, int nextFragment, int checkedId) {
         int button;
-
         switch (currentFragment) {
-
             case 4:
                 button = R.id.firmButton;
                 break;
@@ -212,46 +194,33 @@ public class AddNewJob extends FragmentActivity {
                 button = R.id.pictureButton;
                 break;
         }
-
-        if (canMovetoFragment(currentFragment))
-
+        if (canMoveToFragment(currentFragment))
             if (nextFragment != -1) {
-
                 viewPager.setCurrentItem(nextFragment);
-
                 findViewById(button).setBackgroundResource(R.drawable.completed2);
-
                 findViewById(checkedId).setBackgroundResource(drawableResources[nextFragment]);
-
             } else {
-
-                if (newJob.getBusinessNumber() == 0)
+                if (newJob.getBusinessNumber() == 0) {
                     moveToAnotherFragment(currentFragment, 3, R.id.jobTypeButton);
-                else if (newJob.getTitle() == null)
+                } else if (newJob.getTitle() == null) {
                     moveToAnotherFragment(currentFragment, 2, R.id.jobTitleButton);
-                else if (newJob.getAddress() == null)
+                } else if (newJob.getAddress() == null) {
                     moveToAnotherFragment(currentFragment, 1, R.id.addressButton);
-                else {
-
+                } else {
                     findViewById(button).setBackgroundResource(R.drawable.completed2);
-
                     startActivityForResult(new Intent(AddNewJob.this, MakingContact.class), 1);
                 }
             }
-        else
+        else {
             fragmentsBar.clearCheck();
+        }
     }
 
     public void next(View v) {
-
         hideKeyboard();
-
         int fragmentNumber = viewPager.getCurrentItem();
-
         int checkedId;
-
         switch (fragmentNumber - 1) {
-
             case 3:
                 checkedId = R.id.jobTypeButton;
                 break;
@@ -265,7 +234,6 @@ public class AddNewJob extends FragmentActivity {
                 checkedId = R.id.pictureButton;
                 break;
         }
-
         moveToAnotherFragment(fragmentNumber, fragmentNumber - 1, checkedId);
     }
 }

@@ -19,8 +19,9 @@ import zfani.assaf.jobim.views.activities.MainActivity;
 
 public class FullNameFragment extends Fragment {
 
-    FragmentActivity activity;
-    EditText firstName, lastName;
+    private FragmentActivity activity;
+    private EditText firstName;
+    private EditText lastName;
 
     public static FullNameFragment newInstance() {
 

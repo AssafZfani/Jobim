@@ -14,11 +14,11 @@ import zfani.assaf.jobim.R;
 
 class CutLayout extends LinearLayout {
 
-    private Activity activity;
+    private final Activity activity;
 
-    private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
-    private Path path = new Path();
+    private final Path path = new Path();
 
     public CutLayout(Context context, AttributeSet attrs) {
 

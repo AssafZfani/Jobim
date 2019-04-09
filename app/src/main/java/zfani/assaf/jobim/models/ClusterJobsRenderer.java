@@ -31,13 +31,12 @@ import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 import zfani.assaf.jobim.R;
 import zfani.assaf.jobim.adapters.JobsAdapter;
-import zfani.assaf.jobim.views.fragments.FeedFragments.JobFragment;
 
 public class ClusterJobsRenderer extends DefaultClusterRenderer<ClusterJobs>
         implements ClusterManager.OnClusterClickListener<ClusterJobs>, ClusterManager.OnClusterItemClickListener<ClusterJobs> {
 
-    private Activity activity;
-    private HashMap<ClusterJobs, Job> hashMap;
+    private final Activity activity;
+    private final HashMap<ClusterJobs, Job> hashMap;
     private JobsAdapter.ViewHolder viewHolder;
     private TextView txt;
 

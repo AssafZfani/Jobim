@@ -19,7 +19,7 @@ import zfani.assaf.jobim.views.fragments.DetailsFragments.FullNameFragment;
 
 public class MyDetailsFragment extends Fragment {
 
-    boolean needToFillDetails;
+    private boolean needToFillDetails;
     private Activity activity;
 
     public static MyDetailsFragment newInstance() {

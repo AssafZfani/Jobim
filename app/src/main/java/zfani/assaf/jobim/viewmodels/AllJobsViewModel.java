@@ -15,6 +15,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -27,7 +28,7 @@ import zfani.assaf.jobim.utils.GPSTracker;
 
 public class AllJobsViewModel extends AndroidViewModel {
 
-    private MutableLiveData<List<JobType>> jobTypeLiveList;
+    private final MutableLiveData<List<JobType>> jobTypeLiveList;
 
     public AllJobsViewModel(@NonNull Application application) {
         super(application);
@@ -54,19 +55,23 @@ public class AllJobsViewModel extends AndroidViewModel {
                         JSONArray jsonArray = obj.getJSONArray("jobs");
                         for (int i = 0; i <= jsonArray.length(); i++) {
                             JSONObject object = jsonArray.getJSONObject(i);
-                            String address = object.getString("Address");
+                            String address = object.getString("address");
                             DatabaseReference job = ref.push();
+                            JSONArray colorArray = object.getJSONArray("color");
+                            ArrayList<Integer> color = new ArrayList<>(Arrays.asList(colorArray.getInt(0), colorArray.getInt(1), colorArray.getInt(2)));
                             job.setValue(new Job(
                                     address,
-                                    object.getBoolean("Applied"),
-                                    object.getInt("BusinessNumber"),
+                                    object.getBoolean("applied"),
+                                    object.getInt("business_number"),
+                                    color,
                                     GPSTracker.getDistanceFromAddress(getApplication(), address),
-                                    object.getBoolean("Favorite"),
-                                    object.getString("Firm"),
+                                    object.getBoolean("is_favorite"),
+                                    object.getString("firm"),
                                     job.getKey(),
                                     false,
-                                    object.getString("Title")
-                            ));
+                                    object.getString("title"),
+                                    object.getString("type")
+                                    ));
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();

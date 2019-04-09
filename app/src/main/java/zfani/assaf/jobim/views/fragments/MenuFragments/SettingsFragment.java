@@ -13,7 +13,7 @@ import zfani.assaf.jobim.R;
 
 public class SettingsFragment extends Fragment {
 
-    public ToggleButton toggleButton;
+    private ToggleButton toggleButton;
 
     public static SettingsFragment newInstance() {
 

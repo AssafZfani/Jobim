@@ -39,15 +39,15 @@ import zfani.assaf.jobim.views.activities.AddNewJob;
 
 public class ListFragment extends Fragment {
 
-    static String currentAddress;
-    ArrayList<String> data;
+    private static String currentAddress;
+    private ArrayList<String> data;
 
     public static ListFragment newInstance() {
 
         return new ListFragment();
     }
 
-    static void setContent(final Activity activity, ListView listView, final ArrayList<String> data) {
+    private static void setContent(final Activity activity, ListView listView, final ArrayList<String> data) {
 
         final RadioGroup radioGroup = new RadioGroup(activity);
 
