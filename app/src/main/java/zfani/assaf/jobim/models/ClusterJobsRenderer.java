@@ -151,7 +151,7 @@ public class ClusterJobsRenderer extends DefaultClusterRenderer<ClusterJobs>
 
                 View view = View.inflate(activity, R.layout.cluster_layout, null);
 
-                JobFragment.fillJobDetails(view, job);
+                //.JobFragment.fillJobDetails(view, job);
 
                 container.addView(view);
 

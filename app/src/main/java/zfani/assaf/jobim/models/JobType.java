@@ -15,7 +15,6 @@ public class JobType {
     }
 
     public JobType(ArrayList<Integer> color, int id, String jobType) {
-
         this.color = color;
         this.id = id;
         this.jobType = jobType;
@@ -43,7 +42,6 @@ public class JobType {
 
     @Override
     public boolean equals(Object obj) {
-
-        return obj != null && obj instanceof Integer && ((Integer) obj) == id;
+        return obj instanceof Integer && ((Integer) obj) == id;
     }
 }

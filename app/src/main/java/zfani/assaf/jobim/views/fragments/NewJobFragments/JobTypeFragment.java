@@ -85,12 +85,12 @@ public class JobTypeFragment extends ListFragment {
         if (isShowByActivity)
             businessesNumbers = new ArrayList<>();
 
-        jobsTypes = s == null ? JobsAdapter.jobsTypesList : new ArrayList<>();
+        /*jobsTypes = s == null ? JobsAdapter.jobsTypesList : new ArrayList<>();
 
         if (s != null)
             for (JobType jobType : JobsAdapter.jobsTypesList)
                 if (jobType.getJobType().contains(s))
-                    jobsTypes.add(jobType);
+                    jobsTypes.add(jobType);*/
 
         setListAdapter(new ArrayAdapter<JobType>(activity, android.R.layout.simple_list_item_1, jobsTypes) {
 

@@ -61,11 +61,11 @@ public class JobInfo extends FragmentActivity {
                 cursor.close();
             }
 
-            String text = "הי! " + App.sharedPreferences.getString("FullName", "משתמש/ת Jobim") + " " +
+            /*String text = "הי! " + App.sharedPreferences.getString("FullName", "משתמש/ת Jobim") + " " +
                     getResources().getString(R.string.shareMessage) + " " + job.getFirm() + " מחפשת " +
-                    JobsAdapter.jobsTypesList.get(job.getBusinessNumber() - 1).getJobType();
+                    JobsAdapter.jobsTypesList.get(job.getBusinessNumber() - 1).getJobType();*/
 
-            SmsManager.getDefault().sendTextMessage(phoneNumber, null, text, null, null);
+            //SmsManager.getDefault().sendTextMessage(phoneNumber, null, text, null, null);
 
             getIntent().putExtra("ContactName", contactName);
 

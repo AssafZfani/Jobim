@@ -14,17 +14,24 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.MutableLiveData;
 import zfani.assaf.jobim.App;
 import zfani.assaf.jobim.models.Job;
+import zfani.assaf.jobim.models.JobType;
 import zfani.assaf.jobim.utils.GPSTracker;
 
 public class AllJobsViewModel extends AndroidViewModel {
 
+    private MutableLiveData<List<JobType>> jobTypeLiveList;
+
     public AllJobsViewModel(@NonNull Application application) {
         super(application);
+        jobTypeLiveList = new MutableLiveData<>();
     }
 
     public void loadJobs() {
@@ -72,5 +79,27 @@ public class AllJobsViewModel extends AndroidViewModel {
 
             }
         });
+    }
+
+    public void loadJobsTypes() {
+        FirebaseDatabase.getInstance().getReference().child("jobs_types").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<JobType> jobTypeList = new ArrayList<>();
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
+                    jobTypeList.add(data.getValue(JobType.class));
+                }
+                jobTypeLiveList.setValue(jobTypeList);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public MutableLiveData<List<JobType>> getJobTypeLiveList() {
+        return jobTypeLiveList;
     }
 }

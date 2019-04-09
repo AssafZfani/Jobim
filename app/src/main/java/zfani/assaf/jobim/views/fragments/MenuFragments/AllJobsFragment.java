@@ -42,7 +42,9 @@ public class AllJobsFragment extends Fragment implements SwipeRefreshLayout.OnRe
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_all_jobs, container, false);
         ButterKnife.bind(this, view);
-        ViewModelProviders.of(this).get(AllJobsViewModel.class).loadJobs();
+        AllJobsViewModel allJobsViewModel = ViewModelProviders.of(this).get(AllJobsViewModel.class);
+        allJobsViewModel.loadJobs();
+        allJobsViewModel.loadJobsTypes();
         swipeRefreshLayout.setOnRefreshListener(this);
         if (GPSTracker.location != null) {
             ivLocationMessage.setVisibility(View.GONE);

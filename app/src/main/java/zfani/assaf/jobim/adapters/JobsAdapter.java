@@ -31,42 +31,12 @@ import zfani.assaf.jobim.views.fragments.FeedFragments.JobFragment;
 public class JobsAdapter extends FirebaseRecyclerAdapter<Job, JobsAdapter.ViewHolder> {
 
     public static ArrayList<Job> jobsList;
-    public static ArrayList<JobType> jobsTypesList;
     public static Query query;
 
     public JobsAdapter() {
         super(new FirebaseRecyclerOptions.Builder<Job>()
                 .setQuery(query = FirebaseDatabase.getInstance().getReference().child("jobs").orderByChild("distance"), Job.class)
                 .build());
-        /*query.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                jobsList = new ArrayList<>();
-                for (DataSnapshot data : dataSnapshot.getChildren()) {
-                    jobsList.add(data.getValue(Job.class));
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });*/
-        FirebaseDatabase.getInstance().getReference().child("jobs_types").addValueEventListener(new ValueEventListener() {
-
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                jobsTypesList = new ArrayList<>();
-                for (DataSnapshot data : dataSnapshot.getChildren()) {
-                    jobsTypesList.add(data.getValue(JobType.class));
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
     }
 
     public JobsAdapter(String key, String value) {

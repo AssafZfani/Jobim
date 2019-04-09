@@ -15,14 +15,17 @@ import java.text.DecimalFormat;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 import zfani.assaf.jobim.R;
-import zfani.assaf.jobim.adapters.JobsAdapter;
 import zfani.assaf.jobim.models.Job;
 import zfani.assaf.jobim.models.JobType;
+import zfani.assaf.jobim.viewmodels.AllJobsViewModel;
 import zfani.assaf.jobim.views.activities.JobInfo;
 
 public class JobFragment extends Fragment {
+
+    private AllJobsViewModel allJobsViewModel;
 
     public static JobFragment newInstance(Job job) {
         JobFragment jobFragment = new JobFragment();
@@ -32,19 +35,16 @@ public class JobFragment extends Fragment {
         return jobFragment;
     }
 
-    public static void fillJobDetails(View view, final Job job) {
-        final ViewHolderJob viewHolderJob = new ViewHolderJob(view);
+    private void fillJobDetails(View view, Job job) {
+        ViewHolderJob viewHolderJob = new ViewHolderJob(view);
         if (view.getId() != R.id.clusterLayout) {
             viewHolderJob.setAddress(job.getAddress());
             viewHolderJob.setTitle(job.getTitle());
         }
-        int businessNumber = job.getBusinessNumber();
-        if (JobsAdapter.jobsTypesList != null) {
-            JobType jobType = JobsAdapter.jobsTypesList.get(businessNumber - 1);
+            JobType jobType = allJobsViewModel.getJobTypeLiveList().getValue().get(job.getBusinessNumber() - 1);
             viewHolderJob.setDistance(job.getDistance());
             viewHolderJob.setLayout(jobType.getColor().toArray(new Integer[3]));
             viewHolderJob.setLookingFor(job.getFirm() + " מחפשת " + jobType.getJobType());
-        }
         viewHolderJob.setCircle(job.getBusinessNumber());
         view.setOnClickListener(v -> viewHolderJob.activity.startActivity(new Intent(viewHolderJob.activity, JobInfo.class).putExtra("JobId", job.getId())));
     }
@@ -52,7 +52,11 @@ public class JobFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.job_layout, container, false);
-        fillJobDetails(view, getArguments().getParcelable("Job"));
+        allJobsViewModel = ViewModelProviders.of(this).get(AllJobsViewModel.class);
+        Bundle bundle = getArguments();
+        if (bundle != null && bundle.containsKey("Job")) {
+            fillJobDetails(view, bundle.getParcelable("Job"));
+        }
         return view;
     }
 

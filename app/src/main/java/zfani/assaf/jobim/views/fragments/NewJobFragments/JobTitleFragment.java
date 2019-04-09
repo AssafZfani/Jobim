@@ -45,11 +45,11 @@ public class JobTitleFragment extends Fragment {
 
         int businessNumber = AddNewJob.newJob.getBusinessNumber() - 1;
 
-        if (businessNumber != -1) {
+        /*if (businessNumber != -1) {
 
             lookingFor.setText(AddNewJob.newJob.getFirm() + (branchName == null ? "" : " " +
                     branchName) + " מחפשת " + JobsAdapter.jobsTypesList.get(businessNumber).getJobType());
-        }
+        }*/
 
         return super.getView();
     }
