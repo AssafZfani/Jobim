@@ -26,7 +26,6 @@ import zfani.assaf.jobim.views.fragments.FeedFragments.JobFragment;
 
 public class JobsAdapter extends FirebaseRecyclerAdapter<Job, JobsAdapter.ViewHolder> {
 
-    public static ArrayList<Job> jobsList;
     public static Query query;
 
     public JobsAdapter() {

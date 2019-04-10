@@ -20,7 +20,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import zfani.assaf.jobim.R;
 import zfani.assaf.jobim.adapters.JobsAdapter;
-import zfani.assaf.jobim.utils.GPSTracker;
 import zfani.assaf.jobim.viewmodels.AllJobsViewModel;
 
 public class AllJobsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
@@ -42,14 +41,10 @@ public class AllJobsFragment extends Fragment implements SwipeRefreshLayout.OnRe
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_all_jobs, container, false);
         ButterKnife.bind(this, view);
-        AllJobsViewModel allJobsViewModel = ViewModelProviders.of(this).get(AllJobsViewModel.class);
-        allJobsViewModel.loadJobs();
-        allJobsViewModel.loadJobsTypes();
+        ViewModelProviders.of(this).get(AllJobsViewModel.class).loadJobs();
         swipeRefreshLayout.setOnRefreshListener(this);
-        if (GPSTracker.location != null) {
-            ivLocationMessage.setVisibility(View.GONE);
-            rvAllJobs.setAdapter(jobsAdapter = new JobsAdapter());
-        }
+        ivLocationMessage.setVisibility(View.GONE);
+        rvAllJobs.setAdapter(jobsAdapter = new JobsAdapter());
         int orange = ContextCompat.getColor(container.getContext(), android.R.color.holo_orange_dark);
         designShowByLayout(orange, "");
         return view;
@@ -58,17 +53,13 @@ public class AllJobsFragment extends Fragment implements SwipeRefreshLayout.OnRe
     @Override
     public void onStart() {
         super.onStart();
-        if (jobsAdapter != null) {
-            jobsAdapter.startListening();
-        }
+        jobsAdapter.startListening();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        if (jobsAdapter != null) {
-            jobsAdapter.stopListening();
-        }
+        jobsAdapter.stopListening();
     }
 
     @Override

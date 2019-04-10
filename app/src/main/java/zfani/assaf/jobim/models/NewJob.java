@@ -57,7 +57,6 @@ public class NewJob extends Job {
     }
 
     public void setFirm(String firm) {
-
         this.firm = firm;
     }
 
@@ -94,7 +93,6 @@ public class NewJob extends Job {
     }
 
     public void setTitle(String title) {
-
         this.title = title;
     }
 }

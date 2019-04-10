@@ -15,7 +15,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -58,12 +57,11 @@ public class AllJobsViewModel extends AndroidViewModel {
                             String address = object.getString("address");
                             DatabaseReference job = ref.push();
                             JSONArray colorArray = object.getJSONArray("color");
-                            ArrayList<Integer> color = new ArrayList<>(Arrays.asList(colorArray.getInt(0), colorArray.getInt(1), colorArray.getInt(2)));
                             job.setValue(new Job(
                                     address,
                                     object.getBoolean("applied"),
                                     object.getInt("business_number"),
-                                    color,
+                                    colorArray.getInt(0), colorArray.getInt(1), colorArray.getInt(2),
                                     GPSTracker.getDistanceFromAddress(getApplication(), address),
                                     object.getBoolean("is_favorite"),
                                     object.getString("firm"),
@@ -71,7 +69,7 @@ public class AllJobsViewModel extends AndroidViewModel {
                                     false,
                                     object.getString("title"),
                                     object.getString("type")
-                                    ));
+                            ));
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();

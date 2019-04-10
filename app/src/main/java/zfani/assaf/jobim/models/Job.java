@@ -3,28 +3,29 @@ package zfani.assaf.jobim.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.ArrayList;
-
 import androidx.annotation.NonNull;
 
 @SuppressWarnings("unused")
 public class Job implements Parcelable, Comparable<Job> {
 
-     ArrayList<Integer> color;
-     String address, firm, id, title, type;
-     int businessNumber, distance;
-     boolean applied, favorite, posted;
+    private String id, type;
+    String address, firm, title;
+    int businessNumber, distance;
+    private int color1, color2, color3;
+    private boolean applied, favorite, posted;
 
     Job() {
 
     }
 
-    public Job(String address, boolean applied, int businessNumber, ArrayList<Integer> color, int distance,
+    public Job(String address, boolean applied, int businessNumber, int color1, int color2, int color3, int distance,
                boolean favorite, String firm, String id, boolean posted, String title, String type) {
         this.address = address;
         this.applied = applied;
         this.businessNumber = businessNumber;
-        this.color = color;
+        this.color1 = color1;
+        this.color2 = color2;
+        this.color3 = color3;
         this.distance = distance;
         this.favorite = favorite;
         this.firm = firm;
@@ -35,13 +36,16 @@ public class Job implements Parcelable, Comparable<Job> {
     }
 
     protected Job(Parcel in) {
+        id = in.readString();
+        type = in.readString();
         address = in.readString();
         firm = in.readString();
-        id = in.readString();
         title = in.readString();
-        type = in.readString();
         businessNumber = in.readInt();
         distance = in.readInt();
+        color1 = in.readInt();
+        color2 = in.readInt();
+        color3 = in.readInt();
         applied = in.readByte() != 0;
         favorite = in.readByte() != 0;
         posted = in.readByte() != 0;
@@ -75,8 +79,16 @@ public class Job implements Parcelable, Comparable<Job> {
         return businessNumber;
     }
 
-    public ArrayList<Integer> getColor() {
-        return color;
+    public int getColor1() {
+        return color1;
+    }
+
+    public int getColor2() {
+        return color2;
+    }
+
+    public int getColor3() {
+        return color3;
     }
 
     public int getDistance() {
@@ -127,13 +139,16 @@ public class Job implements Parcelable, Comparable<Job> {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(type);
         dest.writeString(address);
         dest.writeString(firm);
-        dest.writeString(id);
         dest.writeString(title);
-        dest.writeString(type);
         dest.writeInt(businessNumber);
         dest.writeInt(distance);
+        dest.writeInt(color1);
+        dest.writeInt(color2);
+        dest.writeInt(color3);
         dest.writeByte((byte) (applied ? 1 : 0));
         dest.writeByte((byte) (favorite ? 1 : 0));
         dest.writeByte((byte) (posted ? 1 : 0));

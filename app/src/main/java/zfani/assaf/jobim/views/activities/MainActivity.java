@@ -193,7 +193,7 @@ public class MainActivity extends AppCompatActivity {
                                     FilteredAdapter.filteredList.remove(indexToRemove);
                             }*/
                             new Handler().postDelayed(() -> JobsAdapter.query.getRef().child(jobId).removeValue(), 750);
-                            if (activity.getLocalClassName().equalsIgnoreCase("Activities.JobInfo"))
+                            if (activity.getLocalClassName().equalsIgnoreCase("Activities.JobInfoActivity"))
                                 activity.finish();
                             else
                                 ((ViewPager) activity.findViewById(activity.getIntent().getIntExtra("ViewPager", 0))).setCurrentItem(1);

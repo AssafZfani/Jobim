@@ -30,7 +30,7 @@ class CutLayout extends LinearLayout {
     @Override
     public void dispatchDraw(Canvas canvas) {
 
-        if (!activity.getLocalClassName().equalsIgnoreCase("Activities.JobInfo") && getId() != R.id.drawerMenu)
+        if (!activity.getLocalClassName().equalsIgnoreCase("Activities.JobInfoActivity") && getId() != R.id.drawerMenu)
             super.dispatchDraw(canvas);
         else {
 

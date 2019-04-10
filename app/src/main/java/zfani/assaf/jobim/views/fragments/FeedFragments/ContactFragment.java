@@ -178,7 +178,7 @@ public class ContactFragment extends Fragment {
         call = view.findViewById(R.id.call);
         sendMessage = view.findViewById(R.id.sendMessage);
         favorite = view.findViewById(R.id.favorite);
-        if (activity.getLocalClassName().equalsIgnoreCase("Activities.JobInfo"))
+        if (activity.getLocalClassName().equalsIgnoreCase("Activities.JobInfoActivity"))
             ((ViewGroup) view).removeView(favorite);
         if (job != null)
             favorite.setBackgroundResource(job.isFavorite() ? R.drawable.remove1 : R.drawable.favorite1);

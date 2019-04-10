@@ -54,7 +54,7 @@
             android:name=".views.activities.ShowBy"
             android:windowSoftInputMode="adjustNothing" />
 
-        <activity android:name=".views.activities.JobInfo" />
+        <activity android:name=".views.activities.JobInfoActivity" />
 
         <activity android:name=".views.activities.JobsEmployer" />
 
