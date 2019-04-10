@@ -34,4 +34,8 @@
 
     </string-array>
 
+    <string name="dialog_storage_permission_title">In order to use the app, you need to grant access to storage permission</string>
+    <string name="dialog_storage_permission_message">Go to Settings -> Apps and Notifications -> Face Detection -> App Permissions and grant access to Storage.</string>
+    <string name="dialog_storage_permission_confirm">Confirm</string>
+
 </resources>

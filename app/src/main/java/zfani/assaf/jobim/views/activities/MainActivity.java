@@ -1,7 +1,9 @@
 package zfani.assaf.jobim.views.activities;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,8 +12,10 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -24,6 +28,8 @@ import butterknife.ButterKnife;
 import zfani.assaf.jobim.App;
 import zfani.assaf.jobim.R;
 import zfani.assaf.jobim.adapters.JobsAdapter;
+import zfani.assaf.jobim.utils.AlertHelper;
+import zfani.assaf.jobim.utils.Constants;
 import zfani.assaf.jobim.utils.GPSTracker;
 import zfani.assaf.jobim.views.fragments.DetailsFragments.BirthYearFragment;
 import zfani.assaf.jobim.views.fragments.DetailsFragments.CityFragment;
@@ -241,9 +247,7 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         new GPSTracker(this);
         setSupportActionBar(toolBar);
-        fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.fragmentContainer, new AllJobsFragment()).commit();
-        background = findViewById(R.id.mapButton).getBackground();
+        checkLocationPermission();
     }
 
     @Override
@@ -270,6 +274,8 @@ public class MainActivity extends AppCompatActivity {
                 if (resultCode == RESULT_OK) {
                     FillDetails.saveImageFromGallery(this, data);
                 }
+            case Constants.KEY_ACTION_APPLICATION_DETAILS_SETTINGS:
+                checkLocationPermission();
                 break;
         }
     }
@@ -297,6 +303,44 @@ public class MainActivity extends AppCompatActivity {
                 displayDialog(this, R.layout.exit_dialog, null);
             }
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        GPSTracker.location.beginUpdates();
+    }
+
+    @Override
+    protected void onPause() {
+        GPSTracker.location.endUpdates();
+        super.onPause();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case Constants.KEY_REQUEST_LOCATION_PERMISSION:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    fragmentManager = getSupportFragmentManager();
+                    fragmentManager.beginTransaction().replace(R.id.fragmentContainer, new AllJobsFragment()).commit();
+                    background = findViewById(R.id.mapButton).getBackground();
+                } else {
+                    AlertHelper.showPermissionRequestAlert(this);
+                }
+                break;
+        }
+    }
+
+    private void checkLocationPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, Constants.KEY_REQUEST_LOCATION_PERMISSION);
+            return;
+        }
+        fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.fragmentContainer, new AllJobsFragment()).commit();
+        background = findViewById(R.id.mapButton).getBackground();
     }
 
     public void menu(View v) {
@@ -336,9 +380,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showBy(View v) {
-        if (GPSTracker.location != null) {
-            startActivityForResult(new Intent(MainActivity.this, ShowBy.class), 1);
-        }
+        startActivityForResult(new Intent(MainActivity.this, ShowBy.class), 1);
     }
 
     private void handleMenuButtons(View v) {

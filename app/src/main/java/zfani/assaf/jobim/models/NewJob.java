@@ -45,7 +45,7 @@ public class NewJob extends Job {
 
     public void setDistance(Activity activity) {
 
-        this.distance = GPSTracker.getDistanceFromAddress(activity.getApplication(), this.address);
+        this.distance = GPSTracker.getDistanceFromAddress(activity.getApplication(), getAddress());
     }
 
     public String getEmail() {

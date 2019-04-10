@@ -10,6 +10,7 @@ import com.google.android.gms.maps.model.LatLng;
 
 import java.io.IOException;
 
+import androidx.annotation.Nullable;
 import im.delight.android.location.SimpleLocation;
 
 public class GPSTracker {
@@ -48,6 +49,7 @@ public class GPSTracker {
         return 0;
     }
 
+    @Nullable
     public static LatLng getLatLngFromAddress(final Application application, final String address) {
         try {
             Address foundAddress = new Geocoder(application).getFromLocationName(address, 1).get(0);
