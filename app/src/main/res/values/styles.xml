@@ -13,7 +13,9 @@
     <style name="text_view_regular">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
         <item name="android:fontFamily">@font/open_sans</item>
+        <item name="android:gravity">center</item>
     </style>
 
     <style name="text_view_bold" parent="text_view_regular">
@@ -31,8 +33,7 @@
         <item name="android:onClick">handleMenuButtons</item>
     </style>
 
-    <style name="EditText">
-        <item name="android:layout_width">wrap_content</item>
+    <style name="EditText" parent="text_view_regular">
         <item name="android:layout_height">50dp</item>
         <item name="android:layout_toEndOf">@id/ivSearch</item>
         <item name="android:background">@android:color/transparent</item>
@@ -41,18 +42,14 @@
         <item name="android:textAlignment">viewStart</item>
         <item name="android:textColor">@android:color/darker_gray</item>
         <item name="android:textSize">15sp</item>
-        <item name="android:typeface">monospace</item>
     </style>
 
-    <style name="RadioButton">
+    <style name="RadioButton" parent="text_view_regular">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_weight">1</item>
         <item name="android:button">@null</item>
-        <item name="android:gravity">center</item>
         <item name="android:padding">5dp</item>
         <item name="android:textColor">@drawable/text_selector1</item>
-        <item name="android:typeface">monospace</item>
     </style>
 
     <style name="LinearLayout" parent="Base.Widget.AppCompat.Button.Borderless">
@@ -62,14 +59,11 @@
         <item name="android:orientation">vertical</item>
     </style>
 
-    <style name="TextView">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
+    <style name="TextView" parent="text_view_regular">
         <item name="android:layout_marginStart">65dp</item>
         <item name="android:onClick">handleMyDetailsButtons</item>
         <item name="android:textColor">@android:color/darker_gray</item>
         <item name="android:textSize">15sp</item>
-        <item name="android:typeface">monospace</item>
     </style>
 
     <style name="FragmentButton" parent="Base.Widget.AppCompat.Button.Borderless">

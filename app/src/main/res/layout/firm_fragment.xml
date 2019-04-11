@@ -8,14 +8,11 @@
     tools:ignore="HardcodedText">
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/text_view_regular"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="25dp"
-        android:gravity="center"
         android:text="אנא מלאו את הפרטים הבאים כדי ליצור ג'וב חדש"
-        android:textColor="@android:color/black"
-        android:typeface="monospace" />
+        android:textColor="@android:color/black" />
 
     <LinearLayout
         android:layout_width="match_parent"

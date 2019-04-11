@@ -29,7 +29,6 @@
             <TextView
                 android:id="@+id/tvFavorite"
                 style="@style/text_view_regular"
-                android:gravity="center"
                 android:textColor="@android:color/holo_orange_dark" />
 
         </LinearLayout>
@@ -45,7 +44,6 @@
 
             <TextView
                 style="@style/text_view_regular"
-                android:gravity="center"
                 android:text="ג'ובים נוספים\n ממעסיק זה"
                 android:textColor="@android:color/holo_orange_dark" />
 
@@ -62,7 +60,6 @@
 
             <TextView
                 style="@style/text_view_regular"
-                android:gravity="center"
                 android:text="שתף עם\n חברים"
                 android:textColor="@android:color/holo_orange_dark" />
 
@@ -79,7 +76,6 @@
 
             <TextView
                 style="@style/text_view_regular"
-                android:gravity="center"
                 android:text="הסתר\nג'וב"
                 android:textColor="@android:color/holo_orange_dark" />
 

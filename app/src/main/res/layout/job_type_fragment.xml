@@ -14,14 +14,11 @@
         android:visibility="gone">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/text_view_regular"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp"
-            android:gravity="center"
             android:text="אנא בחרו את הג'וב שלכם"
             android:textColor="@android:color/black"
-            android:typeface="monospace"
             tools:ignore="HardcodedText" />
 
         <View

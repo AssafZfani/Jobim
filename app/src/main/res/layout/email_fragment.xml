@@ -8,24 +8,17 @@
     tools:ignore="HardcodedText">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        style="@style/text_view_regular"
         android:layout_marginTop="15dp"
         android:text="כתובת המייל שלך"
-        android:textColor="@android:color/darker_gray"
-        android:typeface="monospace" />
+        android:textColor="@android:color/darker_gray" />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        style="@style/text_view_regular"
         android:layout_marginBottom="5dp"
         android:text="(יש למלא כתובת מייל על מנת לפנות למעסיקים)"
-        android:textAlignment="center"
         android:textColor="@android:color/darker_gray"
-        android:textSize="12.5sp"
-        android:typeface="monospace" />
+        android:textSize="12.5sp" />
 
     <EditText
         android:id="@+id/email"

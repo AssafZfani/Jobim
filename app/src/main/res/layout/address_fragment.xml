@@ -7,14 +7,11 @@
     tools:ignore="HardcodedText">
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/text_view_regular"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="15dp"
-        android:gravity="center"
         android:text="מיקום הג'וב"
-        android:textColor="@android:color/black"
-        android:typeface="monospace" />
+        android:textColor="@android:color/black" />
 
     <View
         android:layout_width="match_parent"
@@ -60,30 +57,22 @@
         android:id="@+id/addressNotFound"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:orientation="vertical"
         android:visibility="gone">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/text_view_bold"
             android:text="אופס!"
-            android:textColor="@android:color/black"
-            android:textStyle="bold"
-            android:typeface="serif" />
+            android:textColor="@android:color/black" />
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/text_view_regular"
             android:layout_marginBottom="5dp"
-            android:gravity="center"
             android:text="הכתובת שציינת לא נמצאה.\nנשמח לעזור לך בתמיכה טכנית בכתובת:"
-            android:textColor="@android:color/black"
-            android:typeface="monospace" />
+            android:textColor="@android:color/black" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/text_view_regular"
             android:autoLink="email"
             android:text="support@yas2job.co.il" />
 

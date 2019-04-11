@@ -16,25 +16,17 @@
         android:paddingEnd="10dp">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            style="@style/text_view_bold"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="15dp"
             android:text="הג'וב החדש נוצר בהצלחה!"
-            android:textColor="@android:color/black"
-            android:textStyle="bold"
-            android:typeface="serif" />
+            android:textColor="@android:color/black" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            style="@style/text_view_regular"
             android:layout_marginTop="10dp"
-            android:gravity="center_horizontal"
             android:text="המשרה תפורסם ללא עלות למשך 14 יום ולקראת סיום התקופה ניצור איתך קשר"
-            android:textColor="@android:color/black"
-            android:typeface="monospace" />
+            android:textColor="@android:color/black" />
 
         <LinearLayout
             android:layout_width="wrap_content"

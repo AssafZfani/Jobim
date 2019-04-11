@@ -27,11 +27,8 @@
 
         <TextView
             android:id="@+id/fullName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
+            style="@style/text_view_regular"
             android:textColor="@color/colorPrimaryDark"
-            android:typeface="monospace"
             tools:ignore="HardcodedText" />
 
     </LinearLayout>

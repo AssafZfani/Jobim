@@ -8,27 +8,22 @@
     tools:ignore="HardcodedText">
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/text_view_regular"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="25dp"
-        android:gravity="center"
         android:text="כמה פרטים אחרונים (לא חובה)"
-        android:textColor="@android:color/black"
-        android:typeface="monospace" />
+        android:textColor="@android:color/black" />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/text_view_regular"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="15dp"
         android:drawableStart="@drawable/picture"
         android:drawablePadding="10dp"
-        android:gravity="center_vertical"
+        android:gravity="start|center_vertical"
         android:text="מומלץ לצרף תמונת אווירה הקשורה לתפקיד או לבית העסק.\nלא להעלות סתם לוגו..."
-        android:textColor="@android:color/black"
-        android:typeface="monospace" />
+        android:textColor="@android:color/black" />
 
     <CheckBox
         android:id="@+id/checkBox"

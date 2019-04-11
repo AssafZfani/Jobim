@@ -28,12 +28,9 @@
                 android:background="@drawable/send_email1" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/text_view_bold"
                 android:text="שלח מייל"
-                android:textColor="@color/orange"
-                android:textStyle="bold"
-                android:typeface="serif" />
+                android:textColor="@color/orange" />
 
         </LinearLayout>
 
@@ -55,12 +52,9 @@
                 android:background="@drawable/call1" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/text_view_bold"
                 android:text="התקשר"
-                android:textColor="@color/orange"
-                android:textStyle="bold"
-                android:typeface="serif" />
+                android:textColor="@color/orange" />
 
         </LinearLayout>
 
@@ -82,12 +76,9 @@
                 android:background="@drawable/send_message1" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/text_view_bold"
                 android:text="שלח הודעה"
-                android:textColor="@color/orange"
-                android:textStyle="bold"
-                android:typeface="serif" />
+                android:textColor="@color/orange" />
 
         </LinearLayout>
 
@@ -101,9 +92,7 @@
         android:layout_gravity="center_horizontal" />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
+        style="@style/text_view_regular"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:text="תנאים טובים למתאימים"

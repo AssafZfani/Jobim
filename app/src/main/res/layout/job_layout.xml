@@ -21,11 +21,9 @@
 
             <TextView
                 android:id="@+id/tvJobLookingFor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/text_view_bold"
                 android:paddingTop="15dp"
-                android:textDirection="anyRtl"
-                android:textStyle="bold" />
+                android:textDirection="anyRtl" />
 
             <ImageView
                 android:id="@+id/ivJobBusinessSymbol"
@@ -36,8 +34,7 @@
 
             <TextView
                 android:id="@+id/tvJobTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/text_view_regular"
                 android:paddingBottom="15dp" />
 
         </LinearLayout>
@@ -78,9 +75,7 @@
 
             <TextView
                 android:id="@+id/tvJobAddress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical" />
+                style="@style/text_view_regular" />
 
             <View
                 android:layout_width="0dp"
@@ -89,13 +84,10 @@
 
             <TextView
                 android:id="@+id/tvJobDistance"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
+                style="@style/text_view_bold"
                 android:gravity="end"
                 android:paddingStart="0dp"
-                android:paddingEnd="10dp"
-                android:textStyle="bold" />
+                android:paddingEnd="10dp" />
 
         </LinearLayout>
 

@@ -16,26 +16,18 @@
         android:paddingEnd="10dp">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            style="@style/text_view_bold"
             android:layout_marginTop="10dp"
             android:text="מחיקת ג'וב"
-            android:textColor="@android:color/black"
-            android:textStyle="bold"
-            android:typeface="serif" />
+            android:textColor="@android:color/black" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            style="@style/text_view_regular"
             android:layout_marginTop="10dp"
-            android:gravity="center_horizontal"
             android:text="שימו לב!
 ג'ובים לא רלוונטים נמחקים מהפיד שלכם ולא
 תוכלו לצפות בהם בעתיד..."
-            android:textColor="@android:color/black"
-            android:typeface="monospace" />
+            android:textColor="@android:color/black" />
 
         <LinearLayout
             android:layout_width="wrap_content"

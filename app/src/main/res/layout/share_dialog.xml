@@ -16,24 +16,16 @@
         android:paddingEnd="10dp">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            style="@style/text_view_bold"
             android:layout_marginTop="10dp"
             android:text="המלצה על משרה"
-            android:textColor="@android:color/black"
-            android:textStyle="bold"
-            android:typeface="serif" />
+            android:textColor="@android:color/black" />
 
         <TextView
             android:id="@+id/dialogText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            style="@style/text_view_regular"
             android:layout_marginTop="10dp"
-            android:textAlignment="center"
-            android:textColor="@android:color/black"
-            android:typeface="monospace" />
+            android:textColor="@android:color/black" />
 
         <Button
             android:id="@+id/cancel"

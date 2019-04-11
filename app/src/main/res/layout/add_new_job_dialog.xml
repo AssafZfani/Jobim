@@ -28,31 +28,24 @@
                 android:background="@drawable/close" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/text_view_bold"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="5dp"
                 android:text="פרסום ג'וב חדש"
                 android:textColor="@android:color/black"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                android:typeface="serif" />
+                android:textSize="15sp" />
 
         </RelativeLayout>
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            style="@style/text_view_regular"
             android:layout_marginTop="10dp"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
             android:text="לפניכם 5 שלבים פשוטים כדי שתוכל ליצור ג'וב חדש בקלות ולמצוא את העובד הבא שלכם בלי מאמץ.\n\nפרטיכם ישמרו בג'ובים ולכן בפעם הבאה תוכלו ליצור ג'וב חדש אפילו יותר מהר..\n\nשאלות או בעיות בנוגע ליצירת ג'וב חדש?\nאנחנו פה בשבילכם... דברו איתנו!\n"
-            android:textAlignment="center"
             android:textColor="@android:color/black"
-            android:textSize="15sp"
-            android:typeface="monospace" />
+            android:textSize="15sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -73,12 +66,9 @@
                     android:background="@drawable/call1" />
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/text_view_bold"
                     android:text="התקשר"
-                    android:textColor="@color/orange"
-                    android:textStyle="bold"
-                    android:typeface="serif" />
+                    android:textColor="@color/orange" />
 
             </LinearLayout>
 
@@ -100,24 +90,18 @@
                     android:background="@drawable/send_email1" />
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/text_view_bold"
                     android:text="שלח מייל"
-                    android:textColor="@color/orange"
-                    android:textStyle="bold"
-                    android:typeface="serif" />
+                    android:textColor="@color/orange" />
 
             </LinearLayout>
 
         </LinearLayout>
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
+            style="@style/text_view_regular"
             android:text="שעות הפעילות: א-ה, 9:00-18:00\n"
-            android:textColor="@android:color/black"
-            android:typeface="monospace" />
+            android:textColor="@android:color/black" />
 
     </LinearLayout>
 

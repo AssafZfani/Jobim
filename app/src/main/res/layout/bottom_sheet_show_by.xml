@@ -20,13 +20,11 @@
             style="@style/text_view_bold"
             android:layout_centerVertical="true"
             android:text="אשר"
-            android:textAlignment="textStart"
             android:textColor="@android:color/holo_orange_dark" />
 
         <TextView
             style="@style/text_view_regular"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
+            android:layout_centerInParent="true"
             android:text="הצג לפי"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@android:color/holo_orange_dark"
@@ -38,7 +36,6 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:text="בטל"
-            android:textAlignment="textEnd"
             android:textColor="@android:color/holo_orange_dark" />
 
     </RelativeLayout>

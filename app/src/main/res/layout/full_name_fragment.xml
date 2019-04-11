@@ -8,16 +8,13 @@
     tools:ignore="ContentDescription, HardcodedText">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        style="@style/text_view_regular"
         android:layout_marginStart="5dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="5dp"
         android:text="אנא מלאו את הפרטים הבאים כדי ליצור קשר עם המעסיק"
-        android:textColor="@color/colorPrimaryDark"
-        android:typeface="monospace" />
+        android:textColor="@color/colorPrimaryDark" />
 
     <zfani.assaf.jobim.models.RoundedImageView
         android:id="@+id/selfie"
@@ -27,14 +24,11 @@
         android:background="@drawable/profile_image" />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        style="@style/text_view_regular"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="10dp"
         android:text="הסלפי שלי"
-        android:textColor="@color/colorPrimaryDark"
-        android:typeface="monospace" />
+        android:textColor="@color/colorPrimaryDark" />
 
     <LinearLayout
         android:layout_width="match_parent"
