@@ -3,7 +3,6 @@ package zfani.assaf.jobim;
 import android.app.Activity;
 import android.app.Application;
 import android.content.SharedPreferences;
-import android.graphics.Typeface;
 import android.preference.PreferenceManager;
 
 import com.google.firebase.database.DataSnapshot;
@@ -18,7 +17,6 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -88,17 +86,5 @@ public class App extends Application {
         super.onCreate();
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         sharedPreferences.edit().putString("PhoneNumber", "0509907979").apply();
-        try {
-            Typeface typeface = Typeface.createFromAsset(getAssets(), "open_sans.ttf");
-            Field staticField = Typeface.class.getDeclaredField("MONOSPACE");
-            staticField.setAccessible(true);
-            staticField.set(null, typeface);
-            typeface = Typeface.createFromAsset(getAssets(), "open_sans_bold.ttf");
-            staticField = Typeface.class.getDeclaredField("SERIF");
-            staticField.setAccessible(true);
-            staticField.set(null, typeface);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }

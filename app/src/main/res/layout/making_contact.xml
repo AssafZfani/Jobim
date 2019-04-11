@@ -124,29 +124,27 @@
 
         <EditText
             android:id="@+id/phoneNumber"
+            style="@style/text_view_regular"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_gravity="top"
             android:layout_weight="0.75"
             android:background="@android:color/transparent"
-            android:gravity="center"
             android:hint="אנא הזינו מספר טלפון ליצירת קשר טלפוני"
             android:inputType="phone"
             android:padding="20dp"
-            android:textColor="@android:color/darker_gray"
-            android:typeface="monospace" />
+            android:textColor="@android:color/darker_gray" />
 
         <EditText
             android:id="@+id/smsNumber"
+            style="@style/text_view_regular"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_gravity="top"
             android:layout_weight="0.75"
             android:background="@android:color/transparent"
-            android:gravity="center"
             android:hint="אנא הזינו מספר טלפון למשלוח SMS"
             android:inputType="phone"
             android:padding="20dp"
-            android:textColor="@android:color/darker_gray"
-            android:typeface="monospace" />
+            android:textColor="@android:color/darker_gray" />
 
         <View
             android:layout_width="1dp"
@@ -173,16 +171,14 @@
 
         <EditText
             android:id="@+id/email"
+            style="@style/text_view_regular"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:layout_weight="0.75"
             android:background="@android:color/transparent"
-            android:gravity="center"
             android:hint="אנא הזינו כתובת מייל"
             android:inputType="textEmailAddress"
             android:padding="20dp"
-            android:textColor="@android:color/darker_gray"
-            android:typeface="monospace" />
+            android:textColor="@android:color/darker_gray" />
 
     </LinearLayout>
 

@@ -155,7 +155,7 @@ public class FillDetails extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        MainActivity.displayDialog(this, R.layout.close_dialog, null);
+        MainActivity.displayDialog(this, R.layout.dialog_close, null);
     }
 
     private boolean canMoveToFragment(int fragmentNumber) {

@@ -27,7 +27,7 @@ public class FilterQuestion extends AppCompatActivity {
 
         radioGroup = findViewById(R.id.radioGroup);
 
-        showDeleteQuestionDialog = findViewById(R.id.showDeleteQuestionDialog);
+        showDeleteQuestionDialog = findViewById(R.id.tvShowDeleteQuestionDialog);
     }
 
     @Override
@@ -65,6 +65,6 @@ public class FilterQuestion extends AppCompatActivity {
             showDeleteQuestionDialog.setVisibility(View.VISIBLE);
         }
 
-        showDeleteQuestionDialog.setOnClickListener(view -> MainActivity.displayDialog((AppCompatActivity) view.getContext(), R.layout.delete_question_dialog, null));
+        showDeleteQuestionDialog.setOnClickListener(view -> MainActivity.displayDialog((AppCompatActivity) view.getContext(), R.layout.dialog_delete_question, null));
     }
 }

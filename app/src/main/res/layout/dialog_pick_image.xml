@@ -18,39 +18,37 @@
         <TextView
             style="@style/text_view_bold"
             android:layout_marginTop="10dp"
-            android:text="את/ה בטוח/ה?"
+            android:text="בחירת תמונה"
             android:textColor="@android:color/black" />
 
         <TextView
             style="@style/text_view_regular"
             android:layout_marginTop="10dp"
-            android:text="השינויים לא נשמרו. האם ברצונך לסגור בכל זאת?"
-            android:textColor="@android:color/black"
-            android:textSize="12.5sp" />
+            android:text="מאיפה להביא את התמונה?"
+            android:textColor="@android:color/black" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal">
 
-            <Button
-                android:id="@+id/cancel"
-                style="@style/Base.Widget.AppCompat.Button.Borderless"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="הישאר"
-                android:textColor="@android:color/holo_orange_dark"
-                android:typeface="monospace" />
+            <TextView
+                android:id="@+id/tvCamera"
+                style="@style/text_view_bold"
+                android:layout_width="75dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:padding="15dp"
+                android:text="מצלמה"
+                android:textColor="@android:color/holo_orange_dark" />
 
-            <Button
-                android:id="@+id/exit"
-                style="@style/Base.Widget.AppCompat.Button.Borderless"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="סגור"
-                android:textColor="@android:color/holo_orange_dark"
-                android:textStyle="bold"
-                android:typeface="serif" />
+            <TextView
+                android:id="@+id/tvGallery"
+                style="@style/text_view_regular"
+                android:layout_width="75dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:padding="15dp"
+                android:text="גלריה"
+                android:textColor="@android:color/holo_orange_dark" />
 
         </LinearLayout>
 

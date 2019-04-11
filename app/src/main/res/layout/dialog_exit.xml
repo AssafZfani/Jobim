@@ -18,15 +18,13 @@
         <TextView
             style="@style/text_view_bold"
             android:layout_marginTop="10dp"
-            android:text="מחיקת ג'וב"
+            android:text="יציאה"
             android:textColor="@android:color/black" />
 
         <TextView
             style="@style/text_view_regular"
             android:layout_marginTop="10dp"
-            android:text="שימו לב!
-ג'ובים לא רלוונטים נמחקים מהפיד שלכם ולא
-תוכלו לצפות בהם בעתיד..."
+            android:text="האם ברצונך לצאת מהאפליקציה?"
             android:textColor="@android:color/black" />
 
         <LinearLayout
@@ -34,24 +32,23 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal">
 
-            <Button
-                android:id="@+id/deleteFromFeed"
-                style="@style/Base.Widget.AppCompat.Button.Borderless"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="מחק מהפיד"
-                android:textColor="@android:color/holo_orange_dark"
-                android:textStyle="bold"
-                android:typeface="serif" />
+            <TextView
+                android:id="@+id/tvExit"
+                style="@style/text_view_bold"
+                android:layout_width="75dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:padding="15dp"
+                android:text="יציאה"
+                android:textColor="@android:color/holo_orange_dark" />
 
-            <Button
-                android:id="@+id/cancel"
-                style="@style/Base.Widget.AppCompat.Button.Borderless"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <TextView
+                android:id="@+id/tvCancel"
+                style="@style/text_view_regular"
+                android:layout_width="75dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:padding="15dp"
                 android:text="בטל"
-                android:textColor="@android:color/holo_orange_dark"
-                android:typeface="monospace" />
+                android:textColor="@android:color/holo_orange_dark" />
 
         </LinearLayout>
 

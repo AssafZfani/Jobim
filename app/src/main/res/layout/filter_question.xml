@@ -24,7 +24,7 @@
 
         <EditText
             android:id="@+id/question"
-            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            style="@style/text_view_regular"
             android:layout_width="match_parent"
             android:layout_height="90dp"
             android:background="@drawable/edit_text_selector"
@@ -34,8 +34,7 @@
             android:paddingStart="10dp"
             android:paddingTop="10dp"
             android:paddingEnd="10dp"
-            android:textColor="@color/orange"
-            android:typeface="monospace" />
+            android:textColor="@color/orange" />
 
         <TextView
             style="@style/text_view_regular"
@@ -82,16 +81,15 @@
             android:layout_height="0dp"
             android:layout_weight="1" />
 
-        <Button
-            android:id="@+id/showDeleteQuestionDialog"
+        <TextView
+            android:id="@+id/tvShowDeleteQuestionDialog"
+            style="@style/text_view_regular"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:background="@drawable/border"
             android:padding="20dp"
             android:text="מחיקת שאלה"
             android:textColor="@android:color/black"
-            android:typeface="monospace"
             android:visibility="gone" />
 
     </LinearLayout>

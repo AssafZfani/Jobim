@@ -23,9 +23,8 @@
 
         <AutoCompleteTextView
             android:id="@+id/city"
-            style="@style/Widget.AppCompat.Button.Borderless"
+            style="@style/text_view_regular"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:background="@drawable/edit_text"
             android:hint="עיר מגורים"
             android:inputType="text"
@@ -34,7 +33,6 @@
             android:textAlignment="viewStart"
             android:textColor="@color/orange"
             android:textSize="15sp"
-            android:typeface="monospace"
             tools:ignore="HardcodedText" />
 
         <Button

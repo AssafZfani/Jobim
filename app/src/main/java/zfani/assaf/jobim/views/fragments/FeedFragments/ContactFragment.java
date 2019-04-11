@@ -55,7 +55,7 @@ public class ContactFragment extends Fragment {
                     activity.startActivity(emailIntent);
                     job.setApplied(true);
                     JobsAdapter.query.getRef().child(job.getId()).setValue(job);
-                    MainActivity.displayDialog(activity, R.layout.contact_dialog, job.getId());
+                    MainActivity.displayDialog(activity, R.layout.dialog_contact, job.getId());
                     break;
                 }
                 case R.id.call: {
@@ -113,7 +113,7 @@ public class ContactFragment extends Fragment {
                 }
             }
         } else {
-            MainActivity.displayDialog(activity, R.layout.fill_details_dialog, job.getId());
+            MainActivity.displayDialog(activity, R.layout.dialog_fill_details, job.getId());
         }
     }
 
@@ -137,7 +137,7 @@ public class ContactFragment extends Fragment {
         sendEmail.setOnClickListener(view12 -> {
             if (job != null)
                 MainActivity.displayDialog(activity, App.sharedPreferences.contains("FullName") ?
-                        R.layout.sending_mail_dialog : R.layout.fill_details_dialog, job.getId());
+                        R.layout.dialog_sending_mail : R.layout.dialog_fill_details, job.getId());
         });
         View.OnClickListener listener;
         call.setOnClickListener(listener = view1 -> {

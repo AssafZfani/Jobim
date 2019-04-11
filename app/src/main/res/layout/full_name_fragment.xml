@@ -38,27 +38,25 @@
 
         <EditText
             android:id="@+id/firstName"
-            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            style="@style/text_view_regular"
             android:layout_width="150dp"
             android:layout_height="45dp"
             android:layout_marginEnd="5dp"
             android:background="@drawable/edit_text_selector"
             android:hint="שם פרטי"
             android:inputType="text"
-            android:textColor="@color/orange"
-            android:typeface="monospace" />
+            android:textColor="@color/orange" />
 
         <EditText
             android:id="@+id/lastName"
-            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            style="@style/text_view_regular"
             android:layout_width="150dp"
             android:layout_height="45dp"
             android:layout_marginStart="5dp"
             android:background="@drawable/edit_text_selector"
             android:hint="שם משפחה"
             android:inputType="text"
-            android:textColor="@color/orange"
-            android:typeface="monospace" />
+            android:textColor="@color/orange" />
 
     </LinearLayout>
 

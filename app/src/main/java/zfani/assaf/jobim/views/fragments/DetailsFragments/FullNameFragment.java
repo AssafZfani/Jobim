@@ -51,7 +51,7 @@ public class FullNameFragment extends Fragment {
             firstName.setText(fullName.substring(0, lastSpace));
             lastName.setText(fullName.substring(lastSpace + 1));
         }
-        view.findViewById(R.id.selfie).setOnClickListener(view1 -> MainActivity.displayDialog(activity, R.layout.image_dialog, null));
+        view.findViewById(R.id.selfie).setOnClickListener(view1 -> MainActivity.displayDialog(activity, R.layout.dialog_pick_image, null));
         return view;
     }
 

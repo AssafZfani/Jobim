@@ -64,14 +64,14 @@ public class JobInfoActivity extends AppCompatActivity {
                         getResources().getString(R.string.shareMessage) + " " + job.getFirm() + " מחפשת " + job.getType();
                 SmsManager.getDefault().sendTextMessage(phoneNumber, null, text, null, null);
                 getIntent().putExtra("ContactName", contactName);
-                MainActivity.displayDialog(this, R.layout.share_dialog, job.getId());
+                MainActivity.displayDialog(this, R.layout.dialog_share, job.getId());
             }
         }
     }
 
     @OnClick(R.id.llDelete)
     public void delete() {
-        MainActivity.displayDialog(this, R.layout.delete_job_dialog, job.getId());
+        MainActivity.displayDialog(this, R.layout.dialog_delete_job, job.getId());
     }
 
     @OnClick(R.id.llShare)

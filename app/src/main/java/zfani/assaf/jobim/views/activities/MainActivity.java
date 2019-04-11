@@ -143,13 +143,13 @@ public class MainActivity extends AppCompatActivity {
             protected void onCreate(Bundle savedInstanceState) {
                 super.onCreate(savedInstanceState);
                 setContentView(layout);
-                View cancel = findViewById(R.id.cancel);
+                View cancel = findViewById(R.id.tvCancel);
                 if (cancel != null) {
                     cancel.setOnClickListener(v -> {
                         dismiss();
-                        if (layout == R.layout.fill_details_dialog) {
+                        if (layout == R.layout.dialog_fill_details) {
                             activity.startActivity(new Intent(activity, FillDetails.class));
-                        } else if (layout == R.layout.post_job_dialog) {
+                        } else if (layout == R.layout.dialog_post_job) {
                             activity.finish();
                         }
                     });
@@ -167,15 +167,15 @@ public class MainActivity extends AppCompatActivity {
                             activity.startActivity(emailIntent);
                         });
                         break;
-                    case R.layout.close_dialog:
-                        findViewById(R.id.exit).setOnClickListener(view -> {
+                    case R.layout.dialog_close:
+                        findViewById(R.id.tvExit).setOnClickListener(view -> {
                             dismiss();
                             App.sharedPreferences.edit().remove("FromCamera").remove("Image").remove("FullName").remove("City").remove("BirthYear").remove("Email").apply();
                             activity.finish();
                         });
                         break;
-                    case R.layout.delete_job_dialog:
-                        findViewById(R.id.deleteFromFeed).setOnClickListener(v -> {
+                    case R.layout.dialog_delete_job:
+                        findViewById(R.id.tvDeleteFromFeed).setOnClickListener(v -> {
                             /*if (FilteredAdapter.filteredList != null) {
                                 int indexToRemove = FilteredAdapter.filteredList.indexOf(Job.findJobById(jobId));
                                 if (activity.getLocalClassName().equalsIgnoreCase("views.activities.MainActivity")) {
@@ -195,37 +195,37 @@ public class MainActivity extends AppCompatActivity {
                             Toast.makeText(activity, "מעכשיו הג'וב לא יופיע יותר בפיד", Toast.LENGTH_SHORT).show();
                         });
                         break;
-                    case R.layout.delete_question_dialog:
-                        findViewById(R.id.deleteQuestion).setOnClickListener(view -> {
+                    case R.layout.dialog_delete_question:
+                        findViewById(R.id.tvDeleteQuestion).setOnClickListener(view -> {
                             AddNewJob.newJob.setAnswer(false);
                             AddNewJob.newJob.setQuestion(null);
                             dismiss();
                             activity.finish();
                         });
                         break;
-                    case R.layout.exit_dialog:
-                        findViewById(R.id.exit).setOnClickListener(v -> {
+                    case R.layout.dialog_exit:
+                        findViewById(R.id.tvExit).setOnClickListener(v -> {
                             dismiss();
                             activity.finish();
                         });
                         break;
-                    case R.layout.image_dialog:
-                        findViewById(R.id.camera).setOnClickListener(view -> {
+                    case R.layout.dialog_pick_image:
+                        findViewById(R.id.tvCamera).setOnClickListener(view -> {
                             dismiss();
                             activity.startActivityForResult(new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE), 3);
                         });
-                        findViewById(R.id.gallery).setOnClickListener(view -> {
+                        findViewById(R.id.tvGallery).setOnClickListener(view -> {
                             dismiss();
                             activity.startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI), 4);
                         });
                         break;
-                    case R.layout.sending_mail_dialog:
-                        findViewById(R.id.send).setOnClickListener(view -> {
+                    case R.layout.dialog_sending_mail:
+                        findViewById(R.id.tvSendMail).setOnClickListener(view -> {
                             dismiss();
                             ContactFragment.contact(activity, null, R.id.sendEmail);
                         });
                         break;
-                    case R.layout.share_dialog:
+                    case R.layout.dialog_share:
                         ((TextView) findViewById(R.id.dialogText)).setText("שלחנו ל" + activity.getIntent().getStringExtra("ContactName") + " המלצה על המשרה");
                         break;
                 }
@@ -294,7 +294,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                 }
             } else {
-                displayDialog(this, R.layout.exit_dialog, null);
+                displayDialog(this, R.layout.dialog_exit, null);
             }
         }
     }

@@ -166,7 +166,7 @@ public class MakingContact extends AppCompatActivity {
 
             setResult(1);
 
-            MainActivity.displayDialog(this, R.layout.post_job_dialog, null);
+            MainActivity.displayDialog(this, R.layout.dialog_post_job, null);
         }
     }
 }

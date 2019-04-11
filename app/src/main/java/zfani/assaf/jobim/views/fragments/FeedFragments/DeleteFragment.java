@@ -25,7 +25,7 @@ public class DeleteFragment extends Fragment {
         View view = inflater.inflate(R.layout.delete_job_layout, container, false);
         view.findViewById(R.id.delete).setOnClickListener(view1 -> {
             getActivity().getIntent().putExtra("ViewPager", container.getId());
-            MainActivity.displayDialog(getActivity(), R.layout.delete_job_dialog, getArguments().getString("JobId"));
+            MainActivity.displayDialog(getActivity(), R.layout.dialog_delete_job, getArguments().getString("JobId"));
         });
         return view;
     }
