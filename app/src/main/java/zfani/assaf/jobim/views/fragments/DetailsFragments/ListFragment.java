@@ -2,19 +2,15 @@ package zfani.assaf.jobim.views.fragments.DetailsFragments;
 
 import android.app.Activity;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -34,7 +30,6 @@ import java.util.Arrays;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import zfani.assaf.jobim.R;
-import zfani.assaf.jobim.utils.GPSTracker;
 import zfani.assaf.jobim.views.activities.AddNewJob;
 
 public class ListFragment extends Fragment {
@@ -48,13 +43,13 @@ public class ListFragment extends Fragment {
 
     private static void setContent(Activity activity, ListView listView, ArrayList<String> data) {
         RadioGroup radioGroup = new RadioGroup(activity);
-        listView.setAdapter(new ArrayAdapter<String>(activity, R.layout.radio_button, data) {
+        listView.setAdapter(new ArrayAdapter<String>(activity, R.layout.row_job_type_radio_button, data) {
 
             @NonNull
             @Override
             public View getView(int position, View convertView, @NonNull ViewGroup parent) {
                 boolean isShowByActivity = activity.getLocalClassName().equalsIgnoreCase("views.activities.ShowByActivity");
-                RadioButton radioButton = (RadioButton) (convertView == null ? LayoutInflater.from(activity).inflate(R.layout.radio_button, parent, false) : convertView);
+                RadioButton radioButton = (RadioButton) (convertView == null ? LayoutInflater.from(activity).inflate(R.layout.row_job_type_radio_button, parent, false) : convertView);
                 radioGroup.addView(radioButton);
                 radioButton.setId(View.generateViewId());
                 radioButton.setHint(data.get(position));

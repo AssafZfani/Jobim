@@ -22,7 +22,7 @@ import zfani.assaf.jobim.views.fragments.FeedFragments.ContactFragment;
 import zfani.assaf.jobim.views.fragments.FeedFragments.DeleteFragment;
 import zfani.assaf.jobim.views.fragments.FeedFragments.JobFragment;
 
-public class JobsAdapter extends FirebaseRecyclerAdapter<Job, JobsAdapter.ViewHolder> {
+public class JobsAdapter extends FirebaseRecyclerAdapter<Job, JobsAdapter.JobViewHolder> {
 
     public static Query query;
 
@@ -39,12 +39,12 @@ public class JobsAdapter extends FirebaseRecyclerAdapter<Job, JobsAdapter.ViewHo
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(View.inflate(parent.getContext(), R.layout.layouts_container, null));
+    public JobViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new JobViewHolder(View.inflate(parent.getContext(), R.layout.layouts_container, null));
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull ViewHolder viewHolder, int i, @NonNull Job job) {
+    protected void onBindViewHolder(@NonNull JobViewHolder viewHolder, int i, @NonNull Job job) {
         viewHolder.viewPager.setId(View.generateViewId());
         viewHolder.viewPager.setPageTransformer(true, (view, position) -> view.setTranslationX(-position * (view.getWidth() / 50f)));
         viewHolder.viewPager.setAdapter(new FragmentPagerAdapter(((AppCompatActivity) viewHolder.itemView.getContext()).getSupportFragmentManager()) {
@@ -69,12 +69,12 @@ public class JobsAdapter extends FirebaseRecyclerAdapter<Job, JobsAdapter.ViewHo
         viewHolder.viewPager.setCurrentItem(1);
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class JobViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.viewPager)
         public ViewPager viewPager;
 
-        public ViewHolder(View itemView) {
+        public JobViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }

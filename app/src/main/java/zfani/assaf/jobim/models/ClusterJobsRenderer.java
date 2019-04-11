@@ -37,7 +37,7 @@ public class ClusterJobsRenderer extends DefaultClusterRenderer<ClusterJobs>
 
     private Activity activity;
     private HashMap<ClusterJobs, Job> hashMap;
-    private JobsAdapter.ViewHolder viewHolder;
+    private JobsAdapter.JobViewHolder viewHolder;
     private TextView txt;
 
     public ClusterJobsRenderer(Activity activity, GoogleMap map, ClusterManager<ClusterJobs> clusterManager, HashMap<ClusterJobs, Job> hashMap) {
@@ -122,7 +122,7 @@ public class ClusterJobsRenderer extends DefaultClusterRenderer<ClusterJobs>
 
     private boolean createClusterDialog(Cluster cluster) {
 
-        viewHolder = new JobsAdapter.ViewHolder(View.inflate(activity, R.layout.layouts_container, null));
+        viewHolder = new JobsAdapter.JobViewHolder(View.inflate(activity, R.layout.layouts_container, null));
 
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 550);
 

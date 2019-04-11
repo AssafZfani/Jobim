@@ -11,7 +11,7 @@ import zfani.assaf.jobim.R;
 import zfani.assaf.jobim.adapters.JobsAdapter;
 import zfani.assaf.jobim.models.Job;
 
-public class FilteredAdapter extends RecyclerView.Adapter<JobsAdapter.ViewHolder> {
+public class FilteredAdapter extends RecyclerView.Adapter<JobsAdapter.JobViewHolder> {
 
     public static ArrayList<Job> filteredList;
 
@@ -30,12 +30,12 @@ public class FilteredAdapter extends RecyclerView.Adapter<JobsAdapter.ViewHolder
 
     @NonNull
     @Override
-    public JobsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new JobsAdapter.ViewHolder(View.inflate(parent.getContext(), R.layout.layouts_container, null));
+    public JobsAdapter.JobViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new JobsAdapter.JobViewHolder(View.inflate(parent.getContext(), R.layout.layouts_container, null));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull JobsAdapter.ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(@NonNull JobsAdapter.JobViewHolder viewHolder, int position) {
         //JobsAdapter.populateViewHolder(viewHolder, filteredList.get(position));
     }
 

@@ -14,54 +14,45 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
-import zfani.assaf.jobim.models.Job;
-import zfani.assaf.jobim.utils.GPSTracker;
+import zfani.assaf.jobim.models.JobType;
 import zfani.assaf.jobim.utils.JsonHelper;
 
-public class AllJobsViewModel extends AndroidViewModel {
+public class JobTypesViewModel extends AndroidViewModel {
 
-    public AllJobsViewModel(@NonNull Application application) {
+    public JobTypesViewModel(@NonNull Application application) {
         super(application);
     }
 
-    public void loadJobs() {
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("jobs");
+    public void loadJobsTypes() {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("jobs_types");
         ref.addValueEventListener(new ValueEventListener() {
+
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (!dataSnapshot.hasChildren()) {
                     InputStream inputStream = null;
                     try {
-                        inputStream = getApplication().getAssets().open("jobs.json");
+                        inputStream = getApplication().getAssets().open("jobs_types.json");
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                    if (inputStream == null) {
+                        return;
+                    }
                     try {
-                        if (inputStream == null) {
-                            return;
-                        }
                         JSONObject obj = new JSONObject(JsonHelper.loadJSONFromAsset(inputStream));
-                        JSONArray jsonArray = obj.getJSONArray("jobs");
+                        JSONArray jsonArray = obj.getJSONArray("jobs_types");
                         for (int i = 0; i <= jsonArray.length(); i++) {
                             JSONObject object = jsonArray.getJSONObject(i);
-                            String address = object.getString("address");
-                            DatabaseReference job = ref.push();
-                            JSONArray colorArray = object.getJSONArray("color");
-                            job.setValue(new Job(
-                                    address,
-                                    object.getBoolean("applied"),
-                                    object.getInt("business_number"),
-                                    colorArray.getInt(0), colorArray.getInt(1), colorArray.getInt(2),
-                                    GPSTracker.getDistanceFromAddress(getApplication(), address),
-                                    object.getBoolean("is_favorite"),
-                                    object.getString("firm"),
-                                    job.getKey(),
-                                    false,
-                                    object.getString("title"),
-                                    object.getString("type")
+                            DatabaseReference child = ref.child(i + "");
+                            JSONArray colorArray = object.getJSONArray("Color");
+                            ArrayList<Integer> color = new ArrayList<>(Arrays.asList(colorArray.getInt(0), colorArray.getInt(1), colorArray.getInt(2)));
+                            child.setValue(new JobType(color, i + 1, object.getString("JobType")
                             ));
                         }
                     } catch (JSONException e) {

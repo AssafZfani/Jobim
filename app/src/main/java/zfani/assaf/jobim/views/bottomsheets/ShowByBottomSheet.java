@@ -161,10 +161,11 @@ public class ShowByBottomSheet extends BottomSheetDialogFragment {
 
     @OnClick(R.id.tvAllow)
     void allow() {
-
+        dismiss();
     }
 
     @OnClick(R.id.tvCancel)
     void cancel() {
+        dismiss();
     }
 }
