@@ -3,14 +3,14 @@ package zfani.assaf.jobim.views.activities;
 import android.os.Bundle;
 import android.os.Handler;
 
-import androidx.fragment.app.FragmentActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import zfani.assaf.jobim.R;
 import zfani.assaf.jobim.adapters.JobsAdapter;
 
-public class JobsEmployer extends FragmentActivity implements SwipeRefreshLayout.OnRefreshListener {
+public class JobsEmployer extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView recyclerView;

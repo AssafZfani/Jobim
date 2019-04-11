@@ -54,11 +54,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     }
 
     @Override
-    public void onMapReady(final GoogleMap map) {
+    public void onMapReady(GoogleMap map) {
         googleMap = map;
-        final LatLng latLng = getArguments().getParcelable("LatLng");
+        LatLng latLng = getArguments().getParcelable("LatLng");
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
-        final Activity activity = getActivity();
+        Activity activity = getActivity();
         String activityName = activity.getLocalClassName();
         if (activityName.equalsIgnoreCase("views.activities.MainActivity")) {
             map.setMyLocationEnabled(true);
@@ -67,8 +67,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 return false;
             });
             googleMap.setOnMapLoadedCallback(() -> loadMarkersToMap(activity));
-        } else if (activityName.equalsIgnoreCase("views.activities.ShowBy")) {
-            final EditText editText = activity.findViewById(R.id.editText2);
+        } else if (activityName.equalsIgnoreCase("views.activities.ShowByActivity")) {
+            EditText editText = activity.findViewById(R.id.editText2);
             googleMap.setOnMapClickListener(latLng1 -> {
                 editText.setText(GPSTracker.getAddressFromLatLng(activity, latLng1, null));
                 changeCamera(latLng1);

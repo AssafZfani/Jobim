@@ -27,7 +27,7 @@ import zfani.assaf.jobim.utils.GPSTracker;
 
 public class AllJobsViewModel extends AndroidViewModel {
 
-    private final MutableLiveData<List<JobType>> jobTypeLiveList;
+    private MutableLiveData<List<JobType>> jobTypeLiveList;
 
     public AllJobsViewModel(@NonNull Application application) {
         super(application);

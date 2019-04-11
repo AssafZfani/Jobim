@@ -18,7 +18,7 @@ import androidx.appcompat.widget.AppCompatImageView;
 
 public class RoundedImageView extends AppCompatImageView {
 
-    private final Activity activity;
+    private Activity activity;
 
     public RoundedImageView(Context context, AttributeSet attrs) {
 
@@ -46,11 +46,11 @@ public class RoundedImageView extends AppCompatImageView {
 
         Canvas canvas = new Canvas(output);
 
-        final String color = "#BAB399";
+        String color = "#BAB399";
 
-        final Paint paint = new Paint();
+        Paint paint = new Paint();
 
-        final Rect rect = new Rect(0, 0, radius, radius);
+        Rect rect = new Rect(0, 0, radius, radius);
 
         paint.setAntiAlias(true);
 

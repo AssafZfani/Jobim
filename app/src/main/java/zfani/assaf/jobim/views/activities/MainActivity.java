@@ -1,6 +1,7 @@
 package zfani.assaf.jobim.views.activities;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -19,7 +20,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
     private MapFragment mapFragment;
     private Fragment fragmentToReplace;
 
-    static void setupToolBar(final FragmentActivity activity) {
+    static void setupToolBar(@NonNull AppCompatActivity activity) {
         Toolbar toolbar = activity.findViewById(R.id.toolbar);
         TextView title = toolbar.findViewById(R.id.title);
         View addButton, backButton, closeButton, mapButton, menuButton, nextButton, postButton, saveButton, settingsButton;
@@ -107,12 +107,6 @@ public class MainActivity extends AppCompatActivity {
                 backButton.setVisibility(View.VISIBLE);*/
                 break;
             }
-            case "views.activities.ShowBy": {
-                toolbar.setBackground(activity.getDrawable(R.drawable.action_bar_dark));
-                menuButton.setEnabled(false);
-                mapButton.setEnabled(false);
-                break;
-            }
             default: {
                 text = activity.getIntent().getStringExtra("Fragment");
                 if (text == null) {
@@ -142,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
         title.setText(text);
     }
 
-    public static void displayDialog(final FragmentActivity activity, final int layout, final String jobId) {
+    public static void displayDialog(Activity activity, int layout, String jobId) {
         Dialog dialog = new Dialog(activity) {
 
             @Override
@@ -377,10 +371,6 @@ public class MainActivity extends AppCompatActivity {
             fragmentManager.beginTransaction().remove(mapFragment).commitAllowingStateLoss();
             findViewById(R.id.mapButton).setBackground(background);
         }
-    }
-
-    public void showBy(View v) {
-        startActivityForResult(new Intent(MainActivity.this, ShowBy.class), 1);
     }
 
     private void handleMenuButtons(View v) {

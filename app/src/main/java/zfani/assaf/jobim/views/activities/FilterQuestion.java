@@ -5,10 +5,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 
-import androidx.fragment.app.FragmentActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import zfani.assaf.jobim.R;
 
-public class FilterQuestion extends FragmentActivity {
+public class FilterQuestion extends AppCompatActivity {
 
     private EditText question;
     private RadioGroup radioGroup;
@@ -65,6 +65,6 @@ public class FilterQuestion extends FragmentActivity {
             showDeleteQuestionDialog.setVisibility(View.VISIBLE);
         }
 
-        showDeleteQuestionDialog.setOnClickListener(view -> MainActivity.displayDialog((FragmentActivity) view.getContext(), R.layout.delete_question_dialog, null));
+        showDeleteQuestionDialog.setOnClickListener(view -> MainActivity.displayDialog((AppCompatActivity) view.getContext(), R.layout.delete_question_dialog, null));
     }
 }

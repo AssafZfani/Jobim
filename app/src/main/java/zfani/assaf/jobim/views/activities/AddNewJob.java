@@ -8,8 +8,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.RadioGroup;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import zfani.assaf.jobim.R;
@@ -20,7 +20,7 @@ import zfani.assaf.jobim.views.fragments.NewJobFragments.JobTitleFragment;
 import zfani.assaf.jobim.views.fragments.NewJobFragments.JobTypeFragment;
 import zfani.assaf.jobim.views.fragments.NewJobFragments.PictureFragment;
 
-public class AddNewJob extends FragmentActivity {
+public class AddNewJob extends AppCompatActivity {
 
     public static NewJob newJob;
     private FirmFragment firmFragment;

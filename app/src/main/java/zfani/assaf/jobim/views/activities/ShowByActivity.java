@@ -6,8 +6,8 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import zfani.assaf.jobim.R;
@@ -16,18 +16,17 @@ import zfani.assaf.jobim.views.fragments.DetailsFragments.ListFragment;
 import zfani.assaf.jobim.views.fragments.FeedFragments.MapFragment;
 import zfani.assaf.jobim.views.fragments.NewJobFragments.JobTypeFragment;
 
-public class ShowBy extends FragmentActivity {
+public class ShowByActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.show_by);
-        MainActivity.setupToolBar(this);
-        final EditText[] editTexts = new EditText[3];
+        setContentView(R.layout.activity_show_by);
+        EditText[] editTexts = new EditText[3];
         editTexts[0] = findViewById(R.id.editText1);
         editTexts[1] = findViewById(R.id.editText2);
         editTexts[2] = findViewById(R.id.editText3);
-        final ViewPager viewPager = findViewById(R.id.viewPager);
+        ViewPager viewPager = findViewById(R.id.viewPager);
         viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @NonNull
             @Override
@@ -47,7 +46,7 @@ public class ShowBy extends FragmentActivity {
                 return 3;
             }
         });
-        final RadioGroup radioGroup = findViewById(R.id.fragmentsBar);
+        RadioGroup radioGroup = findViewById(R.id.fragmentsBar);
         radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
             int item;
             switch (checkedId) {

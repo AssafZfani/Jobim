@@ -46,8 +46,8 @@ public class App extends Application {
         return json;
     }
 
-    public static void loadJobsTypes(final Activity activity) {
-        final DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("jobs_types");
+    public static void loadJobsTypes(Activity activity) {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("jobs_types");
         ref.addValueEventListener(new ValueEventListener() {
 
             @Override

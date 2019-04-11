@@ -15,7 +15,7 @@ public class FilteredAdapter extends RecyclerView.Adapter<JobsAdapter.ViewHolder
 
     public static ArrayList<Job> filteredList;
 
-    public FilteredAdapter(final ArrayList<Integer> businessesNumbers, final String location, final String firm) {
+    public FilteredAdapter(ArrayList<Integer> businessesNumbers, String location, String firm) {
         filteredList = new ArrayList<>();
         /*for (Job job : JobsAdapter.jobsList) {
             if ((firm.isEmpty() || job.getFirm().equalsIgnoreCase(firm)) &&
@@ -35,7 +35,7 @@ public class FilteredAdapter extends RecyclerView.Adapter<JobsAdapter.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final JobsAdapter.ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(@NonNull JobsAdapter.ViewHolder viewHolder, int position) {
         //JobsAdapter.populateViewHolder(viewHolder, filteredList.get(position));
     }
 

@@ -1,5 +1,6 @@
 package zfani.assaf.jobim.views.fragments.FeedFragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -17,7 +18,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import zfani.assaf.jobim.App;
 import zfani.assaf.jobim.R;
 import zfani.assaf.jobim.adapters.JobsAdapter;
@@ -39,7 +39,7 @@ public class ContactFragment extends Fragment {
         JobsAdapter.query.getRef().child(job.getId()).setValue(job);
     }
 
-    public static void contact(final FragmentActivity activity, final Job job, int id) {
+    public static void contact(Activity activity, Job job, int id) {
         String text = null;
         if (App.sharedPreferences.contains("FullName") && job != null) {
             if (id != R.id.call) {
@@ -120,7 +120,7 @@ public class ContactFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.contact_layout, container, false);
-        FragmentActivity activity = getActivity();
+        Activity activity = getActivity();
         Job job = getArguments().getParcelable("Job");
         View sendEmail, call, sendMessage, favorite;
         sendEmail = view.findViewById(R.id.sendEmail);

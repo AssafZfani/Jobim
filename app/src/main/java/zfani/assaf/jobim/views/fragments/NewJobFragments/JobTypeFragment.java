@@ -48,9 +48,9 @@ public class JobTypeFragment extends ListFragment {
 
         super.onStart();
 
-        boolean isShowByActivity = activity.getLocalClassName().equalsIgnoreCase("views.activities.ShowBy");
+        boolean isShowByActivity = activity.getLocalClassName().equalsIgnoreCase("views.activities.ShowByActivity");
 
-        final RadioGroup radioGroup = new RadioGroup(activity);
+        RadioGroup radioGroup = new RadioGroup(activity);
 
         setContentJobTypes(activity, radioGroup, null);
 
@@ -63,7 +63,7 @@ public class JobTypeFragment extends ListFragment {
                 }
 
                 @Override
-                public void onTextChanged(final CharSequence s, int start, int before, int count) {
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
 
                     setContentJobTypes(activity, radioGroup, s);
                 }
@@ -77,9 +77,9 @@ public class JobTypeFragment extends ListFragment {
             activity.findViewById(R.id.titleLayout).setVisibility(View.VISIBLE);
     }
 
-    private void setContentJobTypes(final Activity activity, final RadioGroup radioGroup, final CharSequence s) {
+    private void setContentJobTypes(Activity activity, RadioGroup radioGroup, CharSequence s) {
 
-        final boolean isShowByActivity = activity.getLocalClassName().equalsIgnoreCase("views.activities.ShowBy");
+        boolean isShowByActivity = activity.getLocalClassName().equalsIgnoreCase("views.activities.ShowByActivity");
 
         if (isShowByActivity)
             businessesNumbers = new ArrayList<>();
@@ -96,9 +96,9 @@ public class JobTypeFragment extends ListFragment {
             @NonNull
 
             @Override
-            public View getView(final int position, View convertView, @NonNull final ViewGroup parent) {
+            public View getView(int position, View convertView, @NonNull ViewGroup parent) {
 
-                final JobType jobType = jobsTypes.get(position);
+                JobType jobType = jobsTypes.get(position);
 
                 CheckBox checkBox = null;
 

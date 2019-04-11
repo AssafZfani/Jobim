@@ -21,7 +21,7 @@ public class DeleteFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.delete_job_layout, container, false);
         view.findViewById(R.id.delete).setOnClickListener(view1 -> {
             getActivity().getIntent().putExtra("ViewPager", container.getId());

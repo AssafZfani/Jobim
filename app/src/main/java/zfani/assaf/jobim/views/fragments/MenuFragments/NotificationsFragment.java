@@ -28,7 +28,7 @@ public class NotificationsFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.notifications, container, false);
 
-        final int notificationsCount = App.sharedPreferences.getInt("NotificationsCount", 0);
+        int notificationsCount = App.sharedPreferences.getInt("NotificationsCount", 0);
 
         if (notificationsCount != 0) {
 
@@ -36,7 +36,7 @@ public class NotificationsFragment extends Fragment {
 
             ListView notifications = view.findViewById(R.id.notifications);
 
-            final Context context = container.getContext();
+            Context context = container.getContext();
 
             notifications.setAdapter(new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1) {
 

@@ -20,47 +20,35 @@ public class FirmFragment extends Fragment {
     private View support;
 
     public static FirmFragment newInstance() {
-
         return new FirmFragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.firm_fragment, container, false);
-
         firmName = view.findViewById(R.id.firmName);
-
         branchName = view.findViewById(R.id.branchName);
-
         support = view.findViewById(R.id.support);
-
         return view;
     }
 
     @Override
     public void onStart() {
-
         super.onStart();
-
         support.setOnClickListener(view -> MainActivity.displayDialog(getActivity(), R.layout.add_new_job_dialog, null));
     }
 
     public boolean isValidValue() {
-
         String firmNameText = firmName.getText().toString(), branchNameText = branchName.getText().toString();
-
         boolean result = !firmNameText.isEmpty();
-
         if (result) {
-
             AddNewJob.newJob.setFirm(firmNameText);
-
-            if (!branchNameText.isEmpty())
+            if (!branchNameText.isEmpty()) {
                 AddNewJob.newJob.setBranchName(branchNameText);
-        } else
+            }
+        } else {
             Toast.makeText(getActivity(), "חובה למלא את שם החברה", Toast.LENGTH_SHORT).show();
-
+        }
         return result;
     }
 }

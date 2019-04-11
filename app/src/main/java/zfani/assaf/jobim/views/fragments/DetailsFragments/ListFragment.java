@@ -47,9 +47,9 @@ public class ListFragment extends Fragment {
         return new ListFragment();
     }
 
-    private static void setContent(final Activity activity, ListView listView, final ArrayList<String> data) {
+    private static void setContent(Activity activity, ListView listView, ArrayList<String> data) {
 
-        final RadioGroup radioGroup = new RadioGroup(activity);
+        RadioGroup radioGroup = new RadioGroup(activity);
 
         listView.setAdapter(new ArrayAdapter<String>(activity, R.layout.radio_button, data) {
 
@@ -58,9 +58,9 @@ public class ListFragment extends Fragment {
             @Override
             public View getView(int position, View convertView, @NonNull ViewGroup parent) {
 
-                final boolean isShowByActivity = activity.getLocalClassName().equalsIgnoreCase("views.activities.ShowBy");
+                boolean isShowByActivity = activity.getLocalClassName().equalsIgnoreCase("views.activities.ShowByActivity");
 
-                final RadioButton radioButton = (RadioButton) (convertView == null ?
+                RadioButton radioButton = (RadioButton) (convertView == null ?
                         LayoutInflater.from(activity).inflate(R.layout.radio_button, parent, false) : convertView);
 
                 radioGroup.addView(radioButton);
@@ -110,9 +110,9 @@ public class ListFragment extends Fragment {
         });
     }
 
-    static void initData(final Activity activity, final ListView listView, String text) {
+    static void initData(Activity activity, ListView listView, String text) {
 
-        final boolean isAddNewJobActivity = activity.getLocalClassName().equalsIgnoreCase("views.activities.AddNewJob");
+        boolean isAddNewJobActivity = activity.getLocalClassName().equalsIgnoreCase("views.activities.AddNewJob");
 
         new AsyncTask<String, Void, String>() {
 
@@ -213,13 +213,13 @@ public class ListFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        final Activity activity = getActivity();
+        Activity activity = getActivity();
 
-        final ListView listView = new ListView(activity);
+        ListView listView = new ListView(activity);
 
         listView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
-        if (activity.getLocalClassName().equalsIgnoreCase("views.activities.ShowBy")) {
+        if (activity.getLocalClassName().equalsIgnoreCase("views.activities.ShowByActivity")) {
 
             data = new ArrayList<>(Arrays.asList(activity.getResources().getStringArray(R.array.firms)));
 

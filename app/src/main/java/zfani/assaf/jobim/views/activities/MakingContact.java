@@ -8,14 +8,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentActivity;
 import zfani.assaf.jobim.App;
 import zfani.assaf.jobim.R;
 
 import static android.util.Patterns.EMAIL_ADDRESS;
 
-public class MakingContact extends FragmentActivity {
+public class MakingContact extends AppCompatActivity {
 
     private View[] layouts;
     private View[] images;

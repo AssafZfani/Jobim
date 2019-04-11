@@ -35,8 +35,8 @@ import zfani.assaf.jobim.adapters.JobsAdapter;
 public class ClusterJobsRenderer extends DefaultClusterRenderer<ClusterJobs>
         implements ClusterManager.OnClusterClickListener<ClusterJobs>, ClusterManager.OnClusterItemClickListener<ClusterJobs> {
 
-    private final Activity activity;
-    private final HashMap<ClusterJobs, Job> hashMap;
+    private Activity activity;
+    private HashMap<ClusterJobs, Job> hashMap;
     private JobsAdapter.ViewHolder viewHolder;
     private TextView txt;
 
@@ -87,7 +87,7 @@ public class ClusterJobsRenderer extends DefaultClusterRenderer<ClusterJobs>
     }
 
     @Override
-    public boolean onClusterItemClick(final ClusterJobs clusterJobs) {
+    public boolean onClusterItemClick(ClusterJobs clusterJobs) {
 
         return createClusterDialog(new Cluster<ClusterJobs>() {
 
@@ -120,7 +120,7 @@ public class ClusterJobsRenderer extends DefaultClusterRenderer<ClusterJobs>
         return createClusterDialog(cluster);
     }
 
-    private boolean createClusterDialog(final Cluster cluster) {
+    private boolean createClusterDialog(Cluster cluster) {
 
         viewHolder = new JobsAdapter.ViewHolder(View.inflate(activity, R.layout.layouts_container, null));
 
@@ -146,7 +146,7 @@ public class ClusterJobsRenderer extends DefaultClusterRenderer<ClusterJobs>
             @Override
             public Object instantiateItem(@NonNull ViewGroup container, int position) {
 
-                final Job job = hashMap.get(cluster.getItems().toArray()[position]);
+                Job job = hashMap.get(cluster.getItems().toArray()[position]);
 
                 View view = View.inflate(activity, R.layout.cluster_layout, null);
 
@@ -165,7 +165,7 @@ public class ClusterJobsRenderer extends DefaultClusterRenderer<ClusterJobs>
 
         viewHolder.viewPager.setCurrentItem(cluster.getSize() - 1);
 
-        final LinearLayout container = new LinearLayout(activity), mainView = new LinearLayout(activity);
+        LinearLayout container = new LinearLayout(activity), mainView = new LinearLayout(activity);
 
         mainView.setOrientation(LinearLayout.VERTICAL);
 
@@ -207,7 +207,7 @@ public class ClusterJobsRenderer extends DefaultClusterRenderer<ClusterJobs>
         return true;
     }
 
-    private Button createButton(final boolean next) {
+    private Button createButton(boolean next) {
 
         Button btn = new Button(activity, null, android.R.style.Widget_DeviceDefault_Button_Borderless);
 

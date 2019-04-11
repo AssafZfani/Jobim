@@ -16,8 +16,8 @@ import android.widget.RadioGroup;
 import java.io.ByteArrayOutputStream;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import zfani.assaf.jobim.App;
@@ -28,7 +28,7 @@ import zfani.assaf.jobim.views.fragments.DetailsFragments.CityFragment;
 import zfani.assaf.jobim.views.fragments.DetailsFragments.EmailFragment;
 import zfani.assaf.jobim.views.fragments.DetailsFragments.FullNameFragment;
 
-public class FillDetails extends FragmentActivity {
+public class FillDetails extends AppCompatActivity {
 
     private int[] drawableResources;
     private RadioGroup fragmentsBar;

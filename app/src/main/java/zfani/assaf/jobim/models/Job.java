@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 @SuppressWarnings("unused")
 public class Job implements Parcelable, Comparable<Job> {
 
-    public static final Creator<Job> CREATOR = new Creator<Job>() {
+    public static Creator<Job> CREATOR = new Creator<Job>() {
         @Override
         public Job createFromParcel(Parcel in) {
             return new Job(in);

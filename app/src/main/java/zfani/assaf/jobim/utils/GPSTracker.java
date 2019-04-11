@@ -50,7 +50,7 @@ public class GPSTracker {
     }
 
     @Nullable
-    public static LatLng getLatLngFromAddress(final Application application, final String address) {
+    public static LatLng getLatLngFromAddress(Application application, String address) {
         try {
             Address foundAddress = new Geocoder(application).getFromLocationName(address, 1).get(0);
             return new LatLng(foundAddress.getLatitude(), foundAddress.getLongitude());

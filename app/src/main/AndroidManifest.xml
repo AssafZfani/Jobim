@@ -51,7 +51,7 @@
             android:windowSoftInputMode="adjustNothing" />
 
         <activity
-            android:name=".views.activities.ShowBy"
+            android:name=".views.activities.ShowByActivity"
             android:windowSoftInputMode="adjustNothing" />
 
         <activity android:name=".views.activities.JobInfoActivity" />

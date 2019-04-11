@@ -25,7 +25,7 @@ public class CityFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.city_fragment, container, false);
 
@@ -43,7 +43,7 @@ public class CityFragment extends Fragment {
                 city.setText(address.substring(address.lastIndexOf(", ") + 2));
         }
 
-        final String cityText = address;
+        String cityText = address;
 
         city.addTextChangedListener(new TextWatcher() {
 

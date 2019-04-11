@@ -1,5 +1,6 @@
 package zfani.assaf.jobim.views.fragments.MenuFragments;
 
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
@@ -18,9 +19,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import zfani.assaf.jobim.R;
 import zfani.assaf.jobim.adapters.JobsAdapter;
 import zfani.assaf.jobim.viewmodels.AllJobsViewModel;
+import zfani.assaf.jobim.views.activities.ShowByActivity;
 
 public class AllJobsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
@@ -77,6 +80,11 @@ public class AllJobsFragment extends Fragment implements SwipeRefreshLayout.OnRe
         }*/
     }
 
+    @OnClick(R.id.llShowBy)
+    public void showBy() {
+        startActivityForResult(new Intent(getActivity(), ShowByActivity.class), 1);
+    }
+
     /*public void clean() {
         filteredAdapter = null;
         FilteredAdapter.filteredList = null;
@@ -105,7 +113,7 @@ public class AllJobsFragment extends Fragment implements SwipeRefreshLayout.OnRe
         String firm = data.getStringExtra("Firm") == null ? "" : data.getStringExtra("Firm");
         if (businessesNumbers != null || !location.isEmpty() || !firm.isEmpty()) {
             Button cleanButton = view.findViewById(R.id.cleanButton);
-            final View filter = view.findViewById(R.id.filter);
+             View filter = view.findViewById(R.id.filter);
             filter.setVisibility(View.GONE);
             cleanButton.setVisibility(View.VISIBLE);
             rvAllJobs.setAdapter(filteredAdapter = new FilteredAdapter(businessesNumbers, location, firm));
