@@ -17,12 +17,14 @@ import java.util.Objects;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import zfani.assaf.jobim.R;
 import zfani.assaf.jobim.adapters.ShowByPagerAdapter;
+import zfani.assaf.jobim.viewmodels.ShowByBottomSheetViewModel;
 
 public class ShowByBottomSheet extends BottomSheetDialogFragment {
 
@@ -36,12 +38,14 @@ public class ShowByBottomSheet extends BottomSheetDialogFragment {
     RadioGroup rgFragmentsBar;
     @BindView(R.id.vpContainer)
     ViewPager vpContainer;
+    private ShowByBottomSheetViewModel showByBottomSheetViewModel;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.bottom_sheet_show_by, container, false);
         ButterKnife.bind(this, view);
+        showByBottomSheetViewModel = ViewModelProviders.of(requireActivity()).get(ShowByBottomSheetViewModel.class);
         initView();
         return view;
     }
@@ -73,7 +77,7 @@ public class ShowByBottomSheet extends BottomSheetDialogFragment {
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     switch (editText.getId()) {
                         case R.id.etJobType:
-                            //setContentJobTypes(activity, radioGroup, s);
+                            showByBottomSheetViewModel.setQueryTextLive(s.toString());
                             break;
                         case R.id.etJobLocation:
                             /*activity.getIntent().putExtra("Address", s + "");

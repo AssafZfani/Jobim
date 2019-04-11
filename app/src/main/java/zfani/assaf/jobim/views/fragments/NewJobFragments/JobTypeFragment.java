@@ -16,6 +16,7 @@ import butterknife.ButterKnife;
 import zfani.assaf.jobim.R;
 import zfani.assaf.jobim.adapters.JobTypesAdapter;
 import zfani.assaf.jobim.viewmodels.JobTypesViewModel;
+import zfani.assaf.jobim.viewmodels.ShowByBottomSheetViewModel;
 import zfani.assaf.jobim.views.activities.AddNewJob;
 
 public class JobTypeFragment extends Fragment {
@@ -39,7 +40,12 @@ public class JobTypeFragment extends Fragment {
         ViewModelProviders.of(this).get(JobTypesViewModel.class).loadJobsTypes();
         Bundle bundle = getArguments();
         boolean isComeFromShowBy = bundle != null && bundle.getBoolean("isComeFromShowBy");
-        rvJobTypes.setAdapter(jobTypesAdapter = new JobTypesAdapter(isComeFromShowBy, ""));
+        ViewModelProviders.of(requireActivity()).get(ShowByBottomSheetViewModel.class).getQueryTextLive().observe(this, queryText -> {
+            jobTypesAdapter.stopListening();
+            rvJobTypes.setAdapter(jobTypesAdapter = new JobTypesAdapter(isComeFromShowBy, queryText));
+            jobTypesAdapter.startListening();
+        });
+        rvJobTypes.setAdapter(jobTypesAdapter = new JobTypesAdapter(isComeFromShowBy, null));
         rvJobTypes.addItemDecoration(new DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL));
         if (!isComeFromShowBy) {
             requireActivity().findViewById(R.id.titleLayout).setVisibility(View.VISIBLE);

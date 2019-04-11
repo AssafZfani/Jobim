@@ -1,11 +1,8 @@
 package zfani.assaf.jobim.models;
 
-import java.util.ArrayList;
-
 @SuppressWarnings("unused")
 public class JobType {
 
-    private ArrayList<Integer> color;
     private int id;
     private String jobType;
     private boolean selected;
@@ -14,14 +11,9 @@ public class JobType {
 
     }
 
-    public JobType(ArrayList<Integer> color, int id, String jobType) {
-        this.color = color;
+    public JobType(int id, String jobType) {
         this.id = id;
         this.jobType = jobType;
-    }
-
-    public ArrayList<Integer> getColor() {
-        return color;
     }
 
     public int getId() {

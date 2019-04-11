@@ -29,10 +29,10 @@ public class JobTypesAdapter extends FirebaseRecyclerAdapter<JobType, JobTypesAd
     }
 
     @NonNull
-    private static Query getQuery(@NonNull String queryText) {
+    private static Query getQuery(String queryText) {
         Query query = FirebaseDatabase.getInstance().getReference().child("jobs_types");
-        if (!queryText.isEmpty()) {
-            query.startAt(queryText).endAt(queryText + "\uf8ff");
+        if (queryText != null && !queryText.isEmpty()) {
+            query = query.orderByChild("jobType").startAt(queryText).endAt(queryText + "\uf8ff");
         }
         return query;
     }
@@ -80,17 +80,7 @@ public class JobTypesAdapter extends FirebaseRecyclerAdapter<JobType, JobTypesAd
         void populateJobTypeViewHolder(JobType jobType, Drawable drawable) {
             checkBox.setHint(jobType.getJobType());
             checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                /*if (isChecked) {
-                    if (!businessesNumbers.contains(jobType.getId())) {
-                        businessesNumbers.add(jobType.getId());
-                    }
-                } else {
-                    businessesNumbers.remove(((Integer) jobType.getId()));
-                }
                 jobType.setSelected(isChecked);
-                if (!businessesNumbers.isEmpty()) {
-                    context.getIntent().putIntegerArrayListExtra("BusinessesNumbers", businessesNumbers);
-                }*/
             });
             checkBox.setChecked(jobType.isSelected());
             checkBox.setCompoundDrawablesRelative(null, null, drawable, null);

@@ -14,8 +14,6 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -50,10 +48,7 @@ public class JobTypesViewModel extends AndroidViewModel {
                         for (int i = 0; i <= jsonArray.length(); i++) {
                             JSONObject object = jsonArray.getJSONObject(i);
                             DatabaseReference child = ref.child(i + "");
-                            JSONArray colorArray = object.getJSONArray("Color");
-                            ArrayList<Integer> color = new ArrayList<>(Arrays.asList(colorArray.getInt(0), colorArray.getInt(1), colorArray.getInt(2)));
-                            child.setValue(new JobType(color, i + 1, object.getString("JobType")
-                            ));
+                            child.setValue(new JobType(i + 1, object.getString("JobType")));
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();

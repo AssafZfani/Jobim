@@ -22,6 +22,6 @@ public class JsonHelper {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        return num > 0 ? json :null;
+        return num > 0 ? json : null;
     }
 }
