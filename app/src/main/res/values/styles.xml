@@ -45,6 +45,7 @@
     </style>
 
     <style name="RadioButton" parent="text_view_regular">
+        <item name="android:layout_weight">1</item>
         <item name="android:button">@null</item>
         <item name="android:padding">5dp</item>
         <item name="android:textColor">@drawable/text_selector1</item>

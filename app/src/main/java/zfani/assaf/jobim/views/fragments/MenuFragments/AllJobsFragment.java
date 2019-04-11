@@ -10,9 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
-
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -84,10 +81,7 @@ public class AllJobsFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
     @OnClick(R.id.llShowBy)
     void showBy() {
-        ShowByBottomSheet showByBottomSheet = new ShowByBottomSheet();
-      /*  BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from((View) contentView.getParent());
-        bottomSheetBehavior.setPeekHeight(getView().getHeight());*/
-        showByBottomSheet.show(getChildFragmentManager(), null);
+        new ShowByBottomSheet().show(getChildFragmentManager(), null);
     }
 
     /*public void clean() {

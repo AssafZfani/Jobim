@@ -9,7 +9,10 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,8 +23,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import zfani.assaf.jobim.R;
 import zfani.assaf.jobim.adapters.ShowByPagerAdapter;
-import zfani.assaf.jobim.utils.GPSTracker;
-import zfani.assaf.jobim.views.fragments.FeedFragments.MapFragment;
 
 public class ShowByBottomSheet extends BottomSheetDialogFragment {
 
@@ -35,7 +36,6 @@ public class ShowByBottomSheet extends BottomSheetDialogFragment {
     RadioGroup rgFragmentsBar;
     @BindView(R.id.vpContainer)
     ViewPager vpContainer;
-    private AppCompatActivity activity;
 
     @Nullable
     @Override
@@ -44,6 +44,16 @@ public class ShowByBottomSheet extends BottomSheetDialogFragment {
         ButterKnife.bind(this, view);
         initView();
         return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        view.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
+            View bottomSheet = requireDialog().findViewById(com.google.android.material.R.id.design_bottom_sheet);
+            BottomSheetBehavior.from(bottomSheet).setPeekHeight(view.getHeight() -
+                    Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).getHeight());
+        });
     }
 
     private void initView() {
@@ -66,14 +76,14 @@ public class ShowByBottomSheet extends BottomSheetDialogFragment {
                             //setContentJobTypes(activity, radioGroup, s);
                             break;
                         case R.id.etJobLocation:
-                            activity.getIntent().putExtra("Address", s + "");
+                            /*activity.getIntent().putExtra("Address", s + "");
                             editText.setOnEditorActionListener((v, actionId, event) -> {
                                 if (v.getText().length() != 0) {
                                     activity.getIntent().putExtra("Address", v.getText() + "");
                                     MapFragment.changeCamera(GPSTracker.getLatLngFromAddress(activity.getApplication(), v.getText() + ""));
                                 }
                                 return false;
-                            });
+                            });*/
                             break;
                         case R.id.etJobFirm:
                             /*ArrayList<String> filteredData = new ArrayList<>();
@@ -150,11 +160,11 @@ public class ShowByBottomSheet extends BottomSheetDialogFragment {
     }
 
     @OnClick(R.id.tvAllow)
-    public void allow() {
+    void allow() {
 
     }
 
     @OnClick(R.id.tvCancel)
-    public void cancel() {
+    void cancel() {
     }
 }
