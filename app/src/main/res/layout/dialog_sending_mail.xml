@@ -38,10 +38,10 @@
                 android:id="@+id/tvSendMail"
                 style="@style/text_view_regular"
                 android:layout_width="match_parent"
-                android:foreground="?android:attr/selectableItemBackground"
                 android:background="@drawable/button_full"
-                android:text="שלח"
+                android:foreground="?android:attr/selectableItemBackground"
                 android:padding="5dp"
+                android:text="שלח"
 
                 android:textColor="@android:color/white"
                 android:textSize="20sp" />
@@ -52,9 +52,9 @@
                 android:layout_width="match_parent"
                 android:background="?android:attr/selectableItemBackground"
                 android:padding="5dp"
-                android:textSize="20sp"
                 android:text="חזור"
-                android:textColor="@android:color/holo_orange_dark" />
+                android:textColor="@android:color/holo_orange_dark"
+                android:textSize="20sp" />
 
         </LinearLayout>
 

@@ -38,9 +38,9 @@
 
         <EditText
             android:id="@+id/searchAddress"
+            style="@style/text_view_regular"
             android:layout_width="match_parent"
             android:layout_height="25dp"
-            style="@style/text_view_regular"
             android:background="@drawable/edit_text"
             android:hint="חפש כתובת"
             android:inputType="text"

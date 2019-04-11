@@ -160,29 +160,6 @@ public class ListFragment extends Fragment {
         if (activity.getLocalClassName().equalsIgnoreCase("views.activities.ShowByActivity")) {
             data = new ArrayList<>(Arrays.asList(activity.getResources().getStringArray(R.array.firms)));
             setContent(activity, listView, data);
-            ((EditText) activity.findViewById(R.id.etJobFirm)).addTextChangedListener(new TextWatcher() {
-
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    ArrayList<String> filteredData = new ArrayList<>();
-                    for (String value : data) {
-                        if (value.contains(s)) {
-                            filteredData.add(value);
-                        }
-                    }
-                    setContent(activity, listView, filteredData);
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-
-                }
-            });
             TextView footer = new TextView(activity);
             footer.setPadding(0, 50, 0, 50);
             footer.setGravity(Gravity.CENTER);
@@ -190,7 +167,7 @@ public class ListFragment extends Fragment {
             footer.setTextColor(Color.BLACK);
             listView.addFooterView(footer);
         } else {
-            data = new ArrayList<>();
+            /*data = new ArrayList<>();
             data.add(currentAddress = GPSTracker.getAddressFromLatLng(activity, null, GPSTracker.location));
             setContent(activity, listView, data);
             ((EditText) activity.findViewById(R.id.searchAddress)).addTextChangedListener(new TextWatcher() {
@@ -214,7 +191,7 @@ public class ListFragment extends Fragment {
                 public void afterTextChanged(Editable editable) {
 
                 }
-            });
+            });*/
         }
         return listView;
     }

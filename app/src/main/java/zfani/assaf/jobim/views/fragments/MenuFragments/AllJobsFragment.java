@@ -84,12 +84,10 @@ public class AllJobsFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
     @OnClick(R.id.llShowBy)
     void showBy() {
-        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getActivity());
-        View contentView = new ShowByBottomSheet(getActivity());
-        bottomSheetDialog.setContentView(contentView);
-        BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from((View) contentView.getParent());
-        bottomSheetBehavior.setPeekHeight(getView().getHeight());
-        bottomSheetDialog.show();
+        ShowByBottomSheet showByBottomSheet = new ShowByBottomSheet();
+      /*  BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from((View) contentView.getParent());
+        bottomSheetBehavior.setPeekHeight(getView().getHeight());*/
+        showByBottomSheet.show(getChildFragmentManager(), null);
     }
 
     /*public void clean() {

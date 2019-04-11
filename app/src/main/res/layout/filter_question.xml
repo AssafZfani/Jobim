@@ -19,7 +19,7 @@
             style="@style/text_view_regular"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="10dp"
-            android:text="כל מועמד שירצה ליצור קשר איתכם\n יהיה חייב לענות על שאלת הסינון"
+            android:text="כל מועמד שירצה ליצור קשר איתכם\nיהיה חייב לענות על שאלת הסינון"
             android:textColor="@android:color/black" />
 
         <EditText

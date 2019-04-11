@@ -124,7 +124,7 @@ public class AddNewJob extends AppCompatActivity {
                     case 2:
                         return jobTitleFragment = JobTitleFragment.newInstance();
                     case 3:
-                        return jobTypeFragment = JobTypeFragment.newInstance();
+                        return jobTypeFragment = JobTypeFragment.newInstance(false);
                     default:
                         return firmFragment = FirmFragment.newInstance();
                 }

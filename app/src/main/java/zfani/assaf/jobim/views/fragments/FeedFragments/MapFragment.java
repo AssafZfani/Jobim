@@ -40,7 +40,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         return mapFragment;
     }
 
-    private static void changeCamera(LatLng latLng) {
+    public static void changeCamera(LatLng latLng) {
         googleMap.clear();
         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
         googleMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromAsset("location_marker.png")).position(latLng));
@@ -72,34 +72,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             googleMap.setOnMapClickListener(latLng1 -> {
                 editText.setText(GPSTracker.getAddressFromLatLng(activity, latLng1, null));
                 changeCamera(latLng1);
-            });
-            editText.addTextChangedListener(new TextWatcher() {
-
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-                    activity.getIntent().putExtra("Address", s + "");
-                    editText.setOnEditorActionListener((v, actionId, event) -> {
-                        if (v.getText().length() != 0) {
-                            try {
-                                activity.getIntent().putExtra("Address", v.getText() + "");
-                                MapFragment.changeCamera(GPSTracker.getLatLngFromAddress(activity.getApplication(), v.getText() + ""));
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        return false;
-                    });
-                }
             });
         }
     }

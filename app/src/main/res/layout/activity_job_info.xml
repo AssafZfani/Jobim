@@ -44,7 +44,7 @@
 
             <TextView
                 style="@style/text_view_regular"
-                android:text="ג'ובים נוספים\n ממעסיק זה"
+                android:text="ג'ובים נוספים\nממעסיק זה"
                 android:textColor="@android:color/holo_orange_dark" />
 
         </LinearLayout>
@@ -60,7 +60,7 @@
 
             <TextView
                 style="@style/text_view_regular"
-                android:text="שתף עם\n חברים"
+                android:text="שתף עם\nחברים"
                 android:textColor="@android:color/holo_orange_dark" />
 
         </LinearLayout>

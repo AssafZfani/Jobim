@@ -20,7 +20,7 @@ public class ShowByPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 2:
-                return JobTypeFragment.newInstance();
+                return JobTypeFragment.newInstance(true);
             case 1:
                 return MapFragment.newInstance(GPSTracker.createLatLng(GPSTracker.location));
             default:

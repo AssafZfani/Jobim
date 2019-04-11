@@ -28,7 +28,7 @@ public class FirmFragment extends Fragment {
         View view = inflater.inflate(R.layout.firm_fragment, container, false);
         firmName = view.findViewById(R.id.firmName);
         branchName = view.findViewById(R.id.branchName);
-        support = view.findViewById(R.id.tvSupprt);
+        support = view.findViewById(R.id.tvSupport);
         return view;
     }
 

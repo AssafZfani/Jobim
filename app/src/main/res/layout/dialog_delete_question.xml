@@ -24,7 +24,7 @@
         <TextView
             style="@style/text_view_regular"
             android:layout_marginTop="10dp"
-            android:text="שימו לב!\n שאלת הסינון שלכם תמחק\nו לא תוצג למועמדים."
+            android:text="שימו לב!\nשאלת הסינון שלכם תמחק\nולא תוצג למועמדים."
             android:textColor="@android:color/black"
             android:textSize="12.5sp" />
 
