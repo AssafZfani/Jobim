@@ -28,11 +28,9 @@
 
             <TextView
                 android:id="@+id/tvFavorite"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/text_view_regular"
                 android:gravity="center"
-                android:textColor="@android:color/holo_orange_dark"
-                android:typeface="monospace" />
+                android:textColor="@android:color/holo_orange_dark" />
 
         </LinearLayout>
 
@@ -46,12 +44,10 @@
                 android:background="@drawable/jobs_employer" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/text_view_regular"
                 android:gravity="center"
                 android:text="ג'ובים נוספים\n ממעסיק זה"
-                android:textColor="@android:color/holo_orange_dark"
-                android:typeface="monospace" />
+                android:textColor="@android:color/holo_orange_dark" />
 
         </LinearLayout>
 
@@ -65,12 +61,10 @@
                 android:background="@drawable/share" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/text_view_regular"
                 android:gravity="center"
                 android:text="שתף עם\n חברים"
-                android:textColor="@android:color/holo_orange_dark"
-                android:typeface="monospace" />
+                android:textColor="@android:color/holo_orange_dark" />
 
         </LinearLayout>
 
@@ -84,12 +78,10 @@
                 android:background="@drawable/delete2" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/text_view_regular"
                 android:gravity="center"
                 android:text="הסתר\nג'וב"
-                android:textColor="@android:color/holo_orange_dark"
-                android:typeface="monospace" />
+                android:textColor="@android:color/holo_orange_dark" />
 
         </LinearLayout>
 

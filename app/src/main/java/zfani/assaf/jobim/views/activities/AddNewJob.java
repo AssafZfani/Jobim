@@ -53,7 +53,7 @@ public class AddNewJob extends AppCompatActivity {
         drawableResources[1] = R.drawable.address2;
         drawableResources[0] = R.drawable.picture2;
 
-        fragmentsBar = findViewById(R.id.fragmentsBar);
+        fragmentsBar = findViewById(R.id.rgFragmentsBar);
 
         fragmentsBar.setOnCheckedChangeListener((radioGroup, checkedId) -> {
 

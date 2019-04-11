@@ -225,7 +225,7 @@ public class ListFragment extends Fragment {
 
             setContent(activity, listView, data);
 
-            ((EditText) activity.findViewById(R.id.editText1)).addTextChangedListener(new TextWatcher() {
+            ((EditText) activity.findViewById(R.id.etJobFirm)).addTextChangedListener(new TextWatcher() {
 
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {

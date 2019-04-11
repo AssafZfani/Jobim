@@ -16,6 +16,10 @@
         <item name="android:fontFamily">@font/open_sans</item>
     </style>
 
+    <style name="text_view_bold" parent="text_view_regular">
+        <item name="android:fontFamily">@font/open_sans_bold</item>
+    </style>
+
     <style name="ToolBarButton" parent="@style/Base.Widget.AppCompat.Button.Borderless">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">75dp</item>
@@ -30,7 +34,7 @@
     <style name="EditText">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">50dp</item>
-        <item name="android:layout_toEndOf">@id/search</item>
+        <item name="android:layout_toEndOf">@id/ivSearch</item>
         <item name="android:background">@android:color/transparent</item>
         <item name="android:ems">18</item>
         <item name="android:inputType">textMultiLine</item>

@@ -31,31 +31,23 @@ public class JobTypeFragment extends ListFragment {
     private ArrayList<JobType> jobsTypes;
 
     public static JobTypeFragment newInstance() {
-
         return new JobTypeFragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         activity = getActivity();
-
         return inflater.inflate(R.layout.job_type_fragment, container, false);
     }
 
     @Override
     public void onStart() {
-
         super.onStart();
-
         boolean isShowByActivity = activity.getLocalClassName().equalsIgnoreCase("views.activities.ShowByActivity");
-
         RadioGroup radioGroup = new RadioGroup(activity);
-
         setContentJobTypes(activity, radioGroup, null);
-
-        if (isShowByActivity)
-            ((EditText) activity.findViewById(R.id.editText3)).addTextChangedListener(new TextWatcher() {
+        if (isShowByActivity){
+            ((EditText) activity.findViewById(R.id.etJobType)).addTextChangedListener(new TextWatcher() {
 
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -64,7 +56,6 @@ public class JobTypeFragment extends ListFragment {
 
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-
                     setContentJobTypes(activity, radioGroup, s);
                 }
 
@@ -72,9 +63,10 @@ public class JobTypeFragment extends ListFragment {
                 public void afterTextChanged(Editable editable) {
 
                 }
-            });
-        else
+            });}
+        else {
             activity.findViewById(R.id.titleLayout).setVisibility(View.VISIBLE);
+        }
     }
 
     private void setContentJobTypes(Activity activity, RadioGroup radioGroup, CharSequence s) {

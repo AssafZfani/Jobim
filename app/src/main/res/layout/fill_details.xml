@@ -12,7 +12,7 @@
         android:background="@android:color/white" />
 
     <RadioGroup
-        android:id="@+id/fragmentsBar"
+        android:id="@+id/rgFragmentsBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">

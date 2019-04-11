@@ -1,6 +1,5 @@
 package zfani.assaf.jobim.views.fragments.MenuFragments;
 
-import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
@@ -10,6 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -23,7 +25,7 @@ import butterknife.OnClick;
 import zfani.assaf.jobim.R;
 import zfani.assaf.jobim.adapters.JobsAdapter;
 import zfani.assaf.jobim.viewmodels.AllJobsViewModel;
-import zfani.assaf.jobim.views.activities.ShowByActivity;
+import zfani.assaf.jobim.views.bottomsheets.ShowByBottomSheet;
 
 public class AllJobsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
@@ -81,8 +83,13 @@ public class AllJobsFragment extends Fragment implements SwipeRefreshLayout.OnRe
     }
 
     @OnClick(R.id.llShowBy)
-    public void showBy() {
-        startActivityForResult(new Intent(getActivity(), ShowByActivity.class), 1);
+    void showBy() {
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getActivity());
+        View contentView = new ShowByBottomSheet(getActivity());
+        bottomSheetDialog.setContentView(contentView);
+        BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from((View) contentView.getParent());
+        bottomSheetBehavior.setPeekHeight(getView().getHeight());
+        bottomSheetDialog.show();
     }
 
     /*public void clean() {

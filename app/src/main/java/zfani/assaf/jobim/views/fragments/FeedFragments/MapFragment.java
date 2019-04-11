@@ -68,7 +68,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             });
             googleMap.setOnMapLoadedCallback(() -> loadMarkersToMap(activity));
         } else if (activityName.equalsIgnoreCase("views.activities.ShowByActivity")) {
-            EditText editText = activity.findViewById(R.id.editText2);
+            EditText editText = activity.findViewById(R.id.etJobLocation);
             googleMap.setOnMapClickListener(latLng1 -> {
                 editText.setText(GPSTracker.getAddressFromLatLng(activity, latLng1, null));
                 changeCamera(latLng1);

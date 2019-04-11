@@ -50,10 +50,6 @@
             android:name=".views.activities.MainActivity"
             android:windowSoftInputMode="adjustNothing" />
 
-        <activity
-            android:name=".views.activities.ShowByActivity"
-            android:windowSoftInputMode="adjustNothing" />
-
         <activity android:name=".views.activities.JobInfoActivity" />
 
         <activity android:name=".views.activities.JobsEmployer" />

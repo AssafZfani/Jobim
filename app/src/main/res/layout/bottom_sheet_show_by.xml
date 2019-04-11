@@ -1,63 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:ignore="HardcodedText, ContentDescription">
 
-    <include layout="@layout/view_action_bar" />
-
     <RelativeLayout
-        android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="45dp"
         android:layout_marginEnd="10dp"
+        android:gravity="center_vertical"
         android:paddingTop="20dp"
         android:paddingBottom="10dp">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/tvAllow"
+            style="@style/text_view_bold"
             android:layout_centerVertical="true"
-            android:onClick="allow"
             android:text="אשר"
             android:textAlignment="textStart"
-            android:textColor="@android:color/holo_orange_dark"
-            android:typeface="serif" />
+            android:textColor="@android:color/holo_orange_dark" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/text_view_regular"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:text="הצג לפי"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@android:color/holo_orange_dark"
-            android:textSize="17.5sp"
-            android:typeface="monospace" />
+            android:textSize="17.5sp" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/tvCancel"
+            style="@style/text_view_bold"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:onClick="cancel"
             android:text="בטל"
             android:textAlignment="textEnd"
-            android:textColor="@android:color/holo_orange_dark"
-            android:textStyle="bold"
-            android:typeface="monospace" />
+            android:textColor="@android:color/holo_orange_dark" />
 
     </RelativeLayout>
 
     <RadioGroup
-        android:id="@+id/fragmentsBar"
+        android:id="@+id/rgFragmentsBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/title"
         android:orientation="horizontal"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
@@ -84,15 +73,13 @@
     </RadioGroup>
 
     <RelativeLayout
-        android:id="@+id/searchLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/fragmentsBar"
         android:background="@drawable/shadow"
         android:focusableInTouchMode="true">
 
         <ImageView
-            android:id="@+id/search"
+            android:id="@+id/ivSearch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -102,35 +89,27 @@
             android:src="@drawable/search" />
 
         <EditText
-            android:id="@+id/editText1"
+            android:id="@+id/etJobFirm"
             style="@style/EditText"
             android:hint="כדי למצוא חברות נוספות חפש כאן" />
 
         <EditText
-            android:id="@+id/editText2"
+            android:id="@+id/etJobLocation"
             style="@style/EditText"
             android:hint="חפש לפי מיקום"
             android:imeOptions="actionSearch"
             android:inputType="textNoSuggestions" />
 
         <EditText
-            android:id="@+id/editText3"
+            android:id="@+id/etJobType"
             style="@style/EditText"
             android:hint="מצא ג'וב" />
 
     </RelativeLayout>
 
-    <FrameLayout
-        android:id="@+id/fragment"
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/vpContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/searchLayout">
+        android:layout_height="match_parent" />
 
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/viewPager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </FrameLayout>
-
-</RelativeLayout>
+</LinearLayout>

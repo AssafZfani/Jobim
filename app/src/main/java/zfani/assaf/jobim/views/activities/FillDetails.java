@@ -76,7 +76,7 @@ public class FillDetails extends AppCompatActivity {
         drawableResources[2] = R.drawable.city2;
         drawableResources[1] = R.drawable.birth_year2;
         drawableResources[0] = R.drawable.email2;
-        fragmentsBar = findViewById(R.id.fragmentsBar);
+        fragmentsBar = findViewById(R.id.rgFragmentsBar);
         fragmentsBar.setOnCheckedChangeListener((radioGroup, checkedId) -> {
             if (checkedId != -1) {
                 int currentFragment = viewPager.getCurrentItem(), nextFragment;
