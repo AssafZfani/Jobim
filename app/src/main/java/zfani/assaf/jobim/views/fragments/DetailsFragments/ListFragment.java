@@ -58,7 +58,7 @@ public class ListFragment extends Fragment {
             @Override
             public View getView(int position, View convertView, @NonNull ViewGroup parent) {
 
-                final boolean isShowByActivity = activity.getLocalClassName().equalsIgnoreCase("Activities.ShowBy");
+                final boolean isShowByActivity = activity.getLocalClassName().equalsIgnoreCase("views.activities.ShowBy");
 
                 final RadioButton radioButton = (RadioButton) (convertView == null ?
                         LayoutInflater.from(activity).inflate(R.layout.radio_button, parent, false) : convertView);
@@ -112,7 +112,7 @@ public class ListFragment extends Fragment {
 
     static void initData(final Activity activity, final ListView listView, String text) {
 
-        final boolean isAddNewJobActivity = activity.getLocalClassName().equalsIgnoreCase("Activities.AddNewJob");
+        final boolean isAddNewJobActivity = activity.getLocalClassName().equalsIgnoreCase("views.activities.AddNewJob");
 
         new AsyncTask<String, Void, String>() {
 
@@ -219,7 +219,7 @@ public class ListFragment extends Fragment {
 
         listView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
-        if (activity.getLocalClassName().equalsIgnoreCase("Activities.ShowBy")) {
+        if (activity.getLocalClassName().equalsIgnoreCase("views.activities.ShowBy")) {
 
             data = new ArrayList<>(Arrays.asList(activity.getResources().getStringArray(R.array.firms)));
 

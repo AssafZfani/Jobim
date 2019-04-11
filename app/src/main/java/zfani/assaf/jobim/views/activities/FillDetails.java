@@ -147,8 +147,7 @@ public class FillDetails extends FragmentActivity {
         if (resultCode == RESULT_OK) {
             if (requestCode == 3) {
                 saveImageFromCamera(this, data);
-            }
-            else if (requestCode == 4) {
+            } else if (requestCode == 4) {
                 saveImageFromGallery(this, data);
             }
         }
@@ -203,11 +202,9 @@ public class FillDetails extends FragmentActivity {
             } else {
                 if (App.sharedPreferences.getString("City", null) == null) {
                     moveToAnotherFragment(currentFragment, 2, R.id.cityButton);
-                }
-                else if (App.sharedPreferences.getInt("BirthYear", 0) == 0) {
+                } else if (App.sharedPreferences.getInt("BirthYear", 0) == 0) {
                     moveToAnotherFragment(currentFragment, 1, R.id.birthYearButton);
-                }
-                else {
+                } else {
                     finish();
                 }
             }

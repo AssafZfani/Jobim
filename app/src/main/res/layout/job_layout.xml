@@ -45,12 +45,12 @@
     </zfani.assaf.jobim.models.CutLayout>
 
     <FrameLayout
-        android:id="@+id/contactLayout"
+        android:id="@+id/flContactFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <zfani.assaf.jobim.models.CutLayout
-        android:id="@+id/mapLayout"
+        android:id="@+id/clMapFragment"
         android:layout_width="match_parent"
         android:layout_height="85dp"
         android:visibility="gone" />

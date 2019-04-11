@@ -46,6 +46,7 @@ public class JobFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.job_layout, container, false);
+        ButterKnife.bind(this, view);
         Bundle bundle = getArguments();
         if (bundle != null && bundle.containsKey("Job")) {
             fillJobDetails(view, Objects.requireNonNull(bundle.getParcelable("Job")));
@@ -54,7 +55,6 @@ public class JobFragment extends Fragment {
     }
 
     private void fillJobDetails(View view, Job job) {
-        ButterKnife.bind(this, view);
         tvJobLookingFor.setText(new StringBuilder(job.getFirm() + " מחפשת " + job.getType()));
         try {
             ivJobBusinessSymbol.setBackground(Drawable.createFromStream(Objects.requireNonNull(getContext()).getAssets().open(job.getBusinessNumber() + ".png"), null));
@@ -73,10 +73,10 @@ public class JobFragment extends Fragment {
             layout = view;
         }
         layout.setBackgroundColor(bg = Color.rgb(job.getColor1(), job.getColor2(), job.getColor3()));
-        if (Objects.requireNonNull(getActivity()).getLocalClassName().equalsIgnoreCase("Activities.JobInfoActivity")) {
+        if (Objects.requireNonNull(getActivity()).getLocalClassName().equalsIgnoreCase("views.activities.JobInfoActivity")) {
             layout.setPadding(0, 0, 0, 30);
             view.setEnabled(false);
-            view.findViewById(R.id.mapLayout).setVisibility(View.VISIBLE);
+            view.findViewById(R.id.clMapFragment).setVisibility(View.VISIBLE);
         } else {
             view.findViewById(R.id.whereLayout).setBackgroundColor(bg);
         }

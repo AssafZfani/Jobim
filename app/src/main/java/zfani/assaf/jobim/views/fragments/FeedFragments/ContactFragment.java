@@ -34,154 +34,105 @@ public class ContactFragment extends Fragment {
         return contactFragment;
     }
 
-    public static void favorite(Job job) {
+    public static void favorite(@NonNull Job job) {
         job.setFavorite(!job.isFavorite());
         JobsAdapter.query.getRef().child(job.getId()).setValue(job);
     }
 
     public static void contact(final FragmentActivity activity, final Job job, int id) {
-
         String text = null;
-
         if (App.sharedPreferences.contains("FullName") && job != null) {
-
             if (id != R.id.call) {
-
                 Resources resources = activity.getResources();
-
                 text = resources.getString(R.string.sendMessage1) + " " + job.getBusinessNumber() + " (סניף "
                         + job.getAddress() + ") " + resources.getString(R.string.sendMessage2);
             }
-
             switch (id) {
-
                 case R.id.sendEmail: {
-
                     Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:assafzfani@gmail.com"));
-
                     emailIntent.putExtra(Intent.EXTRA_SUBJECT, "ג'ובים");
                     emailIntent.putExtra(Intent.EXTRA_TEXT, text);
-
                     activity.startActivity(emailIntent);
-
                     job.setApplied(true);
-
                     JobsAdapter.query.getRef().child(job.getId()).setValue(job);
-
                     MainActivity.displayDialog(activity, R.layout.contact_dialog, job.getId());
-
                     break;
                 }
-
                 case R.id.call: {
-
                     Intent callIntent = new Intent(Intent.ACTION_DIAL);
-
                     callIntent.setData(Uri.parse("tel:0509907979"));
+                    ((TelephonyManager) activity.getSystemService(Context.TELEPHONY_SERVICE)).listen(new PhoneStateListener() {
 
-                    ((TelephonyManager) activity.getSystemService(Context.TELEPHONY_SERVICE))
-                            .listen(new PhoneStateListener() {
+                        boolean wasRinging = false;
 
-                                boolean wasRinging = false;
-
-                                @Override
-                                public void onCallStateChanged(int state, String incomingNumber) {
-
-                                    switch (state) {
-
-                                        case TelephonyManager.CALL_STATE_OFFHOOK:
-
-                                            wasRinging = true;
-
-                                            job.setApplied(true);
-
-                                            JobsAdapter.query.getRef().child(job.getId()).setValue(job);
-
-                                            break;
-
-                                        case TelephonyManager.CALL_STATE_IDLE:
-
-                                            if (wasRinging)
-                                                activity.startActivity(activity.getPackageManager().
-                                                        getLaunchIntentForPackage(activity.getPackageName())
-                                                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-
-                                            break;
+                        @Override
+                        public void onCallStateChanged(int state, String incomingNumber) {
+                            switch (state) {
+                                case TelephonyManager.CALL_STATE_OFFHOOK:
+                                    wasRinging = true;
+                                    job.setApplied(true);
+                                    JobsAdapter.query.getRef().child(job.getId()).setValue(job);
+                                    break;
+                                case TelephonyManager.CALL_STATE_IDLE:
+                                    if (wasRinging) {
+                                        activity.startActivity(activity.getPackageManager().getLaunchIntentForPackage(activity.getPackageName()).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                                     }
-                                }
-                            }, PhoneStateListener.LISTEN_CALL_STATE);
-
+                                    break;
+                            }
+                        }
+                    }, PhoneStateListener.LISTEN_CALL_STATE);
                     activity.startActivity(callIntent);
-
                     break;
                 }
-
                 case R.id.sendMessage: {
-
                     Intent sendIntent = new Intent(Intent.ACTION_SEND);
-
-                    final String textToSend = text;
-
+                    String textToSend = text;
                     sendIntent.putExtra(Intent.EXTRA_TEXT, text);
-
                     sendIntent.putExtra("address1", "0509907979");
-
                     sendIntent.putExtra("exit_on_sent", true);
-
                     sendIntent.setType("text/plain");
+                    activity.getContentResolver().registerContentObserver(Telephony.Sms.CONTENT_URI, true, new ContentObserver(new Handler()) {
 
-                    activity.getContentResolver().registerContentObserver(Telephony.Sms.CONTENT_URI, true,
-
-                            new ContentObserver(new Handler()) {
-
-                                @Override
-                                public void onChange(boolean selfChange) {
-
-                                    super.onChange(selfChange);
-
-                                    Cursor cursor = activity.getContentResolver().query(Telephony.Sms.CONTENT_URI, null, null, null, null);
-
-                                    if (cursor != null) {
-
-                                        cursor.moveToNext();
-
-                                        String content = cursor.getString(cursor.getColumnIndex("body"));
-
-                                        if (content.equalsIgnoreCase(textToSend)) {
-
-                                            job.setApplied(true);
-
-                                            JobsAdapter.query.getRef().child(job.getId()).setValue(job);
-                                        }
-
-                                        cursor.close();
-                                    }
+                        @Override
+                        public void onChange(boolean selfChange) {
+                            super.onChange(selfChange);
+                            Cursor cursor = activity.getContentResolver().query(Telephony.Sms.CONTENT_URI, null, null, null, null);
+                            if (cursor != null) {
+                                cursor.moveToNext();
+                                String content = cursor.getString(cursor.getColumnIndex("body"));
+                                if (content.equalsIgnoreCase(textToSend)) {
+                                    job.setApplied(true);
+                                    JobsAdapter.query.getRef().child(job.getId()).setValue(job);
                                 }
-                            });
-
+                                cursor.close();
+                            }
+                        }
+                    });
                     activity.startActivity(sendIntent);
-
                     break;
                 }
             }
-        } else
+        } else {
             MainActivity.displayDialog(activity, R.layout.fill_details_dialog, job.getId());
+        }
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.contact_layout, container, false);
-        final FragmentActivity activity = getActivity();
-        final Job job = getArguments().getParcelable("Job");
+        FragmentActivity activity = getActivity();
+        Job job = getArguments().getParcelable("Job");
         View sendEmail, call, sendMessage, favorite;
         sendEmail = view.findViewById(R.id.sendEmail);
         call = view.findViewById(R.id.call);
         sendMessage = view.findViewById(R.id.sendMessage);
         favorite = view.findViewById(R.id.favorite);
-        if (activity.getLocalClassName().equalsIgnoreCase("Activities.JobInfoActivity"))
+        if (activity.getLocalClassName().equalsIgnoreCase("views.activities.JobInfoActivity")) {
             ((ViewGroup) view).removeView(favorite);
-        if (job != null)
+        }
+        if (job != null) {
             favorite.setBackgroundResource(job.isFavorite() ? R.drawable.remove1 : R.drawable.favorite1);
+        }
         favorite.setOnClickListener(view13 -> favorite(job));
         sendEmail.setOnClickListener(view12 -> {
             if (job != null)

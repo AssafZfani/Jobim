@@ -45,6 +45,8 @@ public class AllJobsFragment extends Fragment implements SwipeRefreshLayout.OnRe
         swipeRefreshLayout.setOnRefreshListener(this);
         ivLocationMessage.setVisibility(View.GONE);
         rvAllJobs.setAdapter(jobsAdapter = new JobsAdapter());
+        rvAllJobs.getItemAnimator().setAddDuration(750);
+        rvAllJobs.getItemAnimator().setRemoveDuration(750);
         int orange = ContextCompat.getColor(container.getContext(), android.R.color.holo_orange_dark);
         designShowByLayout(orange, "");
         return view;

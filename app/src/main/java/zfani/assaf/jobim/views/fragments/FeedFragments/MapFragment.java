@@ -23,11 +23,9 @@ import java.util.HashMap;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import zfani.assaf.jobim.R;
-import zfani.assaf.jobim.adapters.JobsAdapter;
 import zfani.assaf.jobim.models.ClusterJobs;
 import zfani.assaf.jobim.models.ClusterJobsRenderer;
 import zfani.assaf.jobim.models.Job;
-import zfani.assaf.jobim.utils.FilteredAdapter;
 import zfani.assaf.jobim.utils.GPSTracker;
 
 public class MapFragment extends Fragment implements OnMapReadyCallback {
@@ -62,14 +60,14 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
         final Activity activity = getActivity();
         String activityName = activity.getLocalClassName();
-        if (activityName.equalsIgnoreCase("Activities.MainActivity")) {
+        if (activityName.equalsIgnoreCase("views.activities.MainActivity")) {
             map.setMyLocationEnabled(true);
             map.setOnMyLocationButtonClickListener(() -> {
                 map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
                 return false;
             });
             googleMap.setOnMapLoadedCallback(() -> loadMarkersToMap(activity));
-        } else if (activityName.equalsIgnoreCase("Activities.ShowBy")) {
+        } else if (activityName.equalsIgnoreCase("views.activities.ShowBy")) {
             final EditText editText = activity.findViewById(R.id.editText2);
             googleMap.setOnMapClickListener(latLng1 -> {
                 editText.setText(GPSTracker.getAddressFromLatLng(activity, latLng1, null));

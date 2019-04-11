@@ -11,6 +11,9 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import zfani.assaf.jobim.App;
 import zfani.assaf.jobim.R;
 import zfani.assaf.jobim.models.Job;
@@ -21,19 +24,24 @@ import zfani.assaf.jobim.views.fragments.FeedFragments.MapFragment;
 
 public class JobInfoActivity extends AppCompatActivity {
 
+    @BindView(R.id.btnFavorite)
+    View btnFavorite;
+    @BindView(R.id.tvFavorite)
+    TextView tvFavorite;
     private Job job;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_job_info);
+        ButterKnife.bind(this);
         job = getIntent().getParcelableExtra("Job");
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.jobFragment, JobFragment.newInstance(job))
-                .add(R.id.contactLayout, ContactFragment.newInstance(job))
-                .add(R.id.mapLayout, MapFragment.newInstance(GPSTracker.getLatLngFromAddress(getApplication(), job.getAddress()))).commit();
-        findViewById(R.id.favoriteButton).setBackgroundResource(job.isFavorite() ? R.drawable.remove2 : R.drawable.favorite2);
-        ((TextView) findViewById(R.id.favoriteText)).setText(job.isFavorite() ? "הסר\nמהמועדפים" : "הוסף\nלמועדפים");
+                .add(R.id.llJobFragment, JobFragment.newInstance(job))
+                .add(R.id.flContactFragment, ContactFragment.newInstance(job))
+                .add(R.id.clMapFragment, MapFragment.newInstance(GPSTracker.getLatLngFromAddress(getApplication(), job.getAddress()))).commit();
+        btnFavorite.setBackgroundResource(job.isFavorite() ? R.drawable.remove2 : R.drawable.favorite2);
+        tvFavorite.setText(job.isFavorite() ? "הסר\nמהמועדפים" : "הוסף\nלמועדפים");
     }
 
     @Override
@@ -61,21 +69,25 @@ public class JobInfoActivity extends AppCompatActivity {
         }
     }
 
-    public void delete(View v) {
+    @OnClick(R.id.llDelete)
+    public void delete() {
         MainActivity.displayDialog(this, R.layout.delete_job_dialog, job.getId());
     }
 
-    public void share(View v) {
+    @OnClick(R.id.llShare)
+    public void share() {
         startActivityForResult(new Intent(Intent.ACTION_PICK, ContactsContract.CommonDataKinds.Phone.CONTENT_URI), 1);
     }
 
-    public void jobs_employer(View v) {
+    @OnClick(R.id.llJobsEmployer)
+    public void jobsEmployer() {
         startActivity(new Intent(JobInfoActivity.this, JobsEmployer.class).putExtra("Firm", job.getFirm()));
     }
 
-    public void favorite(View v) {
-        v.findViewById(R.id.favoriteButton).setBackgroundResource(!job.isFavorite() ? R.drawable.remove2 : R.drawable.favorite2);
+    @OnClick(R.id.llFavorite)
+    public void favorite() {
+        btnFavorite.setBackgroundResource(!job.isFavorite() ? R.drawable.remove2 : R.drawable.favorite2);
         ContactFragment.favorite(job);
-        ((TextView) findViewById(R.id.favoriteText)).setText(job.isFavorite() ? "הסר\nמהמועדפים" : "הוסף\nלמועדפים");
+        tvFavorite.setText(job.isFavorite() ? "הסר\nמהמועדפים" : "הוסף\nלמועדפים");
     }
 }

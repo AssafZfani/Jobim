@@ -48,7 +48,7 @@ public class JobTypeFragment extends ListFragment {
 
         super.onStart();
 
-        boolean isShowByActivity = activity.getLocalClassName().equalsIgnoreCase("Activities.ShowBy");
+        boolean isShowByActivity = activity.getLocalClassName().equalsIgnoreCase("views.activities.ShowBy");
 
         final RadioGroup radioGroup = new RadioGroup(activity);
 
@@ -79,7 +79,7 @@ public class JobTypeFragment extends ListFragment {
 
     private void setContentJobTypes(final Activity activity, final RadioGroup radioGroup, final CharSequence s) {
 
-        final boolean isShowByActivity = activity.getLocalClassName().equalsIgnoreCase("Activities.ShowBy");
+        final boolean isShowByActivity = activity.getLocalClassName().equalsIgnoreCase("views.activities.ShowBy");
 
         if (isShowByActivity)
             businessesNumbers = new ArrayList<>();

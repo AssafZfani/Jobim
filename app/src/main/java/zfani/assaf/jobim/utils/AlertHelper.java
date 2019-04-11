@@ -6,7 +6,6 @@ import android.net.Uri;
 
 import androidx.appcompat.app.AlertDialog;
 import zfani.assaf.jobim.R;
-import zfani.assaf.jobim.views.activities.MainActivity;
 
 public class AlertHelper {
 

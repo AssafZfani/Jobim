@@ -8,9 +8,20 @@ import androidx.annotation.NonNull;
 @SuppressWarnings("unused")
 public class Job implements Parcelable, Comparable<Job> {
 
-    private String id, type;
+    public static final Creator<Job> CREATOR = new Creator<Job>() {
+        @Override
+        public Job createFromParcel(Parcel in) {
+            return new Job(in);
+        }
+
+        @Override
+        public Job[] newArray(int size) {
+            return new Job[size];
+        }
+    };
     String address, firm, title;
     int businessNumber, distance;
+    private String id, type;
     private int color1, color2, color3;
     private boolean applied, favorite, posted;
 
@@ -50,18 +61,6 @@ public class Job implements Parcelable, Comparable<Job> {
         favorite = in.readByte() != 0;
         posted = in.readByte() != 0;
     }
-
-    public static final Creator<Job> CREATOR = new Creator<Job>() {
-        @Override
-        public Job createFromParcel(Parcel in) {
-            return new Job(in);
-        }
-
-        @Override
-        public Job[] newArray(int size) {
-            return new Job[size];
-        }
-    };
 
     public String getAddress() {
         return address;

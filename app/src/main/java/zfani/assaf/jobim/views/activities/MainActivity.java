@@ -79,21 +79,21 @@ public class MainActivity extends AppCompatActivity {
         int orange = ContextCompat.getColor(activity, R.color.orange);
         String className = activity.getLocalClassName(), text = "";
         switch (className) {
-            case "Activities.AddNewJob": {
+            case "views.activities.AddNewJob": {
                 text = "פרסם ג'וב חדש";
             }
-            case "Activities.FillDetails": {
+            case "views.activities.FillDetails": {
                 /*closeButton.setVisibility(View.VISIBLE);
                 nextButton.setVisibility(View.VISIBLE);*/
                 break;
             }
-            case "Activities.FilterQuestion": {
+            case "views.activities.FilterQuestion": {
                 text = "שאלת סינון";
                 /*addButton.setVisibility(View.VISIBLE);
                 backButton.setVisibility(View.VISIBLE);*/
                 break;
             }
-            case "Activities.JobsEmployer": {
+            case "views.activities.JobsEmployer": {
                 menuButton.setEnabled(false);
                 menuButton.setBackgroundColor(orange);
                 mapButton.setEnabled(false);
@@ -101,13 +101,13 @@ public class MainActivity extends AppCompatActivity {
                 text = "ג'ובים נוספים ממעסיק זה";
                 break;
             }
-            case "Activities.MakingContact": {
+            case "views.activities.MakingContact": {
                 text = "אמצעי יצירת קשר";
                 /*postButton.setVisibility(View.VISIBLE);
                 backButton.setVisibility(View.VISIBLE);*/
                 break;
             }
-            case "Activities.ShowBy": {
+            case "views.activities.ShowBy": {
                 toolbar.setBackground(activity.getDrawable(R.drawable.action_bar_dark));
                 menuButton.setEnabled(false);
                 mapButton.setEnabled(false);
@@ -184,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
                         findViewById(R.id.deleteFromFeed).setOnClickListener(v -> {
                             /*if (FilteredAdapter.filteredList != null) {
                                 int indexToRemove = FilteredAdapter.filteredList.indexOf(Job.findJobById(jobId));
-                                if (activity.getLocalClassName().equalsIgnoreCase("Activities.MainActivity")) {
+                                if (activity.getLocalClassName().equalsIgnoreCase("views.activities.MainActivity")) {
                                     MainActivity mainActivity = (MainActivity) activity;
                                     if (mainActivity.allJobsFragment.filteredAdapter != null) {
                                         mainActivity.allJobsFragment.filteredAdapter.remove(indexToRemove);
@@ -193,7 +193,7 @@ public class MainActivity extends AppCompatActivity {
                                     FilteredAdapter.filteredList.remove(indexToRemove);
                             }*/
                             new Handler().postDelayed(() -> JobsAdapter.query.getRef().child(jobId).removeValue(), 750);
-                            if (activity.getLocalClassName().equalsIgnoreCase("Activities.JobInfoActivity"))
+                            if (activity.getLocalClassName().equalsIgnoreCase("views.activities.JobInfoActivity"))
                                 activity.finish();
                             else
                                 ((ViewPager) activity.findViewById(activity.getIntent().getIntExtra("ViewPager", 0))).setCurrentItem(1);
