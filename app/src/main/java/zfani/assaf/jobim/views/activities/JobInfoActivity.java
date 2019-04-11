@@ -3,12 +3,15 @@ package zfani.assaf.jobim.views.activities;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.telephony.SmsManager;
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import zfani.assaf.jobim.App;
 import zfani.assaf.jobim.R;
 import zfani.assaf.jobim.models.Job;
 import zfani.assaf.jobim.utils.GPSTracker;
@@ -37,22 +40,24 @@ public class JobInfoActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == RESULT_OK) {
-            ContentResolver contentResolver = getContentResolver();
-            String contactName = "", phoneNumber = "";
-            Cursor cursor = contentResolver.query(data.getData(), null, null, null, null);
-            if (cursor != null) {
-                if (cursor.moveToFirst()) {
-                    contactName = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
-                    phoneNumber = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+            Uri dataUri = data.getData();
+            if (dataUri != null) {
+                ContentResolver contentResolver = getContentResolver();
+                String contactName = "", phoneNumber = "";
+                Cursor cursor = contentResolver.query(dataUri, null, null, null, null);
+                if (cursor != null) {
+                    if (cursor.moveToFirst()) {
+                        contactName = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
+                        phoneNumber = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                    }
+                    cursor.close();
                 }
-                cursor.close();
+                String text = "הי! " + App.sharedPreferences.getString("FullName", "משתמש/ת Jobim") + " " +
+                        getResources().getString(R.string.shareMessage) + " " + job.getFirm() + " מחפשת " + job.getType();
+                SmsManager.getDefault().sendTextMessage(phoneNumber, null, text, null, null);
+                getIntent().putExtra("ContactName", contactName);
+                MainActivity.displayDialog(this, R.layout.share_dialog, job.getId());
             }
-            /*String text = "הי! " + App.sharedPreferences.getString("FullName", "משתמש/ת Jobim") + " " +
-                    getResources().getString(R.string.shareMessage) + " " + job.getFirm() + " מחפשת " +
-                    JobsAdapter.jobsTypesList.get(job.getBusinessNumber() - 1).getJobType();*/
-            //SmsManager.getDefault().sendTextMessage(phoneNumber, null, text, null, null);
-            getIntent().putExtra("ContactName", contactName);
-            MainActivity.displayDialog(this, R.layout.share_dialog, job.getId());
         }
     }
 

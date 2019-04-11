@@ -54,7 +54,6 @@
     <style name="LinearLayout" parent="Base.Widget.AppCompat.Button.Borderless">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">match_parent</item>
-        <item name="background">@null</item>
         <item name="android:gravity">center</item>
         <item name="android:orientation">vertical</item>
     </style>

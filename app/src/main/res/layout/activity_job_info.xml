@@ -1,22 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:ignore="HardcodedText">
 
     <LinearLayout
         android:id="@+id/jobFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:orientation="vertical" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/jobFragment"
-        android:layout_alignParentBottom="true">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             style="@style/LinearLayout"
@@ -50,7 +49,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="ג'ובים נוספים\nממעסיק זה"
+                android:text="ג'ובים נוספים\n ממעסיק זה"
                 android:textColor="@android:color/holo_orange_dark"
                 android:typeface="monospace" />
 
@@ -69,7 +68,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="שתף עם\nחברים"
+                android:text="שתף עם\n חברים"
                 android:textColor="@android:color/holo_orange_dark"
                 android:typeface="monospace" />
 
@@ -96,4 +95,4 @@
 
     </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>

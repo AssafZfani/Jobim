@@ -1,7 +1,5 @@
 <resources>
     <!--
-    TODO: Before you run your application, you need job_type1 Google Maps API key.
-
     To get one, follow this link, follow the directions and press "Create" at the end:
 
     https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=2C:3D:EA:CA:3E:06:76:57:7D:33:65:13:7E:01:C9:10:49:B7:F5:54%3Bzfani.assaf.jobim
@@ -21,7 +19,7 @@
     string in this file.
     -->
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
-        AIzaSyDBwHIFSEh2DsgHlCWaT3EPMNe-SvfWWQw
+        AIzaSyCvJqodV_FsxCRD7DRR58VbIdG-M7DwfL4
     </string>
 
     <string name="google_places_key">AIzaSyCWrtafL6TVZkghiqjhG_mAOKrH00Mmj8c</string>

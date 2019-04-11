@@ -37,14 +37,14 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/myDeatils"
+        android:id="@+id/myDetails"
         style="@style/MenuButton"
         android:layout_marginTop="80dp" />
 
     <Button
         android:id="@+id/notifications"
         style="@style/MenuButton"
-        android:layout_below="@+id/myDeatils"
+        android:layout_below="@+id/myDetails"
         android:layout_marginTop="-10dp" />
 
     <Button

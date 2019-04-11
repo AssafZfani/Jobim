@@ -293,7 +293,7 @@ public class MainActivity extends AppCompatActivity {
                     case "עריכת עיר מגורים":
                     case "עריכת שנת לידה":
                     case "עריכת כתובת מייל":
-                        handleMenuButtons(findViewById(R.id.myDeatils));
+                        handleMenuButtons(findViewById(R.id.myDetails));
                         break;
                     default:
                         clean(findViewById(R.id.cleanButton));
@@ -411,7 +411,7 @@ public class MainActivity extends AppCompatActivity {
                 fragmentName = "עריכת שם ותמונה";
                 fragmentToReplace = FullNameFragment.newInstance();
                 break;
-            case R.id.myDeatils:
+            case R.id.myDetails:
             case R.id.myDetailsLayout:
                 fragmentName = "הפרטים שלי";
                 fragmentToReplace = MyDetailsFragment.newInstance();
@@ -437,7 +437,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void handleMyDetailsButtons(View v) {
-        handleMenuButtons(App.sharedPreferences.contains("FullName") ? v : findViewById(R.id.myDeatils));
+        handleMenuButtons(App.sharedPreferences.contains("FullName") ? v : findViewById(R.id.myDetails));
     }
 
     public void website(View v) {

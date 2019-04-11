@@ -25,7 +25,7 @@ public class SettingsFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.settings, container, false);
 
-        toggleButton = view.findViewById(R.id.toogleButton);
+        toggleButton = view.findViewById(R.id.toggleButton);
 
         toggleButton.setChecked(App.sharedPreferences.getBoolean("EnableNotification", true));
 

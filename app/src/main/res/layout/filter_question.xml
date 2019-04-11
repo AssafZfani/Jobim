@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -23,7 +22,7 @@
             android:layout_marginTop="15dp"
             android:layout_marginBottom="10dp"
             android:gravity="center"
-            android:text="כל מועמד שירצה ליצור קשר איתכם\nיהיה חייב לענות על שאלת הסינון"
+            android:text="כל מועמד שירצה ליצור קשר איתכם\n יהיה חייב לענות על שאלת הסינון"
             android:textColor="@android:color/black"
             android:typeface="monospace" />
 
@@ -32,7 +31,7 @@
             style="@style/Base.Widget.AppCompat.Button.Borderless"
             android:layout_width="match_parent"
             android:layout_height="90dp"
-            android:background="@drawable/edittext_selector"
+            android:background="@drawable/edit_text_selector"
             android:gravity="top"
             android:hint="השאלה שלכם..."
             android:inputType="text"
