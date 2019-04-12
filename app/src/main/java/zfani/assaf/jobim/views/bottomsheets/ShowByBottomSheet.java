@@ -54,21 +54,8 @@ public class ShowByBottomSheet extends BottomSheetDialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         view.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
-            View bottomSheet = requireDialog().findViewById(com.google.android.material.R.id.design_bottom_sheet);
-            BottomSheetBehavior behavior = BottomSheetBehavior.from(bottomSheet);
-            behavior.setPeekHeight(view.getHeight() - Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).getHeight());
-            behavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
-                @Override
-                public void onStateChanged(@NonNull View bottomSheet, int newState) {
-                    if (newState == BottomSheetBehavior.STATE_DRAGGING) {
-                        behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                    }
-                }
-
-                @Override
-                public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-                }
-            });;
+            View bottomSheet = requireDialog().findViewById(R.id.design_bottom_sheet);
+            BottomSheetBehavior.from(bottomSheet).setPeekHeight(view.getHeight() - Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).getHeight());
         });
     }
 
@@ -92,15 +79,12 @@ public class ShowByBottomSheet extends BottomSheetDialogFragment {
                             showByBottomSheetViewModel.setJobTypeQuery(s.toString());
                             break;
                         case R.id.etJobLocation:
-                            showByBottomSheetViewModel.setJobLocationQuery(s.toString());
-                            /*activity.getIntent().putExtra("Address", s + "");
                             editText.setOnEditorActionListener((v, actionId, event) -> {
                                 if (v.getText().length() != 0) {
-                                    activity.getIntent().putExtra("Address", v.getText() + "");
-                                    MapFragment.changeCamera(GPSTracker.getLatLngFromAddress(activity.getApplication(), v.getText() + ""));
+                                    showByBottomSheetViewModel.setJobLocationQuery(s.toString());
                                 }
                                 return false;
-                            });*/
+                            });
                             break;
                         case R.id.etJobFirm:
                             showByBottomSheetViewModel.setJobFirmQuery(s.toString());
@@ -168,6 +152,7 @@ public class ShowByBottomSheet extends BottomSheetDialogFragment {
         });
         vpContainer.setCurrentItem(2);
         rgFragmentsBar.check(R.id.button1);
+        showByBottomSheetViewModel.getJobLocationText().observe(this, s -> etLocation.setText(s));
     }
 
     @OnClick(R.id.tvAllow)

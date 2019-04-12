@@ -38,8 +38,7 @@ public class JobTypeFragment extends Fragment {
         View view = inflater.inflate(R.layout.job_type_fragment, container, false);
         ButterKnife.bind(this, view);
         ViewModelProviders.of(this).get(JobTypesViewModel.class).loadJobsTypes();
-        Bundle bundle = getArguments();
-        boolean isComeFromShowBy = bundle != null && bundle.getBoolean("isComeFromShowBy");
+        boolean isComeFromShowBy = requireArguments().getBoolean("isComeFromShowBy");
         ViewModelProviders.of(requireActivity()).get(ShowByBottomSheetViewModel.class).getJobTypeQuery().observe(this, queryText -> {
             jobTypesAdapter.stopListening();
             rvJobTypes.setAdapter(jobTypesAdapter = new JobTypesAdapter(isComeFromShowBy, queryText));

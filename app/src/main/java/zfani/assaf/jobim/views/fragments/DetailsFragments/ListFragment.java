@@ -55,48 +55,6 @@ public class ListFragment extends Fragment {
         return listFragment;
     }
 
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_list, container, false);
-        ButterKnife.bind(this, view);
-        Bundle bundle = getArguments();
-        boolean isComeFromShowBy = bundle != null && bundle.getBoolean("isComeFromShowBy");
-        tvMoreFirms.setVisibility(isComeFromShowBy ? View.VISIBLE : View.GONE);
-        AppCompatActivity activity = (AppCompatActivity) requireActivity();
-        ArrayList<String> items = new ArrayList<>();
-        if (isComeFromShowBy) {
-            items.addAll(Arrays.asList(activity.getResources().getStringArray(R.array.firms)));
-            ViewModelProviders.of(activity).get(ShowByBottomSheetViewModel.class).getJobFirmQuery().observe(this, s -> listAdapter.getFilter().filter(s));
-        } else {
-            items.add(GPSTracker.getAddressFromLatLng(activity, null, GPSTracker.location));
-            ((EditText) activity.findViewById(R.id.searchAddress)).addTextChangedListener(new TextWatcher() {
-
-                @Override
-                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                    boolean isEmptyString = charSequence.toString().isEmpty();
-                    activity.findViewById(R.id.addressNotFound).setVisibility(isEmptyString ? View.VISIBLE : View.GONE);
-                    if (!isEmptyString) {
-                        AddNewJob.newJob.setAddress(null);
-                    }
-                    //initData(isComeFromShowBy, activity, listView, charSequence.toString());
-                }
-
-                @Override
-                public void afterTextChanged(Editable editable) {
-
-                }
-            });
-        }
-        rvList.setAdapter(listAdapter = new ListAdapter(items, isComeFromShowBy));
-        rvList.addItemDecoration(new DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL));
-        return view;
-    }
-
     static void initData(boolean isComeFromShowBy, Activity activity, ListView listView, String text) {
         boolean isAddNewJobActivity = activity.getLocalClassName().equalsIgnoreCase("views.activities.AddNewJob");
         new AsyncTask<String, Void, String>() {
@@ -161,5 +119,46 @@ public class ListFragment extends Fragment {
                 }
             }
         }.execute("https://maps.googleapis.com/maps/api/place/autocomplete/json?input=" + text + "&types=" + (isAddNewJobActivity ? "address" : "(cities)") + "&language=he_IL&key=" + activity.getResources().getString(R.string.google_places_key));
+    }
+
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_list, container, false);
+        ButterKnife.bind(this, view);
+        boolean isComeFromShowBy = requireArguments().getBoolean("isComeFromShowBy");
+        tvMoreFirms.setVisibility(isComeFromShowBy ? View.VISIBLE : View.GONE);
+        AppCompatActivity activity = (AppCompatActivity) requireActivity();
+        ArrayList<String> items = new ArrayList<>();
+        if (isComeFromShowBy) {
+            items.addAll(Arrays.asList(activity.getResources().getStringArray(R.array.firms)));
+            ViewModelProviders.of(activity).get(ShowByBottomSheetViewModel.class).getJobFirmQuery().observe(this, s -> listAdapter.getFilter().filter(s));
+        } else {
+            items.add(GPSTracker.getAddressFromLatLng(activity, null, GPSTracker.location));
+            ((EditText) activity.findViewById(R.id.searchAddress)).addTextChangedListener(new TextWatcher() {
+
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                    boolean isEmptyString = charSequence.toString().isEmpty();
+                    activity.findViewById(R.id.addressNotFound).setVisibility(isEmptyString ? View.VISIBLE : View.GONE);
+                    if (!isEmptyString) {
+                        AddNewJob.newJob.setAddress(null);
+                    }
+                    //initData(isComeFromShowBy, activity, listView, charSequence.toString());
+                }
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+
+                }
+            });
+        }
+        rvList.setAdapter(listAdapter = new ListAdapter(items, isComeFromShowBy));
+        rvList.addItemDecoration(new DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL));
+        return view;
     }
 }

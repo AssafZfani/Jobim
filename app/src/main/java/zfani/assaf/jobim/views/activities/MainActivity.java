@@ -352,7 +352,7 @@ public class MainActivity extends AppCompatActivity {
             if (v.getBackground() == background) {
                 fragmentTransaction.remove(mapFragment).commit();
             } else {
-                fragmentTransaction.add(R.id.mapFragment, mapFragment = MapFragment.newInstance(GPSTracker.createLatLng(GPSTracker.location))).commit();
+                fragmentTransaction.add(R.id.mapFragment, mapFragment = MapFragment.newInstance(1, GPSTracker.createLatLng(GPSTracker.location))).commit();
             }
         }
     }

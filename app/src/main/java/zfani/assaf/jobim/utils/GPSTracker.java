@@ -30,9 +30,8 @@ public class GPSTracker {
             Address foundAddress = new Geocoder(activity).getFromLocation(latLng != null ? latLng.latitude : location.getLatitude(), latLng != null ? latLng.longitude : location.getLongitude(), 1).get(0);
             return foundAddress.getAddressLine(0) + ", " + foundAddress.getLocality();
         } catch (IOException e) {
-            e.printStackTrace();
+            return null;
         }
-        return null;
     }
 
     public static int getDistanceFromAddress(Application application, String address) {
@@ -55,8 +54,7 @@ public class GPSTracker {
             Address foundAddress = new Geocoder(application).getFromLocationName(address, 1).get(0);
             return new LatLng(foundAddress.getLatitude(), foundAddress.getLongitude());
         } catch (IOException e) {
-            e.printStackTrace();
+            return null;
         }
-        return null;
     }
 }

@@ -13,14 +13,12 @@ public class ClusterJobs implements ClusterItem {
     private Activity activity;
 
     public ClusterJobs(Activity activity, Job job) {
-
         this.activity = activity;
         this.job = job;
     }
 
     @Override
     public LatLng getPosition() {
-
         return GPSTracker.getLatLngFromAddress(activity.getApplication(), job.getAddress());
     }
 }

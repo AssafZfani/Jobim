@@ -22,7 +22,7 @@ public class ShowByPagerAdapter extends FragmentPagerAdapter {
             case 2:
                 return JobTypeFragment.newInstance(true);
             case 1:
-                return MapFragment.newInstance(GPSTracker.createLatLng(GPSTracker.location));
+                return MapFragment.newInstance(2, GPSTracker.createLatLng(GPSTracker.location));
             default:
                 return ListFragment.newInstance(true);
         }

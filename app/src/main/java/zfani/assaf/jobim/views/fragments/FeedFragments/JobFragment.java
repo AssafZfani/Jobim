@@ -47,14 +47,14 @@ public class JobFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.job_layout, container, false);
         ButterKnife.bind(this, view);
-        Bundle bundle = getArguments();
-        if (bundle != null && bundle.containsKey("Job")) {
-            fillJobDetails(view, Objects.requireNonNull(bundle.getParcelable("Job")));
+        Job job = requireArguments().getParcelable("Job");
+        if (job != null) {
+            fillJobDetails(view, job);
         }
         return view;
     }
 
-    private void fillJobDetails(View view, Job job) {
+    private void fillJobDetails(View view, @NonNull Job job) {
         tvJobLookingFor.setText(new StringBuilder(job.getFirm() + " מחפשת " + job.getType()));
         try {
             ivJobBusinessSymbol.setBackground(Drawable.createFromStream(Objects.requireNonNull(getContext()).getAssets().open(job.getBusinessNumber() + ".png"), null));

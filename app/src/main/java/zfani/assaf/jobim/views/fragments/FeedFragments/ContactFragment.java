@@ -121,7 +121,7 @@ public class ContactFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.contact_layout, container, false);
         Activity activity = getActivity();
-        Job job = getArguments().getParcelable("Job");
+        Job job = requireArguments().getParcelable("Job");
         View sendEmail, call, sendMessage, favorite;
         sendEmail = view.findViewById(R.id.sendEmail);
         call = view.findViewById(R.id.call);

@@ -39,7 +39,7 @@ public class JobInfoActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.llJobFragment, JobFragment.newInstance(job))
                 .add(R.id.flContactFragment, ContactFragment.newInstance(job))
-                .add(R.id.clMapFragment, MapFragment.newInstance(GPSTracker.getLatLngFromAddress(getApplication(), job.getAddress()))).commit();
+                .add(R.id.clMapFragment, MapFragment.newInstance(3, GPSTracker.getLatLngFromAddress(getApplication(), job.getAddress()))).commit();
         btnFavorite.setBackgroundResource(job.isFavorite() ? R.drawable.remove2 : R.drawable.favorite2);
         tvFavorite.setText(job.isFavorite() ? "הסר\nמהמועדפים" : "הוסף\nלמועדפים");
     }

@@ -35,7 +35,9 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".views.activities.SplashActivity">
+        <activity
+            android:name=".views.activities.SplashActivity"
+            android:screenOrientation="portrait">
 
             <intent-filter>
 
@@ -48,9 +50,11 @@
 
         <activity
             android:name=".views.activities.MainActivity"
-            android:windowSoftInputMode="adjustNothing" />
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".views.activities.JobInfoActivity" />
+        <activity
+            android:name=".views.activities.JobInfoActivity"
+            android:screenOrientation="portrait" />
 
         <activity android:name=".views.activities.JobsEmployer" />
 

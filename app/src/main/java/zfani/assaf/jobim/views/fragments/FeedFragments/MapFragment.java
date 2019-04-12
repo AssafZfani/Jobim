@@ -1,11 +1,11 @@
 package zfani.assaf.jobim.views.fragments.FeedFragments;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -17,64 +17,75 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.maps.android.clustering.ClusterManager;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 import zfani.assaf.jobim.R;
 import zfani.assaf.jobim.models.ClusterJobs;
 import zfani.assaf.jobim.models.ClusterJobsRenderer;
 import zfani.assaf.jobim.models.Job;
 import zfani.assaf.jobim.utils.GPSTracker;
+import zfani.assaf.jobim.viewmodels.ShowByBottomSheetViewModel;
 
 public class MapFragment extends Fragment implements OnMapReadyCallback {
 
-    private static GoogleMap googleMap;
+    private GoogleMap googleMap;
 
-    public static MapFragment newInstance(LatLng latLng) {
+    public static MapFragment newInstance(int screenType, LatLng latLng) {
         MapFragment mapFragment = new MapFragment();
         Bundle bundle = new Bundle();
+        bundle.putInt("Screen_Type", screenType);
         bundle.putParcelable("LatLng", latLng);
         mapFragment.setArguments(bundle);
         return mapFragment;
     }
 
-    public static void changeCamera(LatLng latLng) {
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.map, container, false);
+        ((SupportMapFragment) Objects.requireNonNull(getChildFragmentManager().findFragmentById(R.id.map))).getMapAsync(this);
+        return view;
+    }
+
+    @SuppressLint("MissingPermission")
+    @Override
+    public void onMapReady(GoogleMap map) {
+        googleMap = map;
+        Bundle bundle = requireArguments();
+        LatLng latLng = bundle.getParcelable("LatLng");
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
+        switch (bundle.getInt("Screen_Type")) {
+            case 1:
+                map.setMyLocationEnabled(true);
+                map.setOnMyLocationButtonClickListener(() -> {
+                    map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
+                    return false;
+                });
+                googleMap.setOnMapLoadedCallback(this::loadMarkersToMap);
+                break;
+            case 2:
+                AppCompatActivity activity = (AppCompatActivity) requireActivity();
+                ShowByBottomSheetViewModel showByBottomSheetViewModel = ViewModelProviders.of(activity).get(ShowByBottomSheetViewModel.class);
+                showByBottomSheetViewModel.getJobLocationQuery().observe(this, s -> changeCamera(GPSTracker.getLatLngFromAddress(activity.getApplication(), s)));
+                googleMap.setOnMapClickListener(newLocation -> {
+                    changeCamera(newLocation);
+                    showByBottomSheetViewModel.setJobLocationText(GPSTracker.getAddressFromLatLng(activity, newLocation, null));
+                });
+                break;
+        }
+    }
+
+    private void changeCamera(LatLng latLng) {
         googleMap.clear();
         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
         googleMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromAsset("location_marker.png")).position(latLng));
     }
 
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.map, container, false);
-        ((SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map)).getMapAsync(this);
-        return view;
-    }
-
-    @Override
-    public void onMapReady(GoogleMap map) {
-        googleMap = map;
-        LatLng latLng = getArguments().getParcelable("LatLng");
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
-        Activity activity = getActivity();
-        String activityName = activity.getLocalClassName();
-        if (activityName.equalsIgnoreCase("views.activities.MainActivity")) {
-            map.setMyLocationEnabled(true);
-            map.setOnMyLocationButtonClickListener(() -> {
-                map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
-                return false;
-            });
-            googleMap.setOnMapLoadedCallback(() -> loadMarkersToMap(activity));
-        } else if (activityName.equalsIgnoreCase("views.activities.ShowByActivity")) {
-            EditText editText = activity.findViewById(R.id.etJobLocation);
-            googleMap.setOnMapClickListener(latLng1 -> {
-                editText.setText(GPSTracker.getAddressFromLatLng(activity, latLng1, null));
-                changeCamera(latLng1);
-            });
-        }
-    }
-
-    private void loadMarkersToMap(Activity activity) {
+    private void loadMarkersToMap() {
+        Activity activity = requireActivity();
         ClusterManager<ClusterJobs> clusterManager = new ClusterManager<>(activity, googleMap);
         HashMap<ClusterJobs, Job> hashMap = new HashMap<>();
         ClusterJobsRenderer renderer = new ClusterJobsRenderer(activity, googleMap, clusterManager, hashMap);
