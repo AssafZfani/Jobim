@@ -17,14 +17,18 @@ import java.io.InputStream;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.MutableLiveData;
 import zfani.assaf.jobim.models.Job;
 import zfani.assaf.jobim.utils.GPSTracker;
 import zfani.assaf.jobim.utils.JsonHelper;
 
 public class AllJobsViewModel extends AndroidViewModel {
 
+    private MutableLiveData<Boolean> shouldCheckPermission;
+
     public AllJobsViewModel(@NonNull Application application) {
         super(application);
+        shouldCheckPermission = new MutableLiveData<>();
     }
 
     public void loadJobs() {
@@ -75,5 +79,13 @@ public class AllJobsViewModel extends AndroidViewModel {
 
             }
         });
+    }
+
+    public MutableLiveData<Boolean> getShouldCheckPermission() {
+        return shouldCheckPermission;
+    }
+
+    public void setShouldCheckPermission(boolean shouldCheckPermission) {
+        this.shouldCheckPermission.setValue(shouldCheckPermission);
     }
 }

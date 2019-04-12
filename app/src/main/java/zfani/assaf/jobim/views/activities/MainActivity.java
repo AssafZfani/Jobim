@@ -1,6 +1,5 @@
 package zfani.assaf.jobim.views.activities;
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
@@ -16,21 +15,21 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import zfani.assaf.jobim.App;
 import zfani.assaf.jobim.R;
 import zfani.assaf.jobim.adapters.JobsAdapter;
-import zfani.assaf.jobim.utils.AlertHelper;
 import zfani.assaf.jobim.utils.Constants;
 import zfani.assaf.jobim.utils.GPSTracker;
+import zfani.assaf.jobim.viewmodels.AllJobsViewModel;
 import zfani.assaf.jobim.views.fragments.DetailsFragments.BirthYearFragment;
 import zfani.assaf.jobim.views.fragments.DetailsFragments.CityFragment;
 import zfani.assaf.jobim.views.fragments.DetailsFragments.EmailFragment;
@@ -51,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     Toolbar toolBar;
     @BindView(R.id.drawerMenu)
     View drawerMenu;
+    private AllJobsViewModel allJobsViewModel;
     private FragmentManager fragmentManager;
     private Drawable background;
     private MapFragment mapFragment;
@@ -239,9 +239,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        new GPSTracker(this);
         setSupportActionBar(toolBar);
-        checkLocationPermission();
+        allJobsViewModel = ViewModelProviders.of(this).get(AllJobsViewModel.class);
+        fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.fragmentContainer, new AllJobsFragment()).commit();
+        background = findViewById(R.id.mapButton).getBackground();
     }
 
     @Override
@@ -268,9 +270,6 @@ public class MainActivity extends AppCompatActivity {
                 if (resultCode == RESULT_OK) {
                     FillDetails.saveImageFromGallery(this, data);
                 }
-            case Constants.KEY_ACTION_APPLICATION_DETAILS_SETTINGS:
-                checkLocationPermission();
-                break;
         }
     }
 
@@ -300,41 +299,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        GPSTracker.location.beginUpdates();
-    }
-
-    @Override
-    protected void onPause() {
-        GPSTracker.location.endUpdates();
-        super.onPause();
-    }
-
-    @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             case Constants.KEY_REQUEST_LOCATION_PERMISSION:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    fragmentManager = getSupportFragmentManager();
-                    fragmentManager.beginTransaction().replace(R.id.fragmentContainer, new AllJobsFragment()).commit();
-                    background = findViewById(R.id.mapButton).getBackground();
-                } else {
-                    AlertHelper.showPermissionRequestAlert(this);
+                    allJobsViewModel.setShouldCheckPermission(false);
                 }
                 break;
         }
-    }
-
-    private void checkLocationPermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, Constants.KEY_REQUEST_LOCATION_PERMISSION);
-            return;
-        }
-        fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.fragmentContainer, new AllJobsFragment()).commit();
-        background = findViewById(R.id.mapButton).getBackground();
     }
 
     public void menu(View v) {
