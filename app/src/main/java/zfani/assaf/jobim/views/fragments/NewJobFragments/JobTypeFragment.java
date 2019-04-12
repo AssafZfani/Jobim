@@ -40,7 +40,7 @@ public class JobTypeFragment extends Fragment {
         ViewModelProviders.of(this).get(JobTypesViewModel.class).loadJobsTypes();
         Bundle bundle = getArguments();
         boolean isComeFromShowBy = bundle != null && bundle.getBoolean("isComeFromShowBy");
-        ViewModelProviders.of(requireActivity()).get(ShowByBottomSheetViewModel.class).getQueryTextLive().observe(this, queryText -> {
+        ViewModelProviders.of(requireActivity()).get(ShowByBottomSheetViewModel.class).getJobTypeQuery().observe(this, queryText -> {
             jobTypesAdapter.stopListening();
             rvJobTypes.setAdapter(jobTypesAdapter = new JobTypesAdapter(isComeFromShowBy, queryText));
             jobTypesAdapter.startListening();

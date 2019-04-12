@@ -55,8 +55,20 @@ public class ShowByBottomSheet extends BottomSheetDialogFragment {
         super.onViewCreated(view, savedInstanceState);
         view.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
             View bottomSheet = requireDialog().findViewById(com.google.android.material.R.id.design_bottom_sheet);
-            BottomSheetBehavior.from(bottomSheet).setPeekHeight(view.getHeight() -
-                    Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).getHeight());
+            BottomSheetBehavior behavior = BottomSheetBehavior.from(bottomSheet);
+            behavior.setPeekHeight(view.getHeight() - Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).getHeight());
+            behavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+                @Override
+                public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                    if (newState == BottomSheetBehavior.STATE_DRAGGING) {
+                        behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                    }
+                }
+
+                @Override
+                public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+                }
+            });;
         });
     }
 
@@ -77,9 +89,10 @@ public class ShowByBottomSheet extends BottomSheetDialogFragment {
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     switch (editText.getId()) {
                         case R.id.etJobType:
-                            showByBottomSheetViewModel.setQueryTextLive(s.toString());
+                            showByBottomSheetViewModel.setJobTypeQuery(s.toString());
                             break;
                         case R.id.etJobLocation:
+                            showByBottomSheetViewModel.setJobLocationQuery(s.toString());
                             /*activity.getIntent().putExtra("Address", s + "");
                             editText.setOnEditorActionListener((v, actionId, event) -> {
                                 if (v.getText().length() != 0) {
@@ -90,13 +103,7 @@ public class ShowByBottomSheet extends BottomSheetDialogFragment {
                             });*/
                             break;
                         case R.id.etJobFirm:
-                            /*ArrayList<String> filteredData = new ArrayList<>();
-                            for (String value : data) {
-                                if (value.contains(s)) {
-                                    filteredData.add(value);
-                                }
-                            }
-                            setContent(activity, listView, filteredData);*/
+                            showByBottomSheetViewModel.setJobFirmQuery(s.toString());
                             break;
                     }
                 }

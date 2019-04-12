@@ -19,7 +19,7 @@
 
         <include
             android:id="@+id/sendMessageCheckBox"
-            layout="@layout/row_job_type_check_box"
+            layout="@layout/row_list_check_box"
             android:layout_width="wrap_content"
             android:layout_height="match_parent" />
 
@@ -51,7 +51,7 @@
 
         <include
             android:id="@+id/callCheckBox"
-            layout="@layout/row_job_type_check_box"
+            layout="@layout/row_list_check_box"
             android:layout_width="wrap_content"
             android:layout_height="match_parent" />
 
@@ -83,7 +83,7 @@
 
         <include
             android:id="@+id/sendEmailCheckBox"
-            layout="@layout/row_job_type_check_box"
+            layout="@layout/row_list_check_box"
             android:layout_width="wrap_content"
             android:layout_height="match_parent" />
 

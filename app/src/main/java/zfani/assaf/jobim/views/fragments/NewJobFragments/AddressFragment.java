@@ -15,27 +15,21 @@ import zfani.assaf.jobim.views.fragments.DetailsFragments.ListFragment;
 public class AddressFragment extends Fragment {
 
     public static AddressFragment newInstance() {
-
         return new AddressFragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.address_fragment, container, false);
-
-        getChildFragmentManager().beginTransaction().add(R.id.listLayout, ListFragment.newInstance()).commit();
-
+        getChildFragmentManager().beginTransaction().add(R.id.listLayout, ListFragment.newInstance(false)).commit();
         return view;
     }
 
     public boolean isValidValue() {
-
         boolean result = AddNewJob.newJob.getAddress() != null;
-
-        if (!result)
+        if (!result) {
             Toast.makeText(getActivity(), "חובה לבחור מיקום", Toast.LENGTH_SHORT).show();
-
+        }
         return result;
     }
 }

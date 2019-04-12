@@ -59,11 +59,10 @@ public class CityFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable editable) {
-
                 String text = editable.toString();
-
-                if (!text.isEmpty() && !text.equalsIgnoreCase(cityText) && text.length() >= 2)
-                    ListFragment.initData(getActivity(), null, text);
+                if (!text.isEmpty() && !text.equalsIgnoreCase(cityText) && text.length() >= 2) {
+                    ListFragment.initData(false, requireActivity(), null, text);
+                }
             }
         });
 

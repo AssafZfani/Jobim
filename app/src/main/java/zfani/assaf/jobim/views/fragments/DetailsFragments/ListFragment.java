@@ -1,19 +1,17 @@
 package zfani.assaf.jobim.views.fragments.DetailsFragments;
 
 import android.app.Activity;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.Gravity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -28,59 +26,78 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.RecyclerView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import zfani.assaf.jobim.R;
+import zfani.assaf.jobim.adapters.ListAdapter;
+import zfani.assaf.jobim.utils.GPSTracker;
+import zfani.assaf.jobim.viewmodels.ShowByBottomSheetViewModel;
 import zfani.assaf.jobim.views.activities.AddNewJob;
 
 public class ListFragment extends Fragment {
 
-    private static String currentAddress;
-    private ArrayList<String> data;
+    @BindView(R.id.rvList)
+    RecyclerView rvList;
+    @BindView(R.id.tvMoreFirms)
+    TextView tvMoreFirms;
+    private ListAdapter listAdapter;
 
-    public static ListFragment newInstance() {
-        return new ListFragment();
+    public static ListFragment newInstance(boolean isComeFromShowBy) {
+        ListFragment listFragment = new ListFragment();
+        Bundle bundle = new Bundle();
+        bundle.putBoolean("isComeFromShowBy", isComeFromShowBy);
+        listFragment.setArguments(bundle);
+        return listFragment;
     }
 
-    private static void setContent(Activity activity, ListView listView, ArrayList<String> data) {
-        RadioGroup radioGroup = new RadioGroup(activity);
-        listView.setAdapter(new ArrayAdapter<String>(activity, R.layout.row_job_type_radio_button, data) {
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_list, container, false);
+        ButterKnife.bind(this, view);
+        Bundle bundle = getArguments();
+        boolean isComeFromShowBy = bundle != null && bundle.getBoolean("isComeFromShowBy");
+        tvMoreFirms.setVisibility(isComeFromShowBy ? View.VISIBLE : View.GONE);
+        AppCompatActivity activity = (AppCompatActivity) requireActivity();
+        ArrayList<String> items = new ArrayList<>();
+        if (isComeFromShowBy) {
+            items.addAll(Arrays.asList(activity.getResources().getStringArray(R.array.firms)));
+            ViewModelProviders.of(activity).get(ShowByBottomSheetViewModel.class).getJobFirmQuery().observe(this, s -> listAdapter.getFilter().filter(s));
+        } else {
+            items.add(GPSTracker.getAddressFromLatLng(activity, null, GPSTracker.location));
+            ((EditText) activity.findViewById(R.id.searchAddress)).addTextChangedListener(new TextWatcher() {
 
-            @NonNull
-            @Override
-            public View getView(int position, View convertView, @NonNull ViewGroup parent) {
-                boolean isShowByActivity = activity.getLocalClassName().equalsIgnoreCase("views.activities.ShowByActivity");
-                RadioButton radioButton = (RadioButton) (convertView == null ? LayoutInflater.from(activity).inflate(R.layout.row_job_type_radio_button, parent, false) : convertView);
-                radioGroup.addView(radioButton);
-                radioButton.setId(View.generateViewId());
-                radioButton.setHint(data.get(position));
-                radioButton.setOnClickListener(view -> {
-                    if (isShowByActivity) {
-                        activity.getIntent().putExtra("Firm", radioButton.getHint());
-                    } else {
-                        AddNewJob.newJob.setAddress(radioButton.getHint().toString());
-                        AddNewJob.newJob.setDistance(activity);
-                        activity.findViewById(R.id.pictureButton).performClick();
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                    boolean isEmptyString = charSequence.toString().isEmpty();
+                    activity.findViewById(R.id.addressNotFound).setVisibility(isEmptyString ? View.VISIBLE : View.GONE);
+                    if (!isEmptyString) {
+                        AddNewJob.newJob.setAddress(null);
                     }
-                });
-                if (isShowByActivity) {
-                    String firm = activity.getIntent().getStringExtra("Firm");
-                    radioButton.setChecked(firm != null && firm.equalsIgnoreCase(radioButton.getHint().toString()));
-                } else if (data.size() == 1 && data.get(0).equalsIgnoreCase(currentAddress)) {
-                    radioButton.setChecked(true);
-                    AddNewJob.newJob.setAddress(currentAddress);
-                    AddNewJob.newJob.setDistance(activity);
+                    //initData(isComeFromShowBy, activity, listView, charSequence.toString());
                 }
-                Drawable drawable = activity.getDrawable(R.drawable.radiobutton);
-                if (drawable != null) {
-                    drawable.setBounds(0, 0, 75, 75);
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+
                 }
-                radioButton.setCompoundDrawablesRelative(drawable, null, null, null);
-                return radioButton;
-            }
-        });
+            });
+        }
+        rvList.setAdapter(listAdapter = new ListAdapter(items, isComeFromShowBy));
+        rvList.addItemDecoration(new DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL));
+        return view;
     }
 
-    static void initData(Activity activity, ListView listView, String text) {
+    static void initData(boolean isComeFromShowBy, Activity activity, ListView listView, String text) {
         boolean isAddNewJobActivity = activity.getLocalClassName().equalsIgnoreCase("views.activities.AddNewJob");
         new AsyncTask<String, Void, String>() {
 
@@ -135,7 +152,7 @@ public class ListFragment extends Fragment {
                             if (data.isEmpty()) {
                                 activity.findViewById(R.id.addressNotFound).setVisibility(View.VISIBLE);
                             }
-                            ListFragment.setContent(activity, listView, data);
+                            //ListFragment.setContent(isComeFromShowBy, activity, listView, data);
                         } else
                             ((AutoCompleteTextView) activity.findViewById(R.id.city)).setAdapter(new ArrayAdapter<>(activity, R.layout.city_layout, data));
                     } catch (JSONException e) {
@@ -143,51 +160,6 @@ public class ListFragment extends Fragment {
                     }
                 }
             }
-
         }.execute("https://maps.googleapis.com/maps/api/place/autocomplete/json?input=" + text + "&types=" + (isAddNewJobActivity ? "address" : "(cities)") + "&language=he_IL&key=" + activity.getResources().getString(R.string.google_places_key));
-    }
-
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Activity activity = getActivity();
-        ListView listView = new ListView(activity);
-        listView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        if (activity.getLocalClassName().equalsIgnoreCase("views.activities.ShowByActivity")) {
-            data = new ArrayList<>(Arrays.asList(activity.getResources().getStringArray(R.array.firms)));
-            setContent(activity, listView, data);
-            TextView footer = new TextView(activity);
-            footer.setPadding(0, 50, 0, 50);
-            footer.setGravity(Gravity.CENTER);
-            footer.setText("חפש חברות נוספות על ידי הקלדת השם שלהן בתיבת החיפוש");
-            footer.setTextColor(Color.BLACK);
-            listView.addFooterView(footer);
-        } else {
-            /*data = new ArrayList<>();
-            data.add(currentAddress = GPSTracker.getAddressFromLatLng(activity, null, GPSTracker.location));
-            setContent(activity, listView, data);
-            ((EditText) activity.findViewById(R.id.searchAddress)).addTextChangedListener(new TextWatcher() {
-
-                @Override
-                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                    boolean isEmptyString = charSequence.toString().isEmpty();
-                    activity.findViewById(R.id.addressNotFound).setVisibility(isEmptyString ? View.VISIBLE : View.GONE);
-                    if (!isEmptyString) {
-                        AddNewJob.newJob.setAddress(null);
-                    }
-                    initData(activity, listView, charSequence.toString());
-                }
-
-                @Override
-                public void afterTextChanged(Editable editable) {
-
-                }
-            });*/
-        }
-        return listView;
     }
 }

@@ -40,7 +40,7 @@ public class JobTypesAdapter extends FirebaseRecyclerAdapter<JobType, JobTypesAd
     @NonNull
     @Override
     public JobTypeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(isComeFromShowBy ? R.layout.row_job_type_check_box : R.layout.row_job_type_radio_button, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(isComeFromShowBy ? R.layout.row_list_check_box : R.layout.row_list_radio_button, parent, false);
         return isComeFromShowBy ? new CheckBoxViewHolder(view) : new RadioButtonViewHolder(view);
     }
 

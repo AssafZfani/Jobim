@@ -11,7 +11,7 @@
         <shape>
 
             <stroke
-                android:width="20dp"
+                android:width="15dp"
                 android:color="#f1f1f1" />
 
             <corners android:radius="20dp" />
