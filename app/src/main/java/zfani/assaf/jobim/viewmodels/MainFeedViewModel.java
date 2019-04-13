@@ -22,11 +22,11 @@ import zfani.assaf.jobim.models.Job;
 import zfani.assaf.jobim.utils.GPSTracker;
 import zfani.assaf.jobim.utils.JsonHelper;
 
-public class AllJobsViewModel extends AndroidViewModel {
+public class MainFeedViewModel extends AndroidViewModel {
 
     private MutableLiveData<Boolean> shouldCheckPermission;
 
-    public AllJobsViewModel(@NonNull Application application) {
+    public MainFeedViewModel(@NonNull Application application) {
         super(application);
         shouldCheckPermission = new MutableLiveData<>();
     }

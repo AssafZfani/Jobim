@@ -28,39 +28,39 @@ import zfani.assaf.jobim.R;
 import zfani.assaf.jobim.adapters.JobsAdapter;
 import zfani.assaf.jobim.utils.Constants;
 import zfani.assaf.jobim.utils.GPSTracker;
-import zfani.assaf.jobim.viewmodels.AllJobsViewModel;
+import zfani.assaf.jobim.viewmodels.MainFeedViewModel;
 import zfani.assaf.jobim.views.bottomsheets.ShowByBottomSheet;
 
-public class AllJobsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class MainFeedFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R.id.llShowBy)
     View llShowBy;
     @BindView(R.id.tvShowBY)
     TextView tvShowBY;
-    @BindView(R.id.swipeRefreshLayout)
-    SwipeRefreshLayout swipeRefreshLayout;
-    @BindView(R.id.rvAllJobs)
-    RecyclerView rvAllJobs;
+    @BindView(R.id.srlMainFeed)
+    SwipeRefreshLayout srlMainFeed;
+    @BindView(R.id.rvMainFeed)
+    RecyclerView rvMainFeed;
     @BindView(R.id.ivLocationMessage)
     View ivLocationMessage;
-    private AllJobsViewModel allJobsViewModel;
+    private MainFeedViewModel mainFeedViewModel;
     private JobsAdapter jobsAdapter;
     //private FilteredAdapter filteredAdapter;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_all_jobs, container, false);
+        View view = inflater.inflate(R.layout.fragment_main_feed, container, false);
         ButterKnife.bind(this, view);
-        swipeRefreshLayout.setOnRefreshListener(this);
+        srlMainFeed.setOnRefreshListener(this);
         int orange = ContextCompat.getColor(container.getContext(), android.R.color.holo_orange_dark);
         designShowByLayout(orange, "");
-        allJobsViewModel = ViewModelProviders.of(this).get(AllJobsViewModel.class);
+        mainFeedViewModel = ViewModelProviders.of(this).get(MainFeedViewModel.class);
         new GPSTracker(requireActivity());
-        allJobsViewModel.getShouldCheckPermission().observe(this, isShouldCheckLocationPermission -> {
+        mainFeedViewModel.getShouldCheckPermission().observe(this, isShouldCheckLocationPermission -> {
             if (isShouldCheckLocationPermission) {
                 checkLocationPermission();
             } else {
-                initAllJobsList();
+                initMainFeedList();
             }
         });
         checkLocationPermission();
@@ -101,8 +101,8 @@ public class AllJobsFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
     @Override
     public void onRefresh() {
-        new Handler().postDelayed(() -> swipeRefreshLayout.setRefreshing(false), 3000);
-        rvAllJobs.setAdapter(jobsAdapter = new JobsAdapter());
+        new Handler().postDelayed(() -> srlMainFeed.setRefreshing(false), 3000);
+        rvMainFeed.setAdapter(jobsAdapter = new JobsAdapter());
         jobsAdapter.startListening();
     }
 
@@ -137,18 +137,18 @@ public class AllJobsFragment extends Fragment implements SwipeRefreshLayout.OnRe
             ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, Constants.KEY_REQUEST_LOCATION_PERMISSION);
             return;
         }
-        allJobsViewModel.setShouldCheckPermission(false);
+        mainFeedViewModel.setShouldCheckPermission(false);
     }
 
-    private void initAllJobsList() {
+    private void initMainFeedList() {
         GPSTracker.location.beginUpdates();
         ivLocationMessage.setVisibility(View.GONE);
-        allJobsViewModel.loadJobs();
-        rvAllJobs.setAdapter(jobsAdapter = new JobsAdapter());
-        RecyclerView.ItemAnimator itemAnimator = rvAllJobs.getItemAnimator();
+        mainFeedViewModel.loadJobs();
+        rvMainFeed.setAdapter(jobsAdapter = new JobsAdapter());
+        RecyclerView.ItemAnimator itemAnimator = rvMainFeed.getItemAnimator();
         if (itemAnimator != null) {
-            rvAllJobs.getItemAnimator().setAddDuration(750);
-            rvAllJobs.getItemAnimator().setRemoveDuration(750);
+            rvMainFeed.getItemAnimator().setAddDuration(750);
+            rvMainFeed.getItemAnimator().setRemoveDuration(750);
         }
         jobsAdapter.startListening();
     }
@@ -163,7 +163,7 @@ public class AllJobsFragment extends Fragment implements SwipeRefreshLayout.OnRe
              View filter = view.findViewById(R.id.filter);
             filter.setVisibility(View.GONE);
             cleanButton.setVisibility(View.VISIBLE);
-            rvAllJobs.setAdapter(filteredAdapter = new FilteredAdapter(businessesNumbers, location, firm));
+            rvMainFeed.setAdapter(filteredAdapter = new FilteredAdapter(businessesNumbers, location, firm));
             int color = orange;
             String text = "";
             if (businessesNumbers != null) {

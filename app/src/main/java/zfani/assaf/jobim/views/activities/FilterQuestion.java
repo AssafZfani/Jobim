@@ -7,6 +7,7 @@ import android.widget.RadioGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
 import zfani.assaf.jobim.R;
+import zfani.assaf.jobim.utils.AlertHelper;
 
 public class FilterQuestion extends AppCompatActivity {
 
@@ -65,6 +66,6 @@ public class FilterQuestion extends AppCompatActivity {
             showDeleteQuestionDialog.setVisibility(View.VISIBLE);
         }
 
-        showDeleteQuestionDialog.setOnClickListener(view -> MainActivity.displayDialog((AppCompatActivity) view.getContext(), R.layout.dialog_delete_question, null));
+        showDeleteQuestionDialog.setOnClickListener(view -> AlertHelper.displayDialog((AppCompatActivity) view.getContext(), R.layout.dialog_delete_question, null));
     }
 }

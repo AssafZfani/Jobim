@@ -1,16 +1,11 @@
 package zfani.assaf.jobim.views.activities;
 
-import android.app.Activity;
-import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,42 +13,35 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import zfani.assaf.jobim.App;
 import zfani.assaf.jobim.R;
-import zfani.assaf.jobim.adapters.JobsAdapter;
+import zfani.assaf.jobim.managers.MainManager;
+import zfani.assaf.jobim.utils.AlertHelper;
 import zfani.assaf.jobim.utils.Constants;
-import zfani.assaf.jobim.utils.GPSTracker;
-import zfani.assaf.jobim.viewmodels.AllJobsViewModel;
+import zfani.assaf.jobim.viewmodels.MainFeedViewModel;
 import zfani.assaf.jobim.views.fragments.DetailsFragments.BirthYearFragment;
 import zfani.assaf.jobim.views.fragments.DetailsFragments.CityFragment;
 import zfani.assaf.jobim.views.fragments.DetailsFragments.EmailFragment;
 import zfani.assaf.jobim.views.fragments.DetailsFragments.FullNameFragment;
-import zfani.assaf.jobim.views.fragments.FeedFragments.ContactFragment;
-import zfani.assaf.jobim.views.fragments.FeedFragments.MapFragment;
 import zfani.assaf.jobim.views.fragments.MenuFragments.AboutUsFragment;
-import zfani.assaf.jobim.views.fragments.MenuFragments.AllJobsFragment;
 import zfani.assaf.jobim.views.fragments.MenuFragments.MyDetailsFragment;
 import zfani.assaf.jobim.views.fragments.MenuFragments.MyJobsFragment;
 import zfani.assaf.jobim.views.fragments.MenuFragments.NotificationsFragment;
 
 public class MainActivity extends AppCompatActivity {
 
-    @BindView(R.id.drawerLayout)
-    DrawerLayout drawerLayout;
     @BindView(R.id.toolbar)
     Toolbar toolBar;
+    @BindView(R.id.drawerLayout)
+    DrawerLayout drawerLayout;
     @BindView(R.id.drawerMenu)
     View drawerMenu;
-    private AllJobsViewModel allJobsViewModel;
-    private FragmentManager fragmentManager;
-    private Drawable background;
-    private MapFragment mapFragment;
+    private MainManager mainManager;
+    private MainFeedViewModel mainFeedViewModel;
     private Fragment fragmentToReplace;
 
     static void setupToolBar(@NonNull AppCompatActivity activity) {
@@ -63,8 +51,8 @@ public class MainActivity extends AppCompatActivity {
         /*addButton = view_action_bar.findViewById(R.id.addButton);
         backButton = view_action_bar.findViewById(R.id.backButton);
         closeButton = view_action_bar.findViewById(R.id.closeButton);*/
-        mapButton = toolbar.findViewById(R.id.mapButton);
-        menuButton = toolbar.findViewById(R.id.menuButton);
+        mapButton = toolbar.findViewById(R.id.btnSwitchMode);
+        menuButton = toolbar.findViewById(R.id.btnMenu);
         /*nextButton = view_action_bar.findViewById(R.id.nextButton);
         postButton = view_action_bar.findViewById(R.id.postButton);
         saveButton = view_action_bar.findViewById(R.id.saveButton);
@@ -136,114 +124,15 @@ public class MainActivity extends AppCompatActivity {
         title.setText(text);
     }
 
-    public static void displayDialog(Activity activity, int layout, String jobId) {
-        Dialog dialog = new Dialog(activity) {
-
-            @Override
-            protected void onCreate(Bundle savedInstanceState) {
-                super.onCreate(savedInstanceState);
-                setContentView(layout);
-                View cancel = findViewById(R.id.tvCancel);
-                if (cancel != null) {
-                    cancel.setOnClickListener(v -> {
-                        dismiss();
-                        if (layout == R.layout.dialog_fill_details) {
-                            activity.startActivity(new Intent(activity, FillDetails.class));
-                        } else if (layout == R.layout.dialog_post_job) {
-                            activity.finish();
-                        }
-                    });
-                }
-                switch (layout) {
-                    case R.layout.add_new_job_dialog:
-                        findViewById(R.id.call).setOnClickListener(view -> {
-                            Intent callIntent = new Intent(Intent.ACTION_DIAL);
-                            callIntent.setData(Uri.parse("tel:0509907979"));
-                            activity.startActivity(callIntent);
-                        });
-                        findViewById(R.id.sendEmail).setOnClickListener(view -> {
-                            Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:assafzfani@gmail.com"));
-                            emailIntent.putExtra(Intent.EXTRA_SUBJECT, "בנוגע ליצירת ג'וב");
-                            activity.startActivity(emailIntent);
-                        });
-                        break;
-                    case R.layout.dialog_close:
-                        findViewById(R.id.tvExit).setOnClickListener(view -> {
-                            dismiss();
-                            App.sharedPreferences.edit().remove("FromCamera").remove("Image").remove("FullName").remove("City").remove("BirthYear").remove("Email").apply();
-                            activity.finish();
-                        });
-                        break;
-                    case R.layout.dialog_delete_job:
-                        findViewById(R.id.tvDeleteFromFeed).setOnClickListener(v -> {
-                            /*if (FilteredAdapter.filteredList != null) {
-                                int indexToRemove = FilteredAdapter.filteredList.indexOf(Job.findJobById(jobId));
-                                if (activity.getLocalClassName().equalsIgnoreCase("views.activities.MainActivity")) {
-                                    MainActivity mainActivity = (MainActivity) activity;
-                                    if (mainActivity.allJobsFragment.filteredAdapter != null) {
-                                        mainActivity.allJobsFragment.filteredAdapter.remove(indexToRemove);
-                                    }
-                                } else
-                                    FilteredAdapter.filteredList.remove(indexToRemove);
-                            }*/
-                            new Handler().postDelayed(() -> JobsAdapter.query.getRef().child(jobId).removeValue(), 750);
-                            if (activity.getLocalClassName().equalsIgnoreCase("views.activities.JobInfoActivity"))
-                                activity.finish();
-                            else
-                                ((ViewPager) activity.findViewById(activity.getIntent().getIntExtra("ViewPager", 0))).setCurrentItem(1);
-                            dismiss();
-                            Toast.makeText(activity, "מעכשיו הג'וב לא יופיע יותר בפיד", Toast.LENGTH_SHORT).show();
-                        });
-                        break;
-                    case R.layout.dialog_delete_question:
-                        findViewById(R.id.tvDeleteQuestion).setOnClickListener(view -> {
-                            AddNewJob.newJob.setAnswer(false);
-                            AddNewJob.newJob.setQuestion(null);
-                            dismiss();
-                            activity.finish();
-                        });
-                        break;
-                    case R.layout.dialog_exit:
-                        findViewById(R.id.tvExit).setOnClickListener(v -> {
-                            dismiss();
-                            activity.finish();
-                        });
-                        break;
-                    case R.layout.dialog_pick_image:
-                        findViewById(R.id.tvCamera).setOnClickListener(view -> {
-                            dismiss();
-                            activity.startActivityForResult(new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE), 3);
-                        });
-                        findViewById(R.id.tvGallery).setOnClickListener(view -> {
-                            dismiss();
-                            activity.startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI), 4);
-                        });
-                        break;
-                    case R.layout.dialog_sending_mail:
-                        findViewById(R.id.tvSendMail).setOnClickListener(view -> {
-                            dismiss();
-                            ContactFragment.contact(activity, null, R.id.sendEmail);
-                        });
-                        break;
-                    case R.layout.dialog_share:
-                        ((TextView) findViewById(R.id.dialogText)).setText("שלחנו ל" + activity.getIntent().getStringExtra("ContactName") + " המלצה על המשרה");
-                        break;
-                }
-            }
-        };
-        dialog.show();
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         setSupportActionBar(toolBar);
-        allJobsViewModel = ViewModelProviders.of(this).get(AllJobsViewModel.class);
-        fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.fragmentContainer, new AllJobsFragment()).commit();
-        background = findViewById(R.id.mapButton).getBackground();
+        mainManager = new MainManager(this);
+        mainFeedViewModel = ViewModelProviders.of(this).get(MainFeedViewModel.class);
+        mainManager.pushMainFeedFragment();
     }
 
     @Override
@@ -293,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                 }
             } else {
-                displayDialog(this, R.layout.dialog_exit, null);
+                AlertHelper.displayDialog(this, R.layout.dialog_exit, null);
             }
         }
     }
@@ -304,13 +193,14 @@ public class MainActivity extends AppCompatActivity {
         switch (requestCode) {
             case Constants.KEY_REQUEST_LOCATION_PERMISSION:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    allJobsViewModel.setShouldCheckPermission(false);
+                    mainFeedViewModel.setShouldCheckPermission(false);
                 }
                 break;
         }
     }
 
-    public void menu(View v) {
+    @OnClick(R.id.btnMenu)
+    public void menu() {
         String fullName = App.sharedPreferences.getString("FullName", null);
         getIntent().putExtra("SmallRound", true);
         FullNameFragment.initSelfie(findViewById(R.id.menuSelfie));
@@ -318,16 +208,9 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout.openDrawer(drawerMenu);
     }
 
-    public void map(View v) {
-        if (GPSTracker.location != null) {
-            v.setBackground(v.getBackground() == background ? getDrawable(R.drawable.squares) : background);
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            if (v.getBackground() == background) {
-                fragmentTransaction.remove(mapFragment).commit();
-            } else {
-                fragmentTransaction.add(R.id.mapFragment, mapFragment = MapFragment.newInstance(1, GPSTracker.createLatLng(GPSTracker.location))).commit();
-            }
-        }
+    @OnClick(R.id.btnSwitchMode)
+    public void switchMode() {
+        mainManager.pushOrRemoveMapFragment();
     }
 
     public void clean(View v) {
@@ -340,10 +223,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void hideMap() {
-        if (mapFragment != null && mapFragment.isAdded()) {
-            fragmentManager.beginTransaction().remove(mapFragment).commitAllowingStateLoss();
-            findViewById(R.id.mapButton).setBackground(background);
-        }
+        /*if (mapFragment != null && mapFragment.isAdded()) {
+            getSupportFragmentManager().beginTransaction().remove(mapFragment).commitAllowingStateLoss();
+            findViewById(R.id.btnSwitchMode).setBackground(background);
+        }*/
     }
 
     private void handleMenuButtons(View v) {
@@ -393,7 +276,7 @@ public class MainActivity extends AppCompatActivity {
                 break;*/
         }
         if (fragmentToReplace != null) {
-            fragmentManager.beginTransaction().replace(R.id.fragmentContainer, fragmentToReplace, fragmentName).commitAllowingStateLoss();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, fragmentToReplace, fragmentName).commitAllowingStateLoss();
             getIntent().putExtra("Fragment", fragmentName);
             MainActivity.setupToolBar(MainActivity.this);
         }

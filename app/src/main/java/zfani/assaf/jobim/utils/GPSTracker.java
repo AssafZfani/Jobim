@@ -9,6 +9,7 @@ import android.location.Location;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.io.IOException;
+import java.util.List;
 
 import androidx.annotation.Nullable;
 import im.delight.android.location.SimpleLocation;
@@ -26,12 +27,17 @@ public class GPSTracker {
     }
 
     public static String getAddressFromLatLng(Activity activity, LatLng latLng, SimpleLocation location) {
+        List<Address> addressList = null;
         try {
-            Address foundAddress = new Geocoder(activity).getFromLocation(latLng != null ? latLng.latitude : location.getLatitude(), latLng != null ? latLng.longitude : location.getLongitude(), 1).get(0);
-            return foundAddress.getAddressLine(0) + ", " + foundAddress.getLocality();
+            addressList = new Geocoder(activity).getFromLocation(latLng != null ? latLng.latitude : location.getLatitude(), latLng != null ? latLng.longitude : location.getLongitude(), 1);
         } catch (IOException e) {
-            return null;
+            e.printStackTrace();
         }
+        if (addressList != null && !addressList.isEmpty()) {
+            Address foundAddress = addressList.get(0);
+            return foundAddress.getAddressLine(0) + ", " + foundAddress.getLocality();
+        }
+        return null;
     }
 
     public static int getDistanceFromAddress(Application application, String address) {

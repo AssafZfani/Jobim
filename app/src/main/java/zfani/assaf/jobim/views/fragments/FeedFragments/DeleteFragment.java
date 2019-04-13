@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import zfani.assaf.jobim.R;
-import zfani.assaf.jobim.views.activities.MainActivity;
+import zfani.assaf.jobim.utils.AlertHelper;
 
 public class DeleteFragment extends Fragment {
 
@@ -25,7 +25,7 @@ public class DeleteFragment extends Fragment {
         View view = inflater.inflate(R.layout.delete_job_layout, container, false);
         view.findViewById(R.id.delete).setOnClickListener(view1 -> {
             getActivity().getIntent().putExtra("ViewPager", container.getId());
-            MainActivity.displayDialog(getActivity(), R.layout.dialog_delete_job, getArguments().getString("JobId"));
+            AlertHelper.displayDialog(getActivity(), R.layout.dialog_delete_job, getArguments().getString("JobId"));
         });
         return view;
     }

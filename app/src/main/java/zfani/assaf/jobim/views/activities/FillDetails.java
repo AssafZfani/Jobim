@@ -23,6 +23,7 @@ import androidx.viewpager.widget.ViewPager;
 import zfani.assaf.jobim.App;
 import zfani.assaf.jobim.R;
 import zfani.assaf.jobim.models.RoundedImageView;
+import zfani.assaf.jobim.utils.AlertHelper;
 import zfani.assaf.jobim.views.fragments.DetailsFragments.BirthYearFragment;
 import zfani.assaf.jobim.views.fragments.DetailsFragments.CityFragment;
 import zfani.assaf.jobim.views.fragments.DetailsFragments.EmailFragment;
@@ -155,7 +156,7 @@ public class FillDetails extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        MainActivity.displayDialog(this, R.layout.dialog_close, null);
+        AlertHelper.displayDialog(this, R.layout.dialog_close, null);
     }
 
     private boolean canMoveToFragment(int fragmentNumber) {

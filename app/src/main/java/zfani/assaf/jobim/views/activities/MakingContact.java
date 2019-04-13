@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import zfani.assaf.jobim.App;
 import zfani.assaf.jobim.R;
+import zfani.assaf.jobim.utils.AlertHelper;
 
 import static android.util.Patterns.EMAIL_ADDRESS;
 
@@ -166,7 +167,7 @@ public class MakingContact extends AppCompatActivity {
 
             setResult(1);
 
-            MainActivity.displayDialog(this, R.layout.dialog_post_job, null);
+            AlertHelper.displayDialog(this, R.layout.dialog_post_job, null);
         }
     }
 }

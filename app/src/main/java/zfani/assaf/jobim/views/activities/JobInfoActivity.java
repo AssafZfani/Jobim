@@ -17,6 +17,7 @@ import butterknife.OnClick;
 import zfani.assaf.jobim.App;
 import zfani.assaf.jobim.R;
 import zfani.assaf.jobim.models.Job;
+import zfani.assaf.jobim.utils.AlertHelper;
 import zfani.assaf.jobim.utils.GPSTracker;
 import zfani.assaf.jobim.views.fragments.FeedFragments.ContactFragment;
 import zfani.assaf.jobim.views.fragments.FeedFragments.JobFragment;
@@ -64,14 +65,14 @@ public class JobInfoActivity extends AppCompatActivity {
                         getResources().getString(R.string.shareMessage) + " " + job.getFirm() + " מחפשת " + job.getType();
                 SmsManager.getDefault().sendTextMessage(phoneNumber, null, text, null, null);
                 getIntent().putExtra("ContactName", contactName);
-                MainActivity.displayDialog(this, R.layout.dialog_share, job.getId());
+                AlertHelper.displayDialog(this, R.layout.dialog_share, job.getId());
             }
         }
     }
 
     @OnClick(R.id.llDelete)
     public void delete() {
-        MainActivity.displayDialog(this, R.layout.dialog_delete_job, job.getId());
+        AlertHelper.displayDialog(this, R.layout.dialog_delete_job, job.getId());
     }
 
     @OnClick(R.id.llShare)

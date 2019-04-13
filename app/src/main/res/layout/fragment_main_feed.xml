@@ -55,13 +55,13 @@
     </RelativeLayout>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipeRefreshLayout"
+        android:id="@+id/srlMainFeed"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/showByLayout">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvAllJobs"
+            android:id="@+id/rvMainFeed"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />

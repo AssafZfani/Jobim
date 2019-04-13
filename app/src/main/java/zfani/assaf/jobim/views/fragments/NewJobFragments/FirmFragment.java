@@ -10,8 +10,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import zfani.assaf.jobim.R;
+import zfani.assaf.jobim.utils.AlertHelper;
 import zfani.assaf.jobim.views.activities.AddNewJob;
-import zfani.assaf.jobim.views.activities.MainActivity;
 
 public class FirmFragment extends Fragment {
 
@@ -35,7 +35,7 @@ public class FirmFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        support.setOnClickListener(view -> MainActivity.displayDialog(getActivity(), R.layout.add_new_job_dialog, null));
+        support.setOnClickListener(view -> AlertHelper.displayDialog(getActivity(), R.layout.add_new_job_dialog, null));
     }
 
     public boolean isValidValue() {

@@ -22,7 +22,7 @@ import zfani.assaf.jobim.App;
 import zfani.assaf.jobim.R;
 import zfani.assaf.jobim.adapters.JobsAdapter;
 import zfani.assaf.jobim.models.Job;
-import zfani.assaf.jobim.views.activities.MainActivity;
+import zfani.assaf.jobim.utils.AlertHelper;
 
 public class ContactFragment extends Fragment {
 
@@ -55,7 +55,7 @@ public class ContactFragment extends Fragment {
                     activity.startActivity(emailIntent);
                     job.setApplied(true);
                     JobsAdapter.query.getRef().child(job.getId()).setValue(job);
-                    MainActivity.displayDialog(activity, R.layout.dialog_contact, job.getId());
+                    AlertHelper.displayDialog(activity, R.layout.dialog_contact, job.getId());
                     break;
                 }
                 case R.id.call: {
@@ -113,7 +113,7 @@ public class ContactFragment extends Fragment {
                 }
             }
         } else {
-            MainActivity.displayDialog(activity, R.layout.dialog_fill_details, job.getId());
+            AlertHelper.displayDialog(activity, R.layout.dialog_fill_details, job.getId());
         }
     }
 
@@ -136,7 +136,7 @@ public class ContactFragment extends Fragment {
         favorite.setOnClickListener(view13 -> favorite(job));
         sendEmail.setOnClickListener(view12 -> {
             if (job != null)
-                MainActivity.displayDialog(activity, App.sharedPreferences.contains("FullName") ?
+                AlertHelper.displayDialog(activity, App.sharedPreferences.contains("FullName") ?
                         R.layout.dialog_sending_mail : R.layout.dialog_fill_details, job.getId());
         });
         View.OnClickListener listener;

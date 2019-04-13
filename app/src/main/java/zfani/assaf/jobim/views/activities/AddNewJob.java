@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import zfani.assaf.jobim.R;
 import zfani.assaf.jobim.models.NewJob;
+import zfani.assaf.jobim.utils.AlertHelper;
 import zfani.assaf.jobim.views.fragments.NewJobFragments.AddressFragment;
 import zfani.assaf.jobim.views.fragments.NewJobFragments.FirmFragment;
 import zfani.assaf.jobim.views.fragments.NewJobFragments.JobTitleFragment;
@@ -150,7 +151,7 @@ public class AddNewJob extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        MainActivity.displayDialog(this, R.layout.dialog_close, null);
+        AlertHelper.displayDialog(this, R.layout.dialog_close, null);
     }
 
     private boolean canMoveToFragment(int fragmentNumber) {
