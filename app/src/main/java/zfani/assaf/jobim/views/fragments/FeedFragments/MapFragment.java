@@ -72,16 +72,18 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 showByBottomSheetViewModel.getJobLocationQuery().observe(this, s -> changeCamera(GPSTracker.getLatLngFromAddress(activity.getApplication(), s)));
                 googleMap.setOnMapClickListener(newLocation -> {
                     changeCamera(newLocation);
-                    showByBottomSheetViewModel.setJobLocationText(GPSTracker.getAddressFromLatLng(activity, newLocation, null));
+                    showByBottomSheetViewModel.setChosenLocation(GPSTracker.getAddressFromLatLng(activity, newLocation));
                 });
                 break;
         }
     }
 
     private void changeCamera(LatLng latLng) {
-        googleMap.clear();
-        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
-        googleMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromAsset("location_marker.png")).position(latLng));
+        if (latLng != null) {
+            googleMap.clear();
+            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
+            googleMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromAsset("location_marker.png")).position(latLng));
+        }
     }
 
     private void loadMarkersToMap() {

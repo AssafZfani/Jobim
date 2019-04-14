@@ -17,11 +17,14 @@ import java.io.IOException;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import zfani.assaf.jobim.R;
+import zfani.assaf.jobim.interfaces.OnItemSelectedListener;
 import zfani.assaf.jobim.models.JobType;
 
 public class JobTypesAdapter extends FirebaseRecyclerAdapter<JobType, JobTypesAdapter.JobTypeViewHolder> {
 
     private boolean isComeFromShowBy;
+    private int selectedItem = -1;
+    private OnItemSelectedListener onItemSelectedListener;
 
     public JobTypesAdapter(boolean isComeFromShowBy, String queryText) {
         super(new FirebaseRecyclerOptions.Builder<JobType>().setQuery(getQuery(queryText), JobType.class).build());
@@ -45,7 +48,7 @@ public class JobTypesAdapter extends FirebaseRecyclerAdapter<JobType, JobTypesAd
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull JobTypeViewHolder viewHolder, int i, @NonNull JobType jobType) {
+    protected void onBindViewHolder(@NonNull JobTypeViewHolder viewHolder, int position, @NonNull JobType jobType) {
         Drawable drawable = null;
         try {
             drawable = Drawable.createFromStream(viewHolder.itemView.getContext().getAssets().open("1_" + jobType.getId() + ".png"), null);
@@ -55,7 +58,11 @@ public class JobTypesAdapter extends FirebaseRecyclerAdapter<JobType, JobTypesAd
         if (drawable != null) {
             drawable.setBounds(0, 0, 150, 150);
         }
-        viewHolder.populateJobTypeViewHolder(jobType, drawable);
+        viewHolder.populateJobTypeViewHolder(jobType, drawable, position);
+    }
+
+    public void setOnItemSelectedListener(OnItemSelectedListener onItemSelectedListener) {
+        this.onItemSelectedListener = onItemSelectedListener;
     }
 
     abstract class JobTypeViewHolder extends RecyclerView.ViewHolder {
@@ -64,7 +71,7 @@ public class JobTypesAdapter extends FirebaseRecyclerAdapter<JobType, JobTypesAd
             super(itemView);
         }
 
-        abstract void populateJobTypeViewHolder(JobType jobType, Drawable drawable1);
+        abstract void populateJobTypeViewHolder(JobType jobType, Drawable drawable, int position);
     }
 
     class CheckBoxViewHolder extends JobTypeViewHolder {
@@ -77,10 +84,13 @@ public class JobTypesAdapter extends FirebaseRecyclerAdapter<JobType, JobTypesAd
         }
 
         @Override
-        void populateJobTypeViewHolder(JobType jobType, Drawable drawable) {
+        void populateJobTypeViewHolder(JobType jobType, Drawable drawable, int position) {
             checkBox.setHint(jobType.getJobType());
             checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 jobType.setSelected(isChecked);
+                if (onItemSelectedListener != null) {
+                    onItemSelectedListener.onItemSelected(getItem(selectedItem).getJobType());
+                }
             });
             checkBox.setChecked(jobType.isSelected());
             checkBox.setCompoundDrawablesRelative(null, null, drawable, null);
@@ -97,10 +107,15 @@ public class JobTypesAdapter extends FirebaseRecyclerAdapter<JobType, JobTypesAd
         }
 
         @Override
-        void populateJobTypeViewHolder(JobType jobType, Drawable drawable) {
-            radioButton.setId(View.generateViewId());
+        void populateJobTypeViewHolder(JobType jobType, Drawable drawable, int position) {
             radioButton.setHint(jobType.getJobType());
+            radioButton.setChecked(position == selectedItem);
             radioButton.setOnClickListener(view -> {
+                selectedItem = getAdapterPosition();
+                notifyDataSetChanged();
+                if (onItemSelectedListener != null) {
+                    onItemSelectedListener.onItemSelected(getItem(selectedItem).getJobType());
+                }
                 /*AddNewJob.newJob.setBusinessNumber(jobType.getId());
                 context.findViewById(R.id.jobTitleButton).performClick();*/
             });

@@ -1,27 +1,14 @@
 package zfani.assaf.jobim.views.fragments.DetailsFragments;
 
-import android.app.Activity;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -45,6 +32,7 @@ public class ListFragment extends Fragment {
     RecyclerView rvList;
     @BindView(R.id.tvMoreFirms)
     TextView tvMoreFirms;
+    private ShowByBottomSheetViewModel showByBottomSheetViewModel;
     private ListAdapter listAdapter;
 
     public static ListFragment newInstance(boolean isComeFromShowBy) {
@@ -55,7 +43,7 @@ public class ListFragment extends Fragment {
         return listFragment;
     }
 
-    static void initData(boolean isComeFromShowBy, Activity activity, ListView listView, String text) {
+    /*static void initData(boolean isComeFromShowBy, Activity activity, ListView listView, String text) {
         boolean isAddNewJobActivity = activity.getLocalClassName().equalsIgnoreCase("views.activities.AddNewJob");
         new AsyncTask<String, Void, String>() {
 
@@ -119,21 +107,26 @@ public class ListFragment extends Fragment {
                 }
             }
         }.execute("https://maps.googleapis.com/maps/api/place/autocomplete/json?input=" + text + "&types=" + (isAddNewJobActivity ? "address" : "(cities)") + "&language=he_IL&key=" + activity.getResources().getString(R.string.google_places_key));
-    }
+    }*/
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list, container, false);
         ButterKnife.bind(this, view);
-        boolean isComeFromShowBy = requireArguments().getBoolean("isComeFromShowBy");
-        tvMoreFirms.setVisibility(isComeFromShowBy ? View.VISIBLE : View.GONE);
+        showByBottomSheetViewModel = ViewModelProviders.of(requireActivity()).get(ShowByBottomSheetViewModel.class);
+        initView(requireArguments().getBoolean("isComeFromShowBy"));
+        return view;
+    }
+
+    private void initView(boolean isComeFromShowBy) {
         AppCompatActivity activity = (AppCompatActivity) requireActivity();
+        tvMoreFirms.setVisibility(isComeFromShowBy ? View.VISIBLE : View.GONE);
         ArrayList<String> items = new ArrayList<>();
         if (isComeFromShowBy) {
             items.addAll(Arrays.asList(activity.getResources().getStringArray(R.array.firms)));
-            ViewModelProviders.of(activity).get(ShowByBottomSheetViewModel.class).getJobFirmQuery().observe(this, s -> listAdapter.getFilter().filter(s));
+            showByBottomSheetViewModel.getJobFirmQuery().observe(this, s -> listAdapter.getFilter().filter(s));
         } else {
-            items.add(GPSTracker.getAddressFromLatLng(activity, null, GPSTracker.location));
+            items.add(GPSTracker.getAddressFromLatLng(activity, null));
             ((EditText) activity.findViewById(R.id.searchAddress)).addTextChangedListener(new TextWatcher() {
 
                 @Override
@@ -157,8 +150,10 @@ public class ListFragment extends Fragment {
                 }
             });
         }
-        rvList.setAdapter(listAdapter = new ListAdapter(items, isComeFromShowBy));
+        rvList.setAdapter(listAdapter = new ListAdapter(items));
+        if (isComeFromShowBy) {
+            listAdapter.setOnItemSelectedListener(chosenItem -> showByBottomSheetViewModel.setChosenFirm(chosenItem));
+        }
         rvList.addItemDecoration(new DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL));
-        return view;
     }
 }

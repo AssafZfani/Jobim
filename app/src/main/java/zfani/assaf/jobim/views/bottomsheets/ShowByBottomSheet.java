@@ -80,7 +80,7 @@ public class ShowByBottomSheet extends BottomSheetDialogFragment {
                             break;
                         case R.id.etJobLocation:
                             editText.setOnEditorActionListener((v, actionId, event) -> {
-                                if (v.getText().length() != 0) {
+                                if (s.length() != 0) {
                                     showByBottomSheetViewModel.setJobLocationQuery(s.toString());
                                 }
                                 return false;
@@ -151,8 +151,9 @@ public class ShowByBottomSheet extends BottomSheetDialogFragment {
             }
         });
         vpContainer.setCurrentItem(2);
+        vpContainer.setOffscreenPageLimit(3);
         rgFragmentsBar.check(R.id.button1);
-        showByBottomSheetViewModel.getJobLocationText().observe(this, s -> etLocation.setText(s));
+        showByBottomSheetViewModel.getChosenLocation().observe(this, s -> etLocation.setText(s));
     }
 
     @OnClick(R.id.tvAllow)
@@ -162,6 +163,12 @@ public class ShowByBottomSheet extends BottomSheetDialogFragment {
 
     @OnClick(R.id.tvCancel)
     void cancel() {
+        showByBottomSheetViewModel.setJobTypeQuery(null);
+        showByBottomSheetViewModel.setChosenJobType(null);
+        showByBottomSheetViewModel.setJobLocationQuery(null);
+        showByBottomSheetViewModel.setChosenLocation(null);
+        showByBottomSheetViewModel.setJobFirmQuery(null);
+        showByBottomSheetViewModel.setChosenFirm(null);
         dismiss();
     }
 }

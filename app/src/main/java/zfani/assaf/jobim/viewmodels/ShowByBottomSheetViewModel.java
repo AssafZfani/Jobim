@@ -1,17 +1,35 @@
 package zfani.assaf.jobim.viewmodels;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 public class ShowByBottomSheetViewModel extends ViewModel {
 
-    private MutableLiveData<String> jobTypeQuery, jobLocationQuery,jobLocationText, jobFirmQuery;
+    private List<String> chosenJobTypeList;
+    private MutableLiveData<String> jobTypeQuery, jobLocationQuery, chosenLocation, jobFirmQuery;
+    private String chosenFirm;
 
     public ShowByBottomSheetViewModel() {
+        this.chosenJobTypeList = new ArrayList<>();
         this.jobTypeQuery = new MutableLiveData<>();
         this.jobLocationQuery = new MutableLiveData<>();
-        this.jobLocationText = new MutableLiveData<>();
+        this.chosenLocation = new MutableLiveData<>();
         this.jobFirmQuery = new MutableLiveData<>();
+    }
+
+    public List<String> getChosenJobTypeList() {
+        return chosenJobTypeList;
+    }
+
+    public void setChosenJobType(String chosenJobType) {
+        if (chosenJobTypeList.contains(chosenJobType)) {
+            chosenJobTypeList.remove(chosenJobType);
+        } else {
+            chosenJobTypeList.add(chosenJobType);
+        }
     }
 
     public MutableLiveData<String> getJobTypeQuery() {
@@ -30,12 +48,12 @@ public class ShowByBottomSheetViewModel extends ViewModel {
         this.jobLocationQuery.setValue(jobLocationQuery);
     }
 
-    public MutableLiveData<String> getJobLocationText() {
-        return jobLocationText;
+    public MutableLiveData<String> getChosenLocation() {
+        return chosenLocation;
     }
 
-    public void setJobLocationText(String jobLocationText) {
-        this.jobLocationText.setValue(jobLocationText);
+    public void setChosenLocation(String chosenLocation) {
+        this.chosenLocation.setValue(chosenLocation);
     }
 
     public MutableLiveData<String> getJobFirmQuery() {
@@ -44,5 +62,13 @@ public class ShowByBottomSheetViewModel extends ViewModel {
 
     public void setJobFirmQuery(String jobFirmQuery) {
         this.jobFirmQuery.setValue(jobFirmQuery);
+    }
+
+    public String getChosenFirm() {
+        return chosenFirm;
+    }
+
+    public void setChosenFirm(String chosenFirm) {
+        this.chosenFirm = chosenFirm;
     }
 }

@@ -26,20 +26,6 @@ public class GPSTracker {
         return new LatLng(location.getLatitude(), location.getLongitude());
     }
 
-    public static String getAddressFromLatLng(Activity activity, LatLng latLng, SimpleLocation location) {
-        List<Address> addressList = null;
-        try {
-            addressList = new Geocoder(activity).getFromLocation(latLng != null ? latLng.latitude : location.getLatitude(), latLng != null ? latLng.longitude : location.getLongitude(), 1);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        if (addressList != null && !addressList.isEmpty()) {
-            Address foundAddress = addressList.get(0);
-            return foundAddress.getAddressLine(0) + ", " + foundAddress.getLocality();
-        }
-        return null;
-    }
-
     public static int getDistanceFromAddress(Application application, String address) {
         LatLng latLng = getLatLngFromAddress(application, address);
         if (latLng != null) {
@@ -56,11 +42,34 @@ public class GPSTracker {
 
     @Nullable
     public static LatLng getLatLngFromAddress(Application application, String address) {
+        if (address == null || address.isEmpty()) {
+            return null;
+        }
+        List<Address> addressList;
         try {
-            Address foundAddress = new Geocoder(application).getFromLocationName(address, 1).get(0);
-            return new LatLng(foundAddress.getLatitude(), foundAddress.getLongitude());
+            addressList = new Geocoder(application).getFromLocationName(address, 1);
         } catch (IOException e) {
             return null;
         }
+        if (addressList != null && !addressList.isEmpty()) {
+            Address foundAddress = addressList.get(0);
+            return new LatLng(foundAddress.getLatitude(), foundAddress.getLongitude());
+        }
+        return null;
+    }
+
+    @Nullable
+    public static String getAddressFromLatLng(Activity activity, @Nullable LatLng latLng) {
+        List<Address> addressList;
+        try {
+            addressList = new Geocoder(activity).getFromLocation(latLng != null ? latLng.latitude : location.getLatitude(), latLng != null ? latLng.longitude : location.getLongitude(), 1);
+        } catch (IOException e) {
+            return null;
+        }
+        if (addressList != null && !addressList.isEmpty()) {
+            Address foundAddress = addressList.get(0);
+            return foundAddress.getAddressLine(0) + ", " + foundAddress.getLocality();
+        }
+        return null;
     }
 }

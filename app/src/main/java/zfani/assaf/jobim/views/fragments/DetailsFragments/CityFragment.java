@@ -20,31 +20,23 @@ public class CityFragment extends Fragment {
     private AutoCompleteTextView city;
 
     public static CityFragment newInstance() {
-
         return new CityFragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.city_fragment, container, false);
-
         city = view.findViewById(R.id.city);
-
         String address = App.sharedPreferences.getString("City", null);
-
-        if (address != null)
+        if (address != null) {
             city.setText(address);
-        else {
-
-            address = GPSTracker.getAddressFromLatLng(getActivity(), null, GPSTracker.location);
-
-            if (address != null)
+        } else {
+            address = GPSTracker.getAddressFromLatLng(getActivity(), null);
+            if (address != null) {
                 city.setText(address.substring(address.lastIndexOf(", ") + 2));
+            }
         }
-
-        String cityText = address;
-
+        //String cityText = address;
         city.addTextChangedListener(new TextWatcher() {
 
             @Override
@@ -59,29 +51,24 @@ public class CityFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                String text = editable.toString();
+                /*String text = editable.toString();
                 if (!text.isEmpty() && !text.equalsIgnoreCase(cityText) && text.length() >= 2) {
                     ListFragment.initData(false, requireActivity(), null, text);
-                }
+                }*/
             }
         });
-
         view.findViewById(R.id.resetButton).setOnClickListener(view1 -> city.setText(""));
-
         return view;
     }
 
     public boolean isValidValue() {
-
         String cityText = city.getText().toString();
-
         boolean result = !cityText.isEmpty();
-
-        if (result)
+        if (result) {
             App.sharedPreferences.edit().putString("City", cityText).apply();
-        else
+        } else {
             Toast.makeText(getActivity(), "חובה לבחור עיר מגורים מהרשימה", Toast.LENGTH_SHORT).show();
-
+        }
         return result;
     }
 }

@@ -13,14 +13,16 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import zfani.assaf.jobim.R;
+import zfani.assaf.jobim.interfaces.OnItemSelectedListener;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder> implements Filterable {
 
     private List<String> itemList, filteredList;
+    private int selectedItem = -1;
+    private OnItemSelectedListener onItemSelectedListener;
     //private boolean isComeFromShowBy;
 
-
-    public ListAdapter(List<String> itemList, boolean isComeFromShowBy) {
+    public ListAdapter(List<String> itemList) {
         this.itemList = itemList;
         this.filteredList = itemList;
         //this.isComeFromShowBy = isComeFromShowBy;
@@ -34,9 +36,14 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ListViewHolder holder, int position) {
-        holder.radioButton.setId(View.generateViewId());
-        holder.radioButton.setHint(itemList.get(position));
+        holder.radioButton.setHint(filteredList.get(position));
+        holder.radioButton.setChecked(position == selectedItem);
         holder.radioButton.setOnClickListener(view -> {
+            selectedItem = position;
+            notifyDataSetChanged();
+            if (onItemSelectedListener != null) {
+                onItemSelectedListener.onItemSelected(filteredList.get(selectedItem));
+            }
             /*if (isComeFromShowBy) {
                 context.getIntent().putExtra("Firm", holder.radioButton.getHint());
             } else {
@@ -65,6 +72,9 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
         return new Filter() {
             @Override
             protected FilterResults performFiltering(CharSequence charSequence) {
+                if (charSequence == null) {
+                    charSequence = "";
+                }
                 String query = charSequence.toString();
                 if (query.isEmpty()) {
                     filteredList = itemList;
@@ -89,6 +99,10 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
                 notifyDataSetChanged();
             }
         };
+    }
+
+    public void setOnItemSelectedListener(OnItemSelectedListener onItemSelectedListener) {
+        this.onItemSelectedListener = onItemSelectedListener;
     }
 
     class ListViewHolder extends RecyclerView.ViewHolder {

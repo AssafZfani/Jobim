@@ -45,6 +45,7 @@ public class JobTypeFragment extends Fragment {
             jobTypesAdapter.startListening();
         });
         rvJobTypes.setAdapter(jobTypesAdapter = new JobTypesAdapter(isComeFromShowBy, null));
+        jobTypesAdapter.setOnItemSelectedListener(chosenItem -> ViewModelProviders.of(requireActivity()).get(ShowByBottomSheetViewModel.class).setChosenJobType(chosenItem));
         rvJobTypes.addItemDecoration(new DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL));
         if (!isComeFromShowBy) {
             requireActivity().findViewById(R.id.titleLayout).setVisibility(View.VISIBLE);
