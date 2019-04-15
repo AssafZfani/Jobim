@@ -3,15 +3,12 @@ package zfani.assaf.jobim.adapters;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
@@ -22,29 +19,42 @@ import zfani.assaf.jobim.views.fragments.FeedFragments.ContactFragment;
 import zfani.assaf.jobim.views.fragments.FeedFragments.DeleteFragment;
 import zfani.assaf.jobim.views.fragments.FeedFragments.JobFragment;
 
-public class JobsAdapter extends FirebaseRecyclerAdapter<Job, JobsAdapter.JobViewHolder> {
-
-    public static Query query;
+public class JobsAdapter extends ListAdapter<Job, JobsAdapter.JobViewHolder> {
 
     public JobsAdapter() {
+        super(new DiffUtil.ItemCallback<Job>() {
+            @Override
+            public boolean areItemsTheSame(@NonNull Job oldItem, @NonNull Job newItem) {
+                return oldItem.getId() == newItem.getId();
+            }
+
+            @Override
+            public boolean areContentsTheSame(@NonNull Job oldItem, @NonNull Job newItem) {
+                return oldItem.getDistance() == newItem.getDistance();
+            }
+        });
+    }
+
+    /*public JobsAdapter() {
         super(new FirebaseRecyclerOptions.Builder<Job>()
-                .setQuery(query = FirebaseDatabase.getInstance().getReference().child("jobs").orderByChild("distance"), Job.class)
+                .setQuery(FirebaseDatabase.getInstance().getReference().child("jobs").orderByChild("distance"), Job.class)
                 .build());
     }
 
     public JobsAdapter(String key, String value) {
         super(new FirebaseRecyclerOptions.Builder<Job>().setQuery((value.equalsIgnoreCase("true") ?
                 query.getRef().orderByChild(key).equalTo(true) : query.getRef().orderByChild(key).equalTo(value)), Job.class).build());
-    }
+    }*/
 
     @NonNull
     @Override
-    public JobViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new JobViewHolder(View.inflate(parent.getContext(), R.layout.layouts_container, null));
+    public JobsAdapter.JobViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new JobsAdapter.JobViewHolder(View.inflate(parent.getContext(), R.layout.layouts_container, null));
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull JobViewHolder viewHolder, int i, @NonNull Job job) {
+    public void onBindViewHolder(@NonNull JobsAdapter.JobViewHolder viewHolder, int i) {
+        Job job = getItem(i);
         viewHolder.viewPager.setId(View.generateViewId());
         viewHolder.viewPager.setPageTransformer(true, (view, position) -> view.setTranslationX(-position * (view.getWidth() / 50f)));
         viewHolder.viewPager.setAdapter(new FragmentPagerAdapter(((AppCompatActivity) viewHolder.itemView.getContext()).getSupportFragmentManager()) {
@@ -80,4 +90,3 @@ public class JobsAdapter extends FirebaseRecyclerAdapter<Job, JobsAdapter.JobVie
         }
     }
 }
-

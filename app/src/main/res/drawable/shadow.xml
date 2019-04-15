@@ -11,10 +11,10 @@
         <shape>
 
             <stroke
-                android:width="15dp"
+                android:width="17.5dp"
                 android:color="#f1f1f1" />
 
-            <corners android:radius="20dp" />
+            <corners android:radius="12.5dp" />
 
         </shape>
 

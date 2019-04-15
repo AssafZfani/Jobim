@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import zfani.assaf.jobim.R;
-import zfani.assaf.jobim.adapters.JobsAdapter;
 import zfani.assaf.jobim.models.NewJob;
 import zfani.assaf.jobim.utils.GPSTracker;
 import zfani.assaf.jobim.views.activities.AddNewJob;
@@ -110,7 +109,7 @@ public class MyJobsFragment extends Fragment implements SwipeRefreshLayout.OnRef
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.getItemAnimator().setAddDuration(750);
         recyclerView.getItemAnimator().setRemoveDuration(750);
-        recyclerView.setAdapter(new JobsAdapter(key, "true"));
+        //recyclerView.setAdapter(new JobsAdapter(key, "true"));
     }
 
     private void setMessageVisibility() {

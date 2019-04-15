@@ -14,7 +14,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.viewpager.widget.ViewPager;
 import zfani.assaf.jobim.App;
 import zfani.assaf.jobim.R;
-import zfani.assaf.jobim.adapters.JobsAdapter;
 import zfani.assaf.jobim.views.activities.AddNewJob;
 import zfani.assaf.jobim.views.activities.FillDetails;
 import zfani.assaf.jobim.views.fragments.FeedFragments.ContactFragment;
@@ -32,7 +31,7 @@ public class AlertHelper {
                 }).create().show();
     }
 
-    public static void displayDialog(Activity activity, int layout, String jobId) {
+    public static void displayDialog(Activity activity, int layout, int jobId) {
         Dialog dialog = new Dialog(activity) {
 
             @Override
@@ -82,7 +81,7 @@ public class AlertHelper {
                                 } else
                                     FilteredAdapter.filteredList.remove(indexToRemove);
                             }*/
-                            new Handler().postDelayed(() -> JobsAdapter.query.getRef().child(jobId).removeValue(), 750);
+                            //new Handler().postDelayed(() -> JobsAdapter.query.getRef().child(jobId).removeValue(), 750);
                             if (activity.getLocalClassName().equalsIgnoreCase("views.activities.JobInfoActivity"))
                                 activity.finish();
                             else

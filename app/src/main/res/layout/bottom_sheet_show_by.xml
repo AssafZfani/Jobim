@@ -73,31 +73,31 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/shadow"
-        android:focusableInTouchMode="true">
+        android:focusableInTouchMode="true"
+        android:padding="7.5dp">
 
         <ImageView
             android:id="@+id/ivSearch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginStart="15dp"
-            android:paddingStart="0dp"
-            android:paddingEnd="5dp"
+            android:layout_marginStart="2.5dp"
+            android:layout_marginEnd="2.5dp"
             android:src="@drawable/search" />
 
-        <EditText
+        <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/etJobFirm"
             style="@style/EditText"
             android:hint="כדי למצוא חברות נוספות חפש כאן" />
 
-        <EditText
+        <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/etJobLocation"
             style="@style/EditText"
             android:hint="חפש לפי מיקום"
             android:imeOptions="actionSearch"
             android:inputType="textNoSuggestions" />
 
-        <EditText
+        <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/etJobType"
             style="@style/EditText"
             android:hint="מצא ג'וב" />

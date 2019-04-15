@@ -4,7 +4,11 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
 
+@Entity(tableName = "job_table")
 @SuppressWarnings("unused")
 public class Job implements Parcelable, Comparable<Job> {
 
@@ -21,16 +25,19 @@ public class Job implements Parcelable, Comparable<Job> {
     };
     String address, firm, title;
     int businessNumber, distance;
-    private String id, type;
+    @PrimaryKey(autoGenerate = true)
+    private int id;
+    private String type;
     private int color1, color2, color3;
     private boolean applied, favorite, posted;
 
+    @Ignore
     Job() {
 
     }
 
     public Job(String address, boolean applied, int businessNumber, int color1, int color2, int color3, int distance,
-               boolean favorite, String firm, String id, boolean posted, String title, String type) {
+               boolean favorite, String firm, int id, boolean posted, String title, String type) {
         this.address = address;
         this.applied = applied;
         this.businessNumber = businessNumber;
@@ -47,7 +54,7 @@ public class Job implements Parcelable, Comparable<Job> {
     }
 
     protected Job(Parcel in) {
-        id = in.readString();
+        id = in.readInt();
         type = in.readString();
         address = in.readString();
         firm = in.readString();
@@ -66,7 +73,7 @@ public class Job implements Parcelable, Comparable<Job> {
         return address;
     }
 
-    boolean isApplied() {
+    public boolean isApplied() {
         return applied;
     }
 
@@ -106,8 +113,12 @@ public class Job implements Parcelable, Comparable<Job> {
         return firm;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public boolean isPosted() {
@@ -138,7 +149,7 @@ public class Job implements Parcelable, Comparable<Job> {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(id);
+        dest.writeInt(id);
         dest.writeString(type);
         dest.writeString(address);
         dest.writeString(firm);

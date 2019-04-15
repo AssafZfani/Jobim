@@ -11,13 +11,15 @@ public class ShowByBottomSheetViewModel extends ViewModel {
     private List<String> chosenJobTypeList;
     private MutableLiveData<String> jobTypeQuery, jobLocationQuery, chosenLocation, jobFirmQuery;
     private String chosenFirm;
+    private MutableLiveData<Boolean> filter;
 
     public ShowByBottomSheetViewModel() {
-        this.chosenJobTypeList = new ArrayList<>();
-        this.jobTypeQuery = new MutableLiveData<>();
-        this.jobLocationQuery = new MutableLiveData<>();
-        this.chosenLocation = new MutableLiveData<>();
-        this.jobFirmQuery = new MutableLiveData<>();
+        chosenJobTypeList = new ArrayList<>();
+        jobTypeQuery = new MutableLiveData<>();
+        jobLocationQuery = new MutableLiveData<>();
+        chosenLocation = new MutableLiveData<>();
+        jobFirmQuery = new MutableLiveData<>();
+        filter = new MutableLiveData<>();
     }
 
     public List<String> getChosenJobTypeList() {
@@ -70,5 +72,13 @@ public class ShowByBottomSheetViewModel extends ViewModel {
 
     public void setChosenFirm(String chosenFirm) {
         this.chosenFirm = chosenFirm;
+    }
+
+    public MutableLiveData<Boolean> getFilter() {
+        return filter;
+    }
+
+    public void setFilter(boolean filter) {
+        this.filter.setValue(filter);
     }
 }

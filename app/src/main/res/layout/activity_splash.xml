@@ -33,6 +33,7 @@
 
     <TextView
         style="@style/text_view_regular"
+        android:layout_marginTop="25dp"
         android:text="הג׳וב הבא שלך קרוב מתמיד"
         android:textSize="20sp" />
 

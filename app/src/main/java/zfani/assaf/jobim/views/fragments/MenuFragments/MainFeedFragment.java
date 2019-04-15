@@ -29,6 +29,7 @@ import zfani.assaf.jobim.adapters.JobsAdapter;
 import zfani.assaf.jobim.utils.Constants;
 import zfani.assaf.jobim.utils.GPSTracker;
 import zfani.assaf.jobim.viewmodels.MainFeedViewModel;
+import zfani.assaf.jobim.viewmodels.ShowByBottomSheetViewModel;
 import zfani.assaf.jobim.views.bottomsheets.ShowByBottomSheet;
 
 public class MainFeedFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
@@ -45,7 +46,6 @@ public class MainFeedFragment extends Fragment implements SwipeRefreshLayout.OnR
     View ivLocationMessage;
     private MainFeedViewModel mainFeedViewModel;
     private JobsAdapter jobsAdapter;
-    //private FilteredAdapter filteredAdapter;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -78,22 +78,6 @@ public class MainFeedFragment extends Fragment implements SwipeRefreshLayout.OnR
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
-        if (jobsAdapter != null) {
-            jobsAdapter.stopListening();
-        }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        /*if (filteredAdapter != null) {
-            filteredAdapter.notifyDataSetChanged();
-        }*/
-    }
-
-    @Override
     public void onPause() {
         GPSTracker.location.endUpdates();
         super.onPause();
@@ -102,8 +86,6 @@ public class MainFeedFragment extends Fragment implements SwipeRefreshLayout.OnR
     @Override
     public void onRefresh() {
         new Handler().postDelayed(() -> srlMainFeed.setRefreshing(false), 3000);
-        rvMainFeed.setAdapter(jobsAdapter = new JobsAdapter());
-        jobsAdapter.startListening();
     }
 
     @OnClick(R.id.llShowBy)
@@ -145,12 +127,16 @@ public class MainFeedFragment extends Fragment implements SwipeRefreshLayout.OnR
         ivLocationMessage.setVisibility(View.GONE);
         mainFeedViewModel.loadJobs();
         rvMainFeed.setAdapter(jobsAdapter = new JobsAdapter());
-        RecyclerView.ItemAnimator itemAnimator = rvMainFeed.getItemAnimator();
-        if (itemAnimator != null) {
-            rvMainFeed.getItemAnimator().setAddDuration(750);
-            rvMainFeed.getItemAnimator().setRemoveDuration(750);
-        }
-        jobsAdapter.startListening();
+        mainFeedViewModel.getJobLiveList().observe(this, jobList -> jobsAdapter.submitList(jobList));
+        ShowByBottomSheetViewModel showByBottomSheetViewModel = ViewModelProviders.of(requireActivity()).get(ShowByBottomSheetViewModel.class);
+        showByBottomSheetViewModel.getFilter().observe(this, isFilter -> {
+            if (isFilter) {
+                jobsAdapter.submitList(mainFeedViewModel.getJobLiveList(showByBottomSheetViewModel.getChosenJobTypeList(),
+                        showByBottomSheetViewModel.getChosenLocation().getValue(),
+                        showByBottomSheetViewModel.getChosenFirm()));
+                        //.observe(this, jobList -> jobsAdapter.submitList(jobList));
+            }
+        });
     }
 
     /*public void filterList(View view, Intent data) {

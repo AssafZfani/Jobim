@@ -20,7 +20,6 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import zfani.assaf.jobim.App;
 import zfani.assaf.jobim.R;
-import zfani.assaf.jobim.adapters.JobsAdapter;
 import zfani.assaf.jobim.models.Job;
 import zfani.assaf.jobim.utils.AlertHelper;
 
@@ -36,7 +35,7 @@ public class ContactFragment extends Fragment {
 
     public static void favorite(@NonNull Job job) {
         job.setFavorite(!job.isFavorite());
-        JobsAdapter.query.getRef().child(job.getId()).setValue(job);
+        //JobsAdapter.query.getRef().child(job.getId()).setValue(job);
     }
 
     public static void contact(Activity activity, Job job, int id) {
@@ -54,7 +53,7 @@ public class ContactFragment extends Fragment {
                     emailIntent.putExtra(Intent.EXTRA_TEXT, text);
                     activity.startActivity(emailIntent);
                     job.setApplied(true);
-                    JobsAdapter.query.getRef().child(job.getId()).setValue(job);
+                    //JobsAdapter.query.getRef().child(job.getId()).setValue(job);
                     AlertHelper.displayDialog(activity, R.layout.dialog_contact, job.getId());
                     break;
                 }
@@ -71,7 +70,7 @@ public class ContactFragment extends Fragment {
                                 case TelephonyManager.CALL_STATE_OFFHOOK:
                                     wasRinging = true;
                                     job.setApplied(true);
-                                    JobsAdapter.query.getRef().child(job.getId()).setValue(job);
+                                    //JobsAdapter.query.getRef().child(job.getId()).setValue(job);
                                     break;
                                 case TelephonyManager.CALL_STATE_IDLE:
                                     if (wasRinging) {
@@ -102,7 +101,7 @@ public class ContactFragment extends Fragment {
                                 String content = cursor.getString(cursor.getColumnIndex("body"));
                                 if (content.equalsIgnoreCase(textToSend)) {
                                     job.setApplied(true);
-                                    JobsAdapter.query.getRef().child(job.getId()).setValue(job);
+                                    //JobsAdapter.query.getRef().child(job.getId()).setValue(job);
                                 }
                                 cursor.close();
                             }
@@ -133,16 +132,16 @@ public class ContactFragment extends Fragment {
         if (job != null) {
             favorite.setBackgroundResource(job.isFavorite() ? R.drawable.remove1 : R.drawable.favorite1);
         }
-        favorite.setOnClickListener(view13 -> favorite(job));
-        sendEmail.setOnClickListener(view12 -> {
+        favorite.setOnClickListener(v -> favorite(job));
+        sendEmail.setOnClickListener(v -> {
             if (job != null)
                 AlertHelper.displayDialog(activity, App.sharedPreferences.contains("FullName") ?
                         R.layout.dialog_sending_mail : R.layout.dialog_fill_details, job.getId());
         });
         View.OnClickListener listener;
-        call.setOnClickListener(listener = view1 -> {
+        call.setOnClickListener(listener = v -> {
             if (job != null) {
-                contact(activity, job, view1.getId());
+                contact(activity, job, v.getId());
             }
         });
         sendMessage.setOnClickListener(listener);

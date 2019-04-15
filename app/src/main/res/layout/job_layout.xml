@@ -6,7 +6,7 @@
     android:orientation="vertical"
     tools:ignore="ContentDescription">
 
-    <zfani.assaf.jobim.models.CutLayout
+    <zfani.assaf.jobim.custom_views.CutLayout
         android:id="@+id/jobLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -39,14 +39,14 @@
 
         </LinearLayout>
 
-    </zfani.assaf.jobim.models.CutLayout>
+    </zfani.assaf.jobim.custom_views.CutLayout>
 
     <FrameLayout
         android:id="@+id/flContactFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <zfani.assaf.jobim.models.CutLayout
+    <zfani.assaf.jobim.custom_views.CutLayout
         android:id="@+id/clMapFragment"
         android:layout_width="match_parent"
         android:layout_height="85dp"

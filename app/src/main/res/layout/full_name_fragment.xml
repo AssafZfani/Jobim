@@ -16,7 +16,7 @@
         android:text="אנא מלאו את הפרטים הבאים כדי ליצור קשר עם המעסיק"
         android:textColor="@color/colorPrimaryDark" />
 
-    <zfani.assaf.jobim.models.RoundedImageView
+    <zfani.assaf.jobim.custom_views.RoundedImageView
         android:id="@+id/selfie"
         android:layout_width="100dp"
         android:layout_height="100dp"

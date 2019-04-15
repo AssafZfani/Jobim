@@ -16,7 +16,7 @@
         android:background="@null"
         android:onClick="handleMyDetailsButtons">
 
-        <zfani.assaf.jobim.models.RoundedImageView
+        <zfani.assaf.jobim.custom_views.RoundedImageView
             android:id="@+id/menuSelfie"
             android:layout_width="50dp"
             android:layout_height="50dp"

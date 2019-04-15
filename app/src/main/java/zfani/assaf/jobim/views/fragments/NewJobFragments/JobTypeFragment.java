@@ -42,6 +42,7 @@ public class JobTypeFragment extends Fragment {
         ViewModelProviders.of(requireActivity()).get(ShowByBottomSheetViewModel.class).getJobTypeQuery().observe(this, queryText -> {
             jobTypesAdapter.stopListening();
             rvJobTypes.setAdapter(jobTypesAdapter = new JobTypesAdapter(isComeFromShowBy, queryText));
+            jobTypesAdapter.setOnItemSelectedListener(chosenItem -> ViewModelProviders.of(requireActivity()).get(ShowByBottomSheetViewModel.class).setChosenJobType(chosenItem));
             jobTypesAdapter.startListening();
         });
         rvJobTypes.setAdapter(jobTypesAdapter = new JobTypesAdapter(isComeFromShowBy, null));

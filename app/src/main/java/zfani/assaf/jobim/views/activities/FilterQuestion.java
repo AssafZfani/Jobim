@@ -66,6 +66,6 @@ public class FilterQuestion extends AppCompatActivity {
             showDeleteQuestionDialog.setVisibility(View.VISIBLE);
         }
 
-        showDeleteQuestionDialog.setOnClickListener(view -> AlertHelper.displayDialog((AppCompatActivity) view.getContext(), R.layout.dialog_delete_question, null));
+        showDeleteQuestionDialog.setOnClickListener(view -> AlertHelper.displayDialog((AppCompatActivity) view.getContext(), R.layout.dialog_delete_question, -1));
     }
 }

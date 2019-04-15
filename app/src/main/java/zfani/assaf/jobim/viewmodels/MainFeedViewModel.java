@@ -2,6 +2,7 @@ package zfani.assaf.jobim.viewmodels;
 
 import android.app.Application;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -14,21 +15,27 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import zfani.assaf.jobim.models.Job;
+import zfani.assaf.jobim.repositories.JobRepository;
 import zfani.assaf.jobim.utils.GPSTracker;
 import zfani.assaf.jobim.utils.JsonHelper;
 
 public class MainFeedViewModel extends AndroidViewModel {
 
     private MutableLiveData<Boolean> shouldCheckPermission;
+    private JobRepository jobRepository;
 
     public MainFeedViewModel(@NonNull Application application) {
         super(application);
         shouldCheckPermission = new MutableLiveData<>();
+        jobRepository = new JobRepository(application);
     }
 
     public void loadJobs() {
@@ -52,9 +59,8 @@ public class MainFeedViewModel extends AndroidViewModel {
                         for (int i = 0; i <= jsonArray.length(); i++) {
                             JSONObject object = jsonArray.getJSONObject(i);
                             String address = object.getString("address");
-                            DatabaseReference job = ref.push();
                             JSONArray colorArray = object.getJSONArray("color");
-                            job.setValue(new Job(
+                            ref.push().setValue(new Job(
                                     address,
                                     object.getBoolean("applied"),
                                     object.getInt("business_number"),
@@ -62,7 +68,7 @@ public class MainFeedViewModel extends AndroidViewModel {
                                     GPSTracker.getDistanceFromAddress(getApplication(), address),
                                     object.getBoolean("is_favorite"),
                                     object.getString("firm"),
-                                    job.getKey(),
+                                    i + 1,
                                     false,
                                     object.getString("title"),
                                     object.getString("type")
@@ -79,6 +85,32 @@ public class MainFeedViewModel extends AndroidViewModel {
 
             }
         });
+        ref.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                jobRepository.insert(dataSnapshot.getValue(Job.class));
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                jobRepository.delete(dataSnapshot.getValue(Job.class));
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     public MutableLiveData<Boolean> getShouldCheckPermission() {
@@ -87,5 +119,13 @@ public class MainFeedViewModel extends AndroidViewModel {
 
     public void setShouldCheckPermission(boolean shouldCheckPermission) {
         this.shouldCheckPermission.setValue(shouldCheckPermission);
+    }
+
+    public LiveData<List<Job>> getJobLiveList() {
+        return jobRepository.getAllJobs();
+    }
+
+    public List<Job> getJobLiveList(List<String> jobTypeList, String jobLocation, String jobFirm) {
+        return jobRepository.getAllJobs(jobTypeList, jobLocation, jobFirm);
     }
 }

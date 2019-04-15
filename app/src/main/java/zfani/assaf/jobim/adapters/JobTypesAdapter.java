@@ -89,7 +89,7 @@ public class JobTypesAdapter extends FirebaseRecyclerAdapter<JobType, JobTypesAd
             checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 jobType.setSelected(isChecked);
                 if (onItemSelectedListener != null) {
-                    onItemSelectedListener.onItemSelected(getItem(selectedItem).getJobType());
+                    onItemSelectedListener.onItemSelected(jobType.getJobType());
                 }
             });
             checkBox.setChecked(jobType.isSelected());
@@ -114,7 +114,7 @@ public class JobTypesAdapter extends FirebaseRecyclerAdapter<JobType, JobTypesAd
                 selectedItem = getAdapterPosition();
                 notifyDataSetChanged();
                 if (onItemSelectedListener != null) {
-                    onItemSelectedListener.onItemSelected(getItem(selectedItem).getJobType());
+                    onItemSelectedListener.onItemSelected(jobType.getJobType());
                 }
                 /*AddNewJob.newJob.setBusinessNumber(jobType.getId());
                 context.findViewById(R.id.jobTitleButton).performClick();*/

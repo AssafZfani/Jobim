@@ -14,7 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import zfani.assaf.jobim.App;
 import zfani.assaf.jobim.R;
-import zfani.assaf.jobim.models.RoundedImageView;
+import zfani.assaf.jobim.custom_views.RoundedImageView;
 import zfani.assaf.jobim.utils.AlertHelper;
 
 public class FullNameFragment extends Fragment {
@@ -51,7 +51,7 @@ public class FullNameFragment extends Fragment {
             firstName.setText(fullName.substring(0, lastSpace));
             lastName.setText(fullName.substring(lastSpace + 1));
         }
-        view.findViewById(R.id.selfie).setOnClickListener(view1 -> AlertHelper.displayDialog(activity, R.layout.dialog_pick_image, null));
+        view.findViewById(R.id.selfie).setOnClickListener(view1 -> AlertHelper.displayDialog(activity, R.layout.dialog_pick_image, -1));
         return view;
     }
 

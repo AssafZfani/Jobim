@@ -17,6 +17,7 @@ import java.util.Objects;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatEditText;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
@@ -28,12 +29,12 @@ import zfani.assaf.jobim.viewmodels.ShowByBottomSheetViewModel;
 
 public class ShowByBottomSheet extends BottomSheetDialogFragment {
 
-    @BindView(R.id.etJobFirm)
-    EditText etFirm;
-    @BindView(R.id.etJobLocation)
-    EditText etLocation;
     @BindView(R.id.etJobType)
-    EditText etJob;
+    AppCompatEditText etJob;
+    @BindView(R.id.etJobLocation)
+    AppCompatEditText etLocation;
+    @BindView(R.id.etJobFirm)
+    AppCompatEditText etFirm;
     @BindView(R.id.rgFragmentsBar)
     RadioGroup rgFragmentsBar;
     @BindView(R.id.vpContainer)
@@ -60,7 +61,7 @@ public class ShowByBottomSheet extends BottomSheetDialogFragment {
     }
 
     private void initView() {
-        EditText[] editTexts = new EditText[3];
+        AppCompatEditText[] editTexts = new AppCompatEditText[3];
         editTexts[0] = etFirm;
         editTexts[1] = etLocation;
         editTexts[2] = etJob;
@@ -113,7 +114,7 @@ public class ShowByBottomSheet extends BottomSheetDialogFragment {
             }
             for (int i = 0; i < editTexts.length; i++) {
                 if (i != item) {
-                    editTexts[i].setVisibility(View.INVISIBLE);
+                    editTexts[i].setVisibility(View.GONE);
                 }
             }
             editTexts[item].setVisibility(View.VISIBLE);
@@ -158,6 +159,7 @@ public class ShowByBottomSheet extends BottomSheetDialogFragment {
 
     @OnClick(R.id.tvAllow)
     void allow() {
+        showByBottomSheetViewModel.setFilter(true);
         dismiss();
     }
 
@@ -169,6 +171,7 @@ public class ShowByBottomSheet extends BottomSheetDialogFragment {
         showByBottomSheetViewModel.setChosenLocation(null);
         showByBottomSheetViewModel.setJobFirmQuery(null);
         showByBottomSheetViewModel.setChosenFirm(null);
+        showByBottomSheetViewModel.setFilter(false);
         dismiss();
     }
 }

@@ -182,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                 }
             } else {
-                AlertHelper.displayDialog(this, R.layout.dialog_exit, null);
+                AlertHelper.displayDialog(this, R.layout.dialog_exit, -1);
             }
         }
     }

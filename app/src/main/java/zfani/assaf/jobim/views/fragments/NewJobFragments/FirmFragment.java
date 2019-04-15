@@ -35,7 +35,7 @@ public class FirmFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        support.setOnClickListener(view -> AlertHelper.displayDialog(getActivity(), R.layout.add_new_job_dialog, null));
+        support.setOnClickListener(view -> AlertHelper.displayDialog(getActivity(), R.layout.add_new_job_dialog, -1));
     }
 
     public boolean isValidValue() {

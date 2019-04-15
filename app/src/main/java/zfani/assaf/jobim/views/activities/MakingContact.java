@@ -167,7 +167,7 @@ public class MakingContact extends AppCompatActivity {
 
             setResult(1);
 
-            AlertHelper.displayDialog(this, R.layout.dialog_post_job, null);
+            AlertHelper.displayDialog(this, R.layout.dialog_post_job, -1);
         }
     }
 }

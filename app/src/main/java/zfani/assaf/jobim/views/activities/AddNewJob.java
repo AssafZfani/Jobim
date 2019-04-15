@@ -151,7 +151,7 @@ public class AddNewJob extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        AlertHelper.displayDialog(this, R.layout.dialog_close, null);
+        AlertHelper.displayDialog(this, R.layout.dialog_close, -1);
     }
 
     private boolean canMoveToFragment(int fragmentNumber) {

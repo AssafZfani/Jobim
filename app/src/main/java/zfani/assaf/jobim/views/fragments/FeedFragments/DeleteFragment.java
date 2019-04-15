@@ -12,10 +12,10 @@ import zfani.assaf.jobim.utils.AlertHelper;
 
 public class DeleteFragment extends Fragment {
 
-    public static DeleteFragment newInstance(String jobId) {
+    public static DeleteFragment newInstance(int jobId) {
         DeleteFragment deleteFragment = new DeleteFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("JobId", jobId);
+        bundle.putInt("JobId", jobId);
         deleteFragment.setArguments(bundle);
         return deleteFragment;
     }
@@ -25,7 +25,7 @@ public class DeleteFragment extends Fragment {
         View view = inflater.inflate(R.layout.delete_job_layout, container, false);
         view.findViewById(R.id.delete).setOnClickListener(view1 -> {
             getActivity().getIntent().putExtra("ViewPager", container.getId());
-            AlertHelper.displayDialog(getActivity(), R.layout.dialog_delete_job, getArguments().getString("JobId"));
+            AlertHelper.displayDialog(getActivity(), R.layout.dialog_delete_job, getArguments().getInt("JobId"));
         });
         return view;
     }

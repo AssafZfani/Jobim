@@ -1,10 +1,11 @@
-package zfani.assaf.jobim.models;
+package zfani.assaf.jobim.custom_views;
 
 import android.app.Activity;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.clustering.ClusterItem;
 
+import zfani.assaf.jobim.models.Job;
 import zfani.assaf.jobim.utils.GPSTracker;
 
 public class ClusterJobs implements ClusterItem {
