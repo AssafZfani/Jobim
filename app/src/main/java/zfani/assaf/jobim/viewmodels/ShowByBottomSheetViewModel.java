@@ -27,6 +27,10 @@ public class ShowByBottomSheetViewModel extends ViewModel {
     }
 
     public void setChosenJobType(String chosenJobType) {
+        if (chosenJobType == null) {
+            chosenJobTypeList.clear();
+            return;
+        }
         if (chosenJobTypeList.contains(chosenJobType)) {
             chosenJobTypeList.remove(chosenJobType);
         } else {
@@ -80,5 +84,14 @@ public class ShowByBottomSheetViewModel extends ViewModel {
 
     public void setFilter(boolean filter) {
         this.filter.setValue(filter);
+    }
+
+    public void cleanUserChoices() {
+        setJobTypeQuery(null);
+        setChosenJobType(null);
+        setJobLocationQuery(null);
+        setChosenLocation(null);
+        setJobFirmQuery(null);
+        setChosenFirm(null);
     }
 }

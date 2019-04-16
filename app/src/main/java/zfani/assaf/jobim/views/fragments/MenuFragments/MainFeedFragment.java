@@ -59,15 +59,7 @@ public class MainFeedFragment extends Fragment implements SwipeRefreshLayout.OnR
         srlMainFeed.setOnRefreshListener(this);
         mainFeedViewModel = ViewModelProviders.of(this).get(MainFeedViewModel.class);
         showByBottomSheetViewModel = ViewModelProviders.of(requireActivity()).get(ShowByBottomSheetViewModel.class);
-        mainFeedViewModel.getFilterItem().observe(this, this::designShowByLayout);
-        new GPSTracker(requireActivity());
-        mainFeedViewModel.getShouldCheckPermission().observe(this, isShouldCheckLocationPermission -> {
-            if (isShouldCheckLocationPermission) {
-                checkLocationPermission();
-            } else {
-                initMainFeedList();
-            }
-        });
+        initView();
         return view;
     }
 
@@ -89,7 +81,20 @@ public class MainFeedFragment extends Fragment implements SwipeRefreshLayout.OnR
 
     @OnClick(R.id.tvClean)
     void clean() {
+        showByBottomSheetViewModel.cleanUserChoices();
         showByBottomSheetViewModel.setFilter(false);
+    }
+
+    private void initView() {
+        mainFeedViewModel.getFilterItem().observe(this, this::designShowByLayout);
+        new GPSTracker(requireActivity());
+        mainFeedViewModel.getShouldCheckPermission().observe(this, isShouldCheckLocationPermission -> {
+            if (isShouldCheckLocationPermission) {
+                checkLocationPermission();
+            } else {
+                initMainFeedList();
+            }
+        });
     }
 
     private void designShowByLayout(FilterItem filterItem) {
@@ -102,6 +107,7 @@ public class MainFeedFragment extends Fragment implements SwipeRefreshLayout.OnR
         ivSearch.setVisibility(isFilteringMode ? View.INVISIBLE : View.VISIBLE);
         ivArrow.setColorFilter(color);
         tvShowBY.setText(showByTitle);
+        tvShowBY.setTextColor(color);
         tvClean.setVisibility(isFilteringMode ? View.VISIBLE : View.GONE);
         tvClean.setTextColor(color);
     }

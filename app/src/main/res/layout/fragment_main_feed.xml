@@ -34,7 +34,6 @@
                 android:layout_centerInParent="true"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
-                android:textColor="@color/orange"
                 android:textSize="15sp" />
 
             <ImageView

@@ -1,6 +1,7 @@
 package zfani.assaf.jobim.repositories;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.AsyncTask;
 
 import java.util.ArrayList;
@@ -38,12 +39,11 @@ public class JobRepository {
             containsCondition = true;
         }
         if (jobLocation != null) {
-            query += (containsCondition ? " and" : " where") + " address like ?";
+            query += (containsCondition ? " and" : " where") + " address like '%" + jobLocation + "'";
             containsCondition = true;
-            args.add(jobLocation);
         }
         if (jobFirm != null) {
-            query += (containsCondition ? " and" : " where") + " firm like ?";
+            query += (containsCondition ? " and" : " where") + " firm = ?";
             args.add(jobFirm);
         }
         query += " order by distance asc";
@@ -61,6 +61,16 @@ public class JobRepository {
 
     public void delete(Job job) {
         new DeleteJobTask(jobDao).execute(job);
+    }
+
+    public int getColorByJobType(String jobType) {
+        Job job;
+        try {
+            job = new GetJobByJobTypeTask(jobDao).execute(jobType).get();
+        } catch (Exception e) {
+            return 0;
+        }
+        return Color.rgb(job.getColor1(), job.getColor2(), job.getColor3());
     }
 
     private static class GetAllJobsTask extends AsyncTask<SimpleSQLiteQuery, Void, List<Job>> {
@@ -104,6 +114,20 @@ public class JobRepository {
         protected Void doInBackground(Job... jobs) {
             jobDao.deleteJob(jobs[0]);
             return null;
+        }
+    }
+
+    private static class GetJobByJobTypeTask extends AsyncTask<String, Void, Job> {
+
+        private JobDao jobDao;
+
+        GetJobByJobTypeTask(JobDao jobDao) {
+            this.jobDao = jobDao;
+        }
+
+        @Override
+        protected Job doInBackground(String... jobTypes) {
+            return jobDao.getJobByJobType(jobTypes[0]);
         }
     }
 }

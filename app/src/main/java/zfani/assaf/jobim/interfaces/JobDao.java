@@ -27,4 +27,7 @@ public interface JobDao {
 
     @Delete()
     void deleteJob(Job job);
+
+    @Query("Select * from job_table where type = :jobType limit 1")
+    Job getJobByJobType(String jobType);
 }

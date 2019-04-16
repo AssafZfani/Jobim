@@ -165,13 +165,7 @@ public class ShowByBottomSheet extends BottomSheetDialogFragment {
 
     @OnClick(R.id.tvCancel)
     void cancel() {
-        showByBottomSheetViewModel.setJobTypeQuery(null);
-        showByBottomSheetViewModel.setChosenJobType(null);
-        showByBottomSheetViewModel.setJobLocationQuery(null);
-        showByBottomSheetViewModel.setChosenLocation(null);
-        showByBottomSheetViewModel.setJobFirmQuery(null);
-        showByBottomSheetViewModel.setChosenFirm(null);
-        showByBottomSheetViewModel.setFilter(false);
+        showByBottomSheetViewModel.cleanUserChoices();
         dismiss();
     }
 }
