@@ -35,17 +35,6 @@ public class JobsAdapter extends ListAdapter<Job, JobsAdapter.JobViewHolder> {
         });
     }
 
-    /*public JobsAdapter() {
-        super(new FirebaseRecyclerOptions.Builder<Job>()
-                .setQuery(FirebaseDatabase.getInstance().getReference().child("jobs").orderByChild("distance"), Job.class)
-                .build());
-    }
-
-    public JobsAdapter(String key, String value) {
-        super(new FirebaseRecyclerOptions.Builder<Job>().setQuery((value.equalsIgnoreCase("true") ?
-                query.getRef().orderByChild(key).equalTo(true) : query.getRef().orderByChild(key).equalTo(value)), Job.class).build());
-    }*/
-
     @NonNull
     @Override
     public JobsAdapter.JobViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

@@ -1,7 +1,6 @@
 package zfani.assaf.jobim.views.fragments.MenuFragments;
 
 import android.Manifest;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
@@ -13,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -25,6 +23,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import zfani.assaf.jobim.R;
 import zfani.assaf.jobim.adapters.JobsAdapter;
+import zfani.assaf.jobim.models.FilterItem;
 import zfani.assaf.jobim.utils.Constants;
 import zfani.assaf.jobim.utils.GPSTracker;
 import zfani.assaf.jobim.viewmodels.MainFeedViewModel;
@@ -58,10 +57,9 @@ public class MainFeedFragment extends Fragment implements SwipeRefreshLayout.OnR
         View view = inflater.inflate(R.layout.fragment_main_feed, container, false);
         ButterKnife.bind(this, view);
         srlMainFeed.setOnRefreshListener(this);
-        int orange = ContextCompat.getColor(container.getContext(), R.color.orange);
         mainFeedViewModel = ViewModelProviders.of(this).get(MainFeedViewModel.class);
         showByBottomSheetViewModel = ViewModelProviders.of(requireActivity()).get(ShowByBottomSheetViewModel.class);
-        mainFeedViewModel.getShowByTitle().observe(this, showByTitle -> designShowByLayout(orange, showByTitle));
+        mainFeedViewModel.getFilterItem().observe(this, this::designShowByLayout);
         new GPSTracker(requireActivity());
         mainFeedViewModel.getShouldCheckPermission().observe(this, isShouldCheckLocationPermission -> {
             if (isShouldCheckLocationPermission) {
@@ -70,18 +68,7 @@ public class MainFeedFragment extends Fragment implements SwipeRefreshLayout.OnR
                 initMainFeedList();
             }
         });
-        checkLocationPermission();
         return view;
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case Constants.KEY_ACTION_APPLICATION_DETAILS_SETTINGS:
-                checkLocationPermission();
-                break;
-        }
     }
 
     @Override
@@ -105,21 +92,18 @@ public class MainFeedFragment extends Fragment implements SwipeRefreshLayout.OnR
         showByBottomSheetViewModel.setFilter(false);
     }
 
-    private void designShowByLayout(int color, String showByTitle) {
+    private void designShowByLayout(FilterItem filterItem) {
+        boolean isFilteringMode = filterItem != null;
+        int color = isFilteringMode && filterItem.getColor() != 0 ? filterItem.getColor() : requireActivity().getResources().getColor(R.color.orange);
+        String showByTitle = isFilteringMode ? filterItem.getTitle() : "מציג את כל הג'ובים סביבי";
         GradientDrawable border = new GradientDrawable();
         border.setStroke(5, color);
         rlShowBy.setBackground(border);
-        if (showByTitle.isEmpty()) {
-            ivSearch.setVisibility(View.VISIBLE);
-            tvShowBY.setText("מציג את כל הג'ובים סביבי");
-            tvClean.setVisibility(View.GONE);
-        } else {
-            ivSearch.setVisibility(View.INVISIBLE);
-            tvShowBY.setText(showByTitle);
-            tvClean.setVisibility(View.VISIBLE);
-            tvClean.setTextColor(color);
-        }
+        ivSearch.setVisibility(isFilteringMode ? View.INVISIBLE : View.VISIBLE);
         ivArrow.setColorFilter(color);
+        tvShowBY.setText(showByTitle);
+        tvClean.setVisibility(isFilteringMode ? View.VISIBLE : View.GONE);
+        tvClean.setTextColor(color);
     }
 
     private void checkLocationPermission() {
@@ -135,14 +119,14 @@ public class MainFeedFragment extends Fragment implements SwipeRefreshLayout.OnR
         ivLocationMessage.setVisibility(View.GONE);
         mainFeedViewModel.loadJobs();
         rvMainFeed.setAdapter(jobsAdapter = new JobsAdapter());
-        mainFeedViewModel.getJobLiveList().observe(this, jobList -> jobsAdapter.submitList(jobList));
         showByBottomSheetViewModel.getFilter().observe(this, isFilter -> {
             if (isFilter) {
-                jobsAdapter.submitList(mainFeedViewModel.getJobLiveList(showByBottomSheetViewModel.getChosenJobTypeList(),
-                        showByBottomSheetViewModel.getChosenLocation().getValue(),
-                        showByBottomSheetViewModel.getChosenFirm()));
+                jobsAdapter.submitList(
+                        mainFeedViewModel.getJobLiveList(showByBottomSheetViewModel.getChosenJobTypeList(),
+                                showByBottomSheetViewModel.getChosenLocation().getValue(),
+                                showByBottomSheetViewModel.getChosenFirm()));
             } else {
-                mainFeedViewModel.setShowByTitle("");
+                mainFeedViewModel.setFilterItem(null);
                 mainFeedViewModel.getJobLiveList().observe(this, jobList -> jobsAdapter.submitList(jobList));
             }
         });

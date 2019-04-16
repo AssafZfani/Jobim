@@ -22,6 +22,7 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import zfani.assaf.jobim.models.FilterItem;
 import zfani.assaf.jobim.models.Job;
 import zfani.assaf.jobim.repositories.JobRepository;
 import zfani.assaf.jobim.utils.GPSTracker;
@@ -29,24 +30,23 @@ import zfani.assaf.jobim.utils.JsonHelper;
 
 public class MainFeedViewModel extends AndroidViewModel {
 
-    private MutableLiveData<String> showByTitle;
+    private MutableLiveData<FilterItem> filterItem;
     private MutableLiveData<Boolean> shouldCheckPermission;
     private JobRepository jobRepository;
 
     public MainFeedViewModel(@NonNull Application application) {
         super(application);
-        showByTitle = new MutableLiveData<>();
-        setShowByTitle("");
-        shouldCheckPermission = new MutableLiveData<>();
+        filterItem = new MutableLiveData<>(null);
+        shouldCheckPermission = new MutableLiveData<>(true);
         jobRepository = new JobRepository(application);
     }
 
-    public MutableLiveData<String> getShowByTitle() {
-        return showByTitle;
+    public MutableLiveData<FilterItem> getFilterItem() {
+        return filterItem;
     }
 
-    public void setShowByTitle(String showByTitle) {
-        this.showByTitle.setValue(showByTitle);
+    public void setFilterItem(FilterItem filterItem) {
+        this.filterItem.setValue(filterItem);
     }
 
     public void loadJobs() {
@@ -138,8 +138,8 @@ public class MainFeedViewModel extends AndroidViewModel {
 
     public List<Job> getJobLiveList(List<String> jobTypeList, String jobLocation, String jobFirm) {
         if ((jobTypeList != null && !jobTypeList.isEmpty()) || (jobLocation != null && !jobLocation.isEmpty()) || (jobFirm != null && !jobFirm.isEmpty())) {
-            setShowByTitle("מציג " + (jobTypeList == null || jobTypeList.isEmpty() ? "" : (jobTypeList.size() == 1 ? jobTypeList.get(0) : jobTypeList.size() + " ג'ובים"))
-                    + (jobFirm != null && !jobFirm.isEmpty() ? " ב" + jobFirm : "") + (jobLocation != null && !jobLocation.isEmpty() ? " ב" + jobLocation : ""));
+            setFilterItem(new FilterItem(0, "מציג " + (jobTypeList == null || jobTypeList.isEmpty() ? "" : (jobTypeList.size() == 1 ? jobTypeList.get(0) : jobTypeList.size() + " ג'ובים"))
+                    + (jobFirm != null && !jobFirm.isEmpty() ? " ב" + jobFirm : "") + (jobLocation != null && !jobLocation.isEmpty() ? " ב" + jobLocation : "")));
         }
         return jobRepository.getAllJobs(jobTypeList, jobLocation, jobFirm);
     }

@@ -19,7 +19,7 @@ public class ShowByBottomSheetViewModel extends ViewModel {
         jobLocationQuery = new MutableLiveData<>();
         chosenLocation = new MutableLiveData<>();
         jobFirmQuery = new MutableLiveData<>();
-        filter = new MutableLiveData<>();
+        filter = new MutableLiveData<>(false);
     }
 
     public List<String> getChosenJobTypeList() {
