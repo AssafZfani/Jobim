@@ -5,7 +5,6 @@ import android.os.AsyncTask;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import androidx.lifecycle.LiveData;
 import androidx.sqlite.db.SimpleSQLiteQuery;
@@ -26,29 +25,30 @@ public class JobRepository {
     }
 
     public List<Job> getAllJobs(List<String> jobTypeList, String jobLocation, String jobFirm) {
-        String queryString = "";
+        String query = "";
         List<Object> args = new ArrayList<>();
         boolean containsCondition = false;
-        queryString += "Select * from job_table";
+        query += "Select * from job_table";
         if (!jobTypeList.isEmpty()) {
-            StringBuilder str = new StringBuilder();
+            StringBuilder jobTypeStr = new StringBuilder();
             for (String jobType : jobTypeList) {
-                str.append("'").append(jobType).append("', ");
+                jobTypeStr.append("'").append(jobType).append("', ");
             }
-            queryString += " where type in (" + str.substring(0, str.length() - 2) + ")";
+            query += " where type in (" + jobTypeStr.substring(0, jobTypeStr.length() - 2) + ")";
             containsCondition = true;
         }
         if (jobLocation != null) {
-            queryString += (containsCondition ? " and" : " where") + " address like ?";
+            query += (containsCondition ? " and" : " where") + " address like ?";
             containsCondition = true;
             args.add(jobLocation);
         }
         if (jobFirm != null) {
-            queryString += (containsCondition ? " and" : " where") + " firm like ?";
+            query += (containsCondition ? " and" : " where") + " firm like ?";
             args.add(jobFirm);
         }
+        query += " order by distance asc";
         try {
-            return new GetAllJobsTask(jobDao).execute(new SimpleSQLiteQuery(queryString, args.toArray())).get();
+            return new GetAllJobsTask(jobDao).execute(new SimpleSQLiteQuery(query, args.toArray())).get();
         } catch (Exception e) {
             e.printStackTrace();
         }

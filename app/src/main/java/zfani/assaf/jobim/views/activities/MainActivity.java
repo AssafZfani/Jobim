@@ -178,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
                         handleMenuButtons(findViewById(R.id.myDetails));
                         break;
                     default:
-                        clean(findViewById(R.id.cleanButton));
+                        clean(findViewById(R.id.tvClean));
                         break;
                 }
             } else {

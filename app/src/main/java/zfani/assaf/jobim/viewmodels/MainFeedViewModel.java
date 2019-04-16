@@ -29,13 +29,24 @@ import zfani.assaf.jobim.utils.JsonHelper;
 
 public class MainFeedViewModel extends AndroidViewModel {
 
+    private MutableLiveData<String> showByTitle;
     private MutableLiveData<Boolean> shouldCheckPermission;
     private JobRepository jobRepository;
 
     public MainFeedViewModel(@NonNull Application application) {
         super(application);
+        showByTitle = new MutableLiveData<>();
+        setShowByTitle("");
         shouldCheckPermission = new MutableLiveData<>();
         jobRepository = new JobRepository(application);
+    }
+
+    public MutableLiveData<String> getShowByTitle() {
+        return showByTitle;
+    }
+
+    public void setShowByTitle(String showByTitle) {
+        this.showByTitle.setValue(showByTitle);
     }
 
     public void loadJobs() {
@@ -126,6 +137,10 @@ public class MainFeedViewModel extends AndroidViewModel {
     }
 
     public List<Job> getJobLiveList(List<String> jobTypeList, String jobLocation, String jobFirm) {
+        if ((jobTypeList != null && !jobTypeList.isEmpty()) || (jobLocation != null && !jobLocation.isEmpty()) || (jobFirm != null && !jobFirm.isEmpty())) {
+            setShowByTitle("מציג " + (jobTypeList == null || jobTypeList.isEmpty() ? "" : (jobTypeList.size() == 1 ? jobTypeList.get(0) : jobTypeList.size() + " ג'ובים"))
+                    + (jobFirm != null && !jobFirm.isEmpty() ? " ב" + jobFirm : "") + (jobLocation != null && !jobLocation.isEmpty() ? " ב" + jobLocation : ""));
+        }
         return jobRepository.getAllJobs(jobTypeList, jobLocation, jobFirm);
     }
 }

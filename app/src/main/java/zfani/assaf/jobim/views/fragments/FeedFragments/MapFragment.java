@@ -69,21 +69,25 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             case 2:
                 AppCompatActivity activity = (AppCompatActivity) requireActivity();
                 ShowByBottomSheetViewModel showByBottomSheetViewModel = ViewModelProviders.of(activity).get(ShowByBottomSheetViewModel.class);
-                showByBottomSheetViewModel.getJobLocationQuery().observe(this, s -> changeCamera(GPSTracker.getLatLngFromAddress(activity.getApplication(), s)));
-                googleMap.setOnMapClickListener(newLocation -> {
-                    changeCamera(newLocation);
-                    showByBottomSheetViewModel.setChosenLocation(GPSTracker.getAddressFromLatLng(activity, newLocation));
+                showByBottomSheetViewModel.getJobLocationQuery().observe(this, jobLocation -> {
+                    LatLng newLatLng = GPSTracker.getLatLngFromAddress(activity.getApplication(), jobLocation);
+                    if (newLatLng != null) {
+                        changeCamera(newLatLng);
+                        showByBottomSheetViewModel.setChosenLocation(jobLocation);
+                    }
+                });
+                googleMap.setOnMapClickListener(newLatLng -> {
+                    changeCamera(newLatLng);
+                    showByBottomSheetViewModel.setChosenLocation(GPSTracker.getAddressFromLatLng(activity, newLatLng));
                 });
                 break;
         }
     }
 
     private void changeCamera(LatLng latLng) {
-        if (latLng != null) {
-            googleMap.clear();
-            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
-            googleMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromAsset("location_marker.png")).position(latLng));
-        }
+        googleMap.clear();
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
+        googleMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromAsset("location_marker.png")).position(latLng));
     }
 
     private void loadMarkersToMap() {

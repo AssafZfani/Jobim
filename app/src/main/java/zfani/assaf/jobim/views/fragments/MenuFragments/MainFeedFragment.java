@@ -3,14 +3,13 @@ package zfani.assaf.jobim.views.fragments.MenuFragments;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -34,10 +33,16 @@ import zfani.assaf.jobim.views.bottomsheets.ShowByBottomSheet;
 
 public class MainFeedFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    @BindView(R.id.llShowBy)
-    View llShowBy;
-    @BindView(R.id.tvShowBY)
+    @BindView(R.id.rlShowBy)
+    View rlShowBy;
+    @BindView(R.id.ivSearch)
+    View ivSearch;
+    @BindView(R.id.tvShowBy)
     TextView tvShowBY;
+    @BindView(R.id.ivArrow)
+    ImageView ivArrow;
+    @BindView(R.id.tvClean)
+    TextView tvClean;
     @BindView(R.id.srlMainFeed)
     SwipeRefreshLayout srlMainFeed;
     @BindView(R.id.rvMainFeed)
@@ -45,6 +50,7 @@ public class MainFeedFragment extends Fragment implements SwipeRefreshLayout.OnR
     @BindView(R.id.ivLocationMessage)
     View ivLocationMessage;
     private MainFeedViewModel mainFeedViewModel;
+    private ShowByBottomSheetViewModel showByBottomSheetViewModel;
     private JobsAdapter jobsAdapter;
 
     @Override
@@ -52,9 +58,10 @@ public class MainFeedFragment extends Fragment implements SwipeRefreshLayout.OnR
         View view = inflater.inflate(R.layout.fragment_main_feed, container, false);
         ButterKnife.bind(this, view);
         srlMainFeed.setOnRefreshListener(this);
-        int orange = ContextCompat.getColor(container.getContext(), android.R.color.holo_orange_dark);
-        designShowByLayout(orange, "");
+        int orange = ContextCompat.getColor(container.getContext(), R.color.orange);
         mainFeedViewModel = ViewModelProviders.of(this).get(MainFeedViewModel.class);
+        showByBottomSheetViewModel = ViewModelProviders.of(requireActivity()).get(ShowByBottomSheetViewModel.class);
+        mainFeedViewModel.getShowByTitle().observe(this, showByTitle -> designShowByLayout(orange, showByTitle));
         new GPSTracker(requireActivity());
         mainFeedViewModel.getShouldCheckPermission().observe(this, isShouldCheckLocationPermission -> {
             if (isShouldCheckLocationPermission) {
@@ -88,30 +95,31 @@ public class MainFeedFragment extends Fragment implements SwipeRefreshLayout.OnR
         new Handler().postDelayed(() -> srlMainFeed.setRefreshing(false), 3000);
     }
 
-    @OnClick(R.id.llShowBy)
+    @OnClick(R.id.rlShowBy)
     void showBy() {
         new ShowByBottomSheet().show(getChildFragmentManager(), null);
     }
 
-    /*public void clean() {
-        filteredAdapter = null;
-        FilteredAdapter.filteredList = null;
-        view.findViewById(R.id.filter).setVisibility(View.VISIBLE);
-        view.findViewById(R.id.cleanButton).setVisibility(View.GONE);
-        designShowByLayout(orange, "");
-        onRefresh();
-    }*/
+    @OnClick(R.id.tvClean)
+    void clean() {
+        showByBottomSheetViewModel.setFilter(false);
+    }
 
-    private void designShowByLayout(int color, String text) {
+    private void designShowByLayout(int color, String showByTitle) {
         GradientDrawable border = new GradientDrawable();
         border.setStroke(5, color);
-        llShowBy.setBackground(border);
-        tvShowBY.setTextColor(color);
-        tvShowBY.setText(text.isEmpty() ? "מציג את כל הג'ובים סביבי" : text);
-        Drawable drawable = tvShowBY.getCompoundDrawables()[0];
-        if (drawable != null) {
-            drawable.setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
+        rlShowBy.setBackground(border);
+        if (showByTitle.isEmpty()) {
+            ivSearch.setVisibility(View.VISIBLE);
+            tvShowBY.setText("מציג את כל הג'ובים סביבי");
+            tvClean.setVisibility(View.GONE);
+        } else {
+            ivSearch.setVisibility(View.INVISIBLE);
+            tvShowBY.setText(showByTitle);
+            tvClean.setVisibility(View.VISIBLE);
+            tvClean.setTextColor(color);
         }
+        ivArrow.setColorFilter(color);
     }
 
     private void checkLocationPermission() {
@@ -128,43 +136,15 @@ public class MainFeedFragment extends Fragment implements SwipeRefreshLayout.OnR
         mainFeedViewModel.loadJobs();
         rvMainFeed.setAdapter(jobsAdapter = new JobsAdapter());
         mainFeedViewModel.getJobLiveList().observe(this, jobList -> jobsAdapter.submitList(jobList));
-        ShowByBottomSheetViewModel showByBottomSheetViewModel = ViewModelProviders.of(requireActivity()).get(ShowByBottomSheetViewModel.class);
         showByBottomSheetViewModel.getFilter().observe(this, isFilter -> {
             if (isFilter) {
                 jobsAdapter.submitList(mainFeedViewModel.getJobLiveList(showByBottomSheetViewModel.getChosenJobTypeList(),
                         showByBottomSheetViewModel.getChosenLocation().getValue(),
                         showByBottomSheetViewModel.getChosenFirm()));
-                        //.observe(this, jobList -> jobsAdapter.submitList(jobList));
+            } else {
+                mainFeedViewModel.setShowByTitle("");
+                mainFeedViewModel.getJobLiveList().observe(this, jobList -> jobsAdapter.submitList(jobList));
             }
         });
     }
-
-    /*public void filterList(View view, Intent data) {
-        ArrayList<Integer> businessesNumbers = data.getIntegerArrayListExtra("BusinessesNumbers");
-        String address = data.getStringExtra("Address") == null ? "" : data.getStringExtra("Address");
-        String location = address.isEmpty() ? address : address.substring(address.indexOf(", ") + 2);
-        String firm = data.getStringExtra("Firm") == null ? "" : data.getStringExtra("Firm");
-        if (businessesNumbers != null || !location.isEmpty() || !firm.isEmpty()) {
-            Button cleanButton = view.findViewById(R.id.cleanButton);
-             View filter = view.findViewById(R.id.filter);
-            filter.setVisibility(View.GONE);
-            cleanButton.setVisibility(View.VISIBLE);
-            rvMainFeed.setAdapter(filteredAdapter = new FilteredAdapter(businessesNumbers, location, firm));
-            int color = orange;
-            String text = "";
-            if (businessesNumbers != null) {
-                JobType jobType = null;
-                if (businessesNumbers.size() == 1) {
-                    jobType = JobsAdapter.jobsTypesList.get(businessesNumbers.get(0) - 1);
-                    Integer[] colorArray = jobType.getColor().toArray(new Integer[3]);
-                    color = Color.rgb(colorArray[0], colorArray[1], colorArray[2]);
-                }
-                text = "מציג " + (jobType != null ? jobType.getJobType() : businessesNumbers.size() + " ג'ובים");
-            }
-            text += (!firm.isEmpty() ? " ב" + firm : "") + (!address.isEmpty() ? " ב" + address : "");
-            cleanButton.setTextColor(color);
-            designShowByLayout(color, text);
-            setMessageVisibility();
-        }
-    }*/
 }

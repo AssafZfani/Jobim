@@ -31,7 +31,6 @@ import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 import zfani.assaf.jobim.R;
 import zfani.assaf.jobim.adapters.JobsAdapter;
-import zfani.assaf.jobim.custom_views.ClusterJobs;
 import zfani.assaf.jobim.models.Job;
 
 public class ClusterJobsRenderer extends DefaultClusterRenderer<ClusterJobs>

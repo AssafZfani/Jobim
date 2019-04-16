@@ -16,7 +16,7 @@ import static androidx.room.OnConflictStrategy.REPLACE;
 @Dao
 public interface JobDao {
 
-    @Query("Select * from job_table order by distance desc")
+    @Query("Select * from job_table order by distance asc")
     LiveData<List<Job>> getAllJobs();
 
     @RawQuery
