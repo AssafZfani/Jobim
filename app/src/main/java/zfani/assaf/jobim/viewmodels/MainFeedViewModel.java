@@ -137,11 +137,10 @@ public class MainFeedViewModel extends AndroidViewModel {
     }
 
     public List<Job> getJobLiveList(List<String> jobTypeList, String jobLocation, String jobFirm) {
-        if ((jobTypeList != null && !jobTypeList.isEmpty()) || (jobLocation != null && !jobLocation.isEmpty()) || (jobFirm != null && !jobFirm.isEmpty())) {
-            setFilterItem(new FilterItem(jobTypeList != null && jobTypeList.size() == 1 ? jobRepository.getColorByJobType(jobTypeList.get(0)) : 0,
-                    "מציג " + (jobTypeList == null || jobTypeList.isEmpty() ? "" : (jobTypeList.size() == 1 ? jobTypeList.get(0) : jobTypeList.size() + " ג'ובים")) +
-                            (jobFirm != null && !jobFirm.isEmpty() ? " ב" + jobFirm : "") + (jobLocation != null && !jobLocation.isEmpty() ? " ב" + jobLocation : "")));
-        }
+        setFilterItem((jobTypeList != null && !jobTypeList.isEmpty()) || (jobLocation != null && !jobLocation.isEmpty()) || (jobFirm != null && !jobFirm.isEmpty()) ?
+                new FilterItem(jobTypeList != null && jobTypeList.size() == 1 ? jobRepository.getColorByJobType(jobTypeList.get(0)) : 0,
+                "מציג" + (jobTypeList == null || jobTypeList.isEmpty() ? "" : " " + (jobTypeList.size() == 1 ? jobTypeList.get(0) : jobTypeList.size() + " ג'ובים")) +
+                        (jobFirm != null && !jobFirm.isEmpty() ? " ב" + jobFirm : "") + (jobLocation != null && !jobLocation.isEmpty() ? " ב" + jobLocation : "")) : null);
         return jobRepository.getAllJobs(jobTypeList, jobLocation, jobFirm);
     }
 }

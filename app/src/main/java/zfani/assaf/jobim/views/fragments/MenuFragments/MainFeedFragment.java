@@ -48,6 +48,8 @@ public class MainFeedFragment extends Fragment implements SwipeRefreshLayout.OnR
     RecyclerView rvMainFeed;
     @BindView(R.id.ivLocationMessage)
     View ivLocationMessage;
+    @BindView(R.id.ivNoResultsMessage)
+    View ivNoResultsMessage;
     private MainFeedViewModel mainFeedViewModel;
     private ShowByBottomSheetViewModel showByBottomSheetViewModel;
     private JobsAdapter jobsAdapter;
@@ -76,6 +78,7 @@ public class MainFeedFragment extends Fragment implements SwipeRefreshLayout.OnR
 
     @OnClick(R.id.rlShowBy)
     void showBy() {
+        showByBottomSheetViewModel.cleanUserChoices();
         new ShowByBottomSheet().show(getChildFragmentManager(), null);
     }
 
@@ -127,13 +130,14 @@ public class MainFeedFragment extends Fragment implements SwipeRefreshLayout.OnR
         rvMainFeed.setAdapter(jobsAdapter = new JobsAdapter());
         showByBottomSheetViewModel.getFilter().observe(this, isFilter -> {
             if (isFilter) {
-                jobsAdapter.submitList(
-                        mainFeedViewModel.getJobLiveList(showByBottomSheetViewModel.getChosenJobTypeList(),
-                                showByBottomSheetViewModel.getChosenLocation().getValue(),
-                                showByBottomSheetViewModel.getChosenFirm()));
+                jobsAdapter.submitList(mainFeedViewModel.getJobLiveList(showByBottomSheetViewModel.getChosenJobTypeList(),
+                        showByBottomSheetViewModel.getChosenLocation().getValue(),
+                        showByBottomSheetViewModel.getChosenFirm()),
+                        () -> ivNoResultsMessage.setVisibility(jobsAdapter.getItemCount() == 0 ? View.VISIBLE : View.GONE));
             } else {
                 mainFeedViewModel.setFilterItem(null);
-                mainFeedViewModel.getJobLiveList().observe(this, jobList -> jobsAdapter.submitList(jobList));
+                mainFeedViewModel.getJobLiveList().observe(this, jobList -> jobsAdapter.submitList(jobList,
+                        () -> ivNoResultsMessage.setVisibility(jobsAdapter.getItemCount() == 0 ? View.VISIBLE : View.GONE)));
             }
         });
     }
