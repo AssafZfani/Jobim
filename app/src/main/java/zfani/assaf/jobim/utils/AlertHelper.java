@@ -9,9 +9,11 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.viewpager.widget.ViewPager;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
 import zfani.assaf.jobim.App;
 import zfani.assaf.jobim.R;
+import zfani.assaf.jobim.viewmodels.MainFeedViewModel;
 import zfani.assaf.jobim.views.activities.AddNewJob;
 import zfani.assaf.jobim.views.activities.FillDetails;
 import zfani.assaf.jobim.views.fragments.FeedFragments.ContactFragment;
@@ -58,21 +60,13 @@ public class AlertHelper {
                         break;
                     case R.layout.dialog_delete_job:
                         findViewById(R.id.tvDeleteFromFeed).setOnClickListener(v -> {
-                            /*if (FilteredAdapter.filteredList != null) {
-                                int indexToRemove = FilteredAdapter.filteredList.indexOf(Job.findJobById(jobId));
-                                if (activity.getLocalClassName().equalsIgnoreCase("views.activities.MainActivity")) {
-                                    MainActivity mainActivity = (MainActivity) activity;
-                                    if (mainActivity.allJobsFragment.filteredAdapter != null) {
-                                        mainActivity.allJobsFragment.filteredAdapter.remove(indexToRemove);
-                                    }
-                                } else
-                                    FilteredAdapter.filteredList.remove(indexToRemove);
-                            }*/
-                            //new Handler().postDelayed(() -> JobsAdapter.query.getRef().child(jobId).removeValue(), 750);
-                            if (activity.getLocalClassName().equalsIgnoreCase("views.activities.JobInfoActivity"))
+                            MainFeedViewModel mainFeedViewModel = ViewModelProviders.of((AppCompatActivity) activity).get(MainFeedViewModel.class);
+                            mainFeedViewModel.getJobRepository().delete(jobId);
+                            if (activity.getLocalClassName().equalsIgnoreCase("views.activities.JobInfoActivity")) {
                                 activity.finish();
-                            else
-                                ((ViewPager) activity.findViewById(activity.getIntent().getIntExtra("ViewPager", 0))).setCurrentItem(1);
+                            } else {
+                                mainFeedViewModel.setShouldSetToDefault(true);
+                            }
                             dismiss();
                             Toast.makeText(activity, "מעכשיו הג'וב לא יופיע יותר בפיד", Toast.LENGTH_SHORT).show();
                         });
@@ -108,7 +102,7 @@ public class AlertHelper {
                         });
                         break;
                     case R.layout.dialog_share:
-                        ((TextView) findViewById(R.id.dialogText)).setText("שלחנו ל" + activity.getIntent().getStringExtra("ContactName") + " המלצה על המשרה");
+                        ((TextView) findViewById(R.id.dialogText)).setText(new StringBuilder("שלחנו ל" + activity.getIntent().getStringExtra("ContactName") + " המלצה על המשרה"));
                         break;
                 }
             }

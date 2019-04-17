@@ -28,7 +28,7 @@ import zfani.assaf.jobim.utils.JsonHelper;
 public class MainFeedViewModel extends AndroidViewModel {
 
     private MutableLiveData<FilterItem> filterItem;
-    private MutableLiveData<Boolean> shouldCheckPermission;
+    private MutableLiveData<Boolean> shouldCheckPermission, shouldSetToDefault;
     private JobRepository jobRepository;
 
     public MainFeedViewModel(@NonNull Application application) {
@@ -36,6 +36,7 @@ public class MainFeedViewModel extends AndroidViewModel {
         filterItem = new MutableLiveData<>(null);
         shouldCheckPermission = new MutableLiveData<>(true);
         jobRepository = new JobRepository(application);
+        shouldSetToDefault = new MutableLiveData<>(true);
     }
 
     public MutableLiveData<FilterItem> getFilterItem() {
@@ -44,6 +45,18 @@ public class MainFeedViewModel extends AndroidViewModel {
 
     public void setFilterItem(FilterItem filterItem) {
         this.filterItem.setValue(filterItem);
+    }
+
+    public MutableLiveData<Boolean> getShouldCheckPermission() {
+        return shouldCheckPermission;
+    }
+
+    public void setShouldCheckPermission(boolean shouldCheckPermission) {
+        this.shouldCheckPermission.setValue(shouldCheckPermission);
+    }
+
+    public JobRepository getJobRepository() {
+        return jobRepository;
     }
 
     public void loadJobs() {
@@ -85,7 +98,7 @@ public class MainFeedViewModel extends AndroidViewModel {
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-                jobRepository.delete(dataSnapshot.getValue(Job.class));
+                jobRepository.delete(dataSnapshot.getValue(Job.class).getId());
             }
 
             @Override
@@ -100,14 +113,6 @@ public class MainFeedViewModel extends AndroidViewModel {
         });
     }
 
-    public MutableLiveData<Boolean> getShouldCheckPermission() {
-        return shouldCheckPermission;
-    }
-
-    public void setShouldCheckPermission(boolean shouldCheckPermission) {
-        this.shouldCheckPermission.setValue(shouldCheckPermission);
-    }
-
     public LiveData<List<Job>> getJobLiveList() {
         return jobRepository.getAllJobs();
     }
@@ -118,5 +123,13 @@ public class MainFeedViewModel extends AndroidViewModel {
                         "מציג" + (jobTypeList == null || jobTypeList.isEmpty() ? "" : " " + (jobTypeList.size() == 1 ? jobTypeList.get(0) : jobTypeList.size() + " ג'ובים")) +
                                 (jobFirm != null && !jobFirm.isEmpty() ? " ב" + jobFirm : "") + (jobLocation != null && !jobLocation.isEmpty() ? " ב" + jobLocation : "")) : null);
         return jobRepository.getAllJobs(jobTypeList, jobLocation, jobFirm);
+    }
+
+    public MutableLiveData<Boolean> getShouldSetToDefault() {
+        return shouldSetToDefault;
+    }
+
+    public void setShouldSetToDefault(boolean shouldSetToDefault) {
+        this.shouldSetToDefault.setValue(shouldSetToDefault);
     }
 }

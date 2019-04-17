@@ -7,12 +7,12 @@
     tools:ignore="ContentDescription">
 
     <zfani.assaf.jobim.custom_views.CutLayout
-        android:id="@+id/jobLayout"
+        android:id="@+id/clJob"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <LinearLayout
-            android:id="@+id/layout"
+            android:id="@+id/llContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -53,7 +53,7 @@
         android:visibility="gone" />
 
     <FrameLayout
-        android:id="@+id/whereLayout"
+        android:id="@+id/flWhere"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:gravity="center_horizontal">

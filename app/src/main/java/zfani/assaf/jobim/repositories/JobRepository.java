@@ -59,8 +59,8 @@ public class JobRepository {
         new InsertJobTask(jobDao).execute(job);
     }
 
-    public void delete(Job job) {
-        new DeleteJobTask(jobDao).execute(job);
+    public void delete(int jobId) {
+        new DeleteJobTask(jobDao).execute(jobId);
     }
 
     public int getColorByJobType(String jobType) {
@@ -102,7 +102,7 @@ public class JobRepository {
         }
     }
 
-    private static class DeleteJobTask extends AsyncTask<Job, Void, Void> {
+    private static class DeleteJobTask extends AsyncTask<Integer, Void, Void> {
 
         private JobDao jobDao;
 
@@ -111,8 +111,8 @@ public class JobRepository {
         }
 
         @Override
-        protected Void doInBackground(Job... jobs) {
-            jobDao.deleteJob(jobs[0]);
+        protected Void doInBackground(Integer... jobIds) {
+            jobDao.deleteJob(jobIds[0]);
             return null;
         }
     }

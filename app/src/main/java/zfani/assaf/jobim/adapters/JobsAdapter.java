@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,6 +16,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import zfani.assaf.jobim.R;
 import zfani.assaf.jobim.models.Job;
+import zfani.assaf.jobim.viewmodels.MainFeedViewModel;
 import zfani.assaf.jobim.views.fragments.FeedFragments.ContactFragment;
 import zfani.assaf.jobim.views.fragments.FeedFragments.DeleteFragment;
 import zfani.assaf.jobim.views.fragments.FeedFragments.JobFragment;
@@ -44,9 +46,10 @@ public class JobsAdapter extends ListAdapter<Job, JobsAdapter.JobViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull JobsAdapter.JobViewHolder viewHolder, int i) {
         Job job = getItem(i);
+        AppCompatActivity activity = (AppCompatActivity) viewHolder.itemView.getContext();
         viewHolder.viewPager.setId(View.generateViewId());
         viewHolder.viewPager.setPageTransformer(true, (view, position) -> view.setTranslationX(-position * (view.getWidth() / 50f)));
-        viewHolder.viewPager.setAdapter(new FragmentPagerAdapter(((AppCompatActivity) viewHolder.itemView.getContext()).getSupportFragmentManager()) {
+        viewHolder.viewPager.setAdapter(new FragmentPagerAdapter(activity.getSupportFragmentManager()) {
             @NonNull
             @Override
             public Fragment getItem(int position) {
@@ -65,7 +68,7 @@ public class JobsAdapter extends ListAdapter<Job, JobsAdapter.JobViewHolder> {
                 return 3;
             }
         });
-        viewHolder.viewPager.setCurrentItem(1);
+        ViewModelProviders.of(activity).get(MainFeedViewModel.class).getShouldSetToDefault().observe(activity, shouldSetToDefault -> viewHolder.viewPager.setCurrentItem(1));
     }
 
     public static class JobViewHolder extends RecyclerView.ViewHolder {

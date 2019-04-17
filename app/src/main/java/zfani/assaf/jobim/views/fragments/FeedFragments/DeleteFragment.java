@@ -22,10 +22,9 @@ public class DeleteFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.delete_job_layout, container, false);
-        view.findViewById(R.id.delete).setOnClickListener(view1 -> {
-            getActivity().getIntent().putExtra("ViewPager", container.getId());
-            AlertHelper.displayDialog(getActivity(), R.layout.dialog_delete_job, getArguments().getInt("JobId"));
+        View view = inflater.inflate(R.layout.fragment_delete_job, container, false);
+        view.findViewById(R.id.btnDeleteJob).setOnClickListener(view1 -> {
+            AlertHelper.displayDialog(getActivity(), R.layout.dialog_delete_job, requireArguments().getInt("JobId"));
         });
         return view;
     }

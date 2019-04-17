@@ -31,7 +31,7 @@ class CutLayout extends LinearLayout {
             int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
             super.dispatchDraw(canvas);
             paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
-            if (getId() == R.id.jobLayout) {
+            if (getId() == R.id.clJob) {
                 path.moveTo(0, getHeight() - 75);
                 path.lineTo(getWidth(), getHeight());
                 path.lineTo(0, getHeight());

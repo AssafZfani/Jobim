@@ -46,7 +46,7 @@ public class JobFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.job_layout, container, false);
+        View view = inflater.inflate(R.layout.fragment_job, container, false);
         ButterKnife.bind(this, view);
         Bundle bundle = requireArguments();
         Job job = bundle.getParcelable("Job");
@@ -67,7 +67,7 @@ public class JobFragment extends Fragment {
         int distance = job.getDistance();
         tvJobDistance.setText(distance > 1000 ? new DecimalFormat("#.#").format((double) distance / 1000) + " ק\"מ ממני" : distance + " מ\' ממני");
         int bg;
-        View layout = view.findViewById(R.id.layout);
+        View layout = view.findViewById(R.id.llContainer);
         if (layout == null) {
             layout = view;
         }
@@ -77,7 +77,7 @@ public class JobFragment extends Fragment {
             view.setEnabled(false);
             view.findViewById(R.id.clMapFragment).setVisibility(View.VISIBLE);
         } else {
-            view.findViewById(R.id.whereLayout).setBackgroundColor(bg);
+            view.findViewById(R.id.flWhere).setBackgroundColor(bg);
         }
         view.setOnClickListener(v -> startActivity(new Intent(getActivity(), JobInfoActivity.class).putExtra("Job", job)));
     }

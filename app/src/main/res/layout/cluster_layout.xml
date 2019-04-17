@@ -22,7 +22,7 @@
         android:paddingBottom="10dp" />
 
     <FrameLayout
-        android:id="@+id/whereLayout"
+        android:id="@+id/flWhere"
         android:layout_width="match_parent"
         android:layout_height="35dp">
 

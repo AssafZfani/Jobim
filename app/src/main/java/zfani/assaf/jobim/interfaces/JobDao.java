@@ -25,8 +25,8 @@ public interface JobDao {
     @Insert(onConflict = REPLACE)
     void insertJob(Job job);
 
-    @Delete()
-    void deleteJob(Job job);
+    @Query("Delete from job_table where id = :jobId")
+    void deleteJob(int jobId);
 
     @Query("Select * from job_table where type = :jobType limit 1")
     Job getJobByJobType(String jobType);
