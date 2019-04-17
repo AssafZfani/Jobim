@@ -38,7 +38,7 @@ public class JobInfoActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         job = getIntent().getParcelableExtra("Job");
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.llJobFragment, JobFragment.newInstance(job))
+                .add(R.id.llJobFragment, JobFragment.newInstance(job, true))
                 .add(R.id.flContactFragment, ContactFragment.newInstance(job))
                 .add(R.id.clMapFragment, MapFragment.newInstance(3, GPSTracker.getLatLngFromAddress(getApplication(), job.getAddress()))).commit();
         btnFavorite.setBackgroundResource(job.isFavorite() ? R.drawable.remove2 : R.drawable.favorite2);

@@ -3,6 +3,6 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/app/src/main/java/zfani/assaf/jobim/views/activities/MainActivity.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/zfani/assaf/jobim/views/fragments/FeedFragments/JobFragment.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/zfani/assaf/jobim/views/fragments/MenuFragments/MainFeedFragment.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/zfani/assaf/jobim/views/fragments/FeedFragments/MainFeedFragment.java" charset="UTF-8" />
   </component>
 </project>

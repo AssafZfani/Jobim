@@ -22,4 +22,14 @@ public class ClusterJobs implements ClusterItem {
     public LatLng getPosition() {
         return GPSTracker.getLatLngFromAddress(activity.getApplication(), job.getAddress());
     }
+
+    @Override
+    public String getTitle() {
+        return "";
+    }
+
+    @Override
+    public String getSnippet() {
+        return "";
+    }
 }

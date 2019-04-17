@@ -2,7 +2,7 @@ package zfani.assaf.jobim.views.fragments.FeedFragments;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,9 +10,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.io.IOException;
+import com.bumptech.glide.Glide;
+
 import java.text.DecimalFormat;
-import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -35,10 +35,11 @@ public class JobFragment extends Fragment {
     @BindView(R.id.tvJobDistance)
     TextView tvJobDistance;
 
-    public static JobFragment newInstance(Job job) {
+    public static JobFragment newInstance(Job job, boolean isComeFromJobInfo) {
         JobFragment jobFragment = new JobFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelable("Job", job);
+        bundle.putBoolean("isComeFromJobInfo", isComeFromJobInfo);
         jobFragment.setArguments(bundle);
         return jobFragment;
     }
@@ -47,20 +48,18 @@ public class JobFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.job_layout, container, false);
         ButterKnife.bind(this, view);
-        Job job = requireArguments().getParcelable("Job");
+        Bundle bundle = requireArguments();
+        Job job = bundle.getParcelable("Job");
+        boolean isComeFromJobInfo = bundle.getBoolean("isComeFromJobInfo");
         if (job != null) {
-            fillJobDetails(view, job);
+            fillJobDetails(view, job, isComeFromJobInfo);
         }
         return view;
     }
 
-    private void fillJobDetails(View view, @NonNull Job job) {
+    private void fillJobDetails(View view, @NonNull Job job, boolean isComeFromJobInfo) {
         tvJobLookingFor.setText(new StringBuilder(job.getFirm() + " מחפשת " + job.getType()));
-        try {
-            ivJobBusinessSymbol.setBackground(Drawable.createFromStream(Objects.requireNonNull(getContext()).getAssets().open(job.getBusinessNumber() + ".png"), null));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Glide.with(requireContext()).load(Uri.parse("file:///android_asset/" + job.getBusinessNumber() + ".png")).into(ivJobBusinessSymbol);
         if (view.getId() != R.id.clusterLayout) {
             tvJobTitle.setText(job.getTitle());
             tvJobAddress.setText(job.getAddress());
@@ -73,7 +72,7 @@ public class JobFragment extends Fragment {
             layout = view;
         }
         layout.setBackgroundColor(bg = Color.rgb(job.getColor1(), job.getColor2(), job.getColor3()));
-        if (Objects.requireNonNull(getActivity()).getLocalClassName().equalsIgnoreCase("views.activities.JobInfoActivity")) {
+        if (isComeFromJobInfo) {
             layout.setPadding(0, 0, 0, 30);
             view.setEnabled(false);
             view.findViewById(R.id.clMapFragment).setVisibility(View.VISIBLE);

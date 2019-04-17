@@ -1,4 +1,4 @@
-package zfani.assaf.jobim.views.fragments.MenuFragments;
+package zfani.assaf.jobim.views.fragments.FeedFragments;
 
 import android.Manifest;
 import android.content.pm.PackageManager;

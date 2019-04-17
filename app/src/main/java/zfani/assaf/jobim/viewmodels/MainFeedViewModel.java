@@ -10,11 +10,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -55,37 +52,16 @@ public class MainFeedViewModel extends AndroidViewModel {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (!dataSnapshot.hasChildren()) {
-                    InputStream inputStream = null;
                     try {
-                        inputStream = getApplication().getAssets().open("jobs.json");
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    try {
-                        if (inputStream == null) {
-                            return;
-                        }
-                        JSONObject obj = new JSONObject(JsonHelper.loadJSONFromAsset(inputStream));
-                        JSONArray jsonArray = obj.getJSONArray("jobs");
+                        JSONArray jsonArray = new JSONObject(JsonHelper.loadJSONFromAsset(getApplication().getAssets()
+                                .open("jobs.json"))).getJSONArray("jobs");
                         for (int i = 0; i <= jsonArray.length(); i++) {
                             JSONObject object = jsonArray.getJSONObject(i);
                             String address = object.getString("address");
                             JSONArray colorArray = object.getJSONArray("color");
-                            ref.push().setValue(new Job(
-                                    address,
-                                    object.getBoolean("applied"),
-                                    object.getInt("business_number"),
-                                    colorArray.getInt(0), colorArray.getInt(1), colorArray.getInt(2),
-                                    GPSTracker.getDistanceFromAddress(getApplication(), address),
-                                    object.getBoolean("is_favorite"),
-                                    object.getString("firm"),
-                                    i + 1,
-                                    false,
-                                    object.getString("title"),
-                                    object.getString("type")
-                            ));
+                            ref.push().setValue(new Job(address, object.getBoolean("applied"), object.getInt("business_number"), colorArray.getInt(0), colorArray.getInt(1), colorArray.getInt(2), GPSTracker.getDistanceFromAddress(getApplication(), address), object.getBoolean("is_favorite"), object.getString("firm"), i + 1, false, object.getString("title"), object.getString("type")));
                         }
-                    } catch (JSONException e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
@@ -139,8 +115,8 @@ public class MainFeedViewModel extends AndroidViewModel {
     public List<Job> getJobLiveList(List<String> jobTypeList, String jobLocation, String jobFirm) {
         setFilterItem((jobTypeList != null && !jobTypeList.isEmpty()) || (jobLocation != null && !jobLocation.isEmpty()) || (jobFirm != null && !jobFirm.isEmpty()) ?
                 new FilterItem(jobTypeList != null && jobTypeList.size() == 1 ? jobRepository.getColorByJobType(jobTypeList.get(0)) : 0,
-                "מציג" + (jobTypeList == null || jobTypeList.isEmpty() ? "" : " " + (jobTypeList.size() == 1 ? jobTypeList.get(0) : jobTypeList.size() + " ג'ובים")) +
-                        (jobFirm != null && !jobFirm.isEmpty() ? " ב" + jobFirm : "") + (jobLocation != null && !jobLocation.isEmpty() ? " ב" + jobLocation : "")) : null);
+                        "מציג" + (jobTypeList == null || jobTypeList.isEmpty() ? "" : " " + (jobTypeList.size() == 1 ? jobTypeList.get(0) : jobTypeList.size() + " ג'ובים")) +
+                                (jobFirm != null && !jobFirm.isEmpty() ? " ב" + jobFirm : "") + (jobLocation != null && !jobLocation.isEmpty() ? " ב" + jobLocation : "")) : null);
         return jobRepository.getAllJobs(jobTypeList, jobLocation, jobFirm);
     }
 }

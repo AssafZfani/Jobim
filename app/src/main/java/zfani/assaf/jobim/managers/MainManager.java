@@ -9,7 +9,7 @@ import androidx.fragment.app.FragmentTransaction;
 import zfani.assaf.jobim.R;
 import zfani.assaf.jobim.utils.GPSTracker;
 import zfani.assaf.jobim.views.fragments.FeedFragments.MapFragment;
-import zfani.assaf.jobim.views.fragments.MenuFragments.MainFeedFragment;
+import zfani.assaf.jobim.views.fragments.FeedFragments.MainFeedFragment;
 
 public class MainManager {
 

@@ -54,7 +54,7 @@ public class JobsAdapter extends ListAdapter<Job, JobsAdapter.JobViewHolder> {
                     case 0:
                         return ContactFragment.newInstance(job);
                     case 1:
-                        return JobFragment.newInstance(job);
+                        return JobFragment.newInstance(job, false);
                     default:
                         return DeleteFragment.newInstance(job.getId());
                 }
